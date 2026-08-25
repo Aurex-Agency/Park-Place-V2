@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { EASE, lineMask } from "@/lib/motion";
 
 /** Splits a headline so each line can be masked and revealed separately. */
-const HEADLINE_LINES = ["Transform Your Smile", "with Expert Care"];
+const HEADLINE_LINES = ["Transform", "Your Smile", "with Expert Care"];
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -40,8 +40,10 @@ export function Hero() {
           alt={hero.imageAlt}
           fill
           priority
-          sizes="100vw"
-          className="object-cover object-center"
+          quality={90}
+          /* The render is 1672px wide. Anything larger is an upscale. */
+          sizes="(max-width: 1672px) 100vw, 1672px"
+          className="object-cover object-[18%_center] md:object-center"
         />
       </motion.div>
 
@@ -72,10 +74,10 @@ export function Hero() {
         className="shell relative z-10 w-full pb-24 pt-40 md:pb-32"
         style={{ y: contentY, opacity: contentOpacity }}
       >
-        <div className="max-w-3xl">
+        <div className="max-w-[34rem]">
           {/* Eyebrow */}
           <motion.p
-            className="t-eyebrow flex items-center gap-3 !text-rose-soft"
+            className="t-eyebrow flex items-center gap-3 !text-rose-mist"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8, ease: EASE }}
@@ -105,7 +107,7 @@ export function Hero() {
           </h1>
 
           <motion.p
-            className="mt-7 max-w-xl text-[1.0625rem] leading-relaxed text-linen/85 md:text-[1.15rem]"
+            className="mt-7 max-w-[30rem] text-[1.0625rem] leading-relaxed text-linen/85 md:text-[1.15rem]"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.9, ease: EASE }}

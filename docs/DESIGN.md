@@ -67,8 +67,14 @@ build: the first palette used it for all body copy and it failed at 4.04:1.
 | --- | --- | --- | --- |
 | `--color-rose` | `#B87A68` | 3.24:1 | Flat accent, icons, large type |
 | `--color-rose-deep` | `#96543F` | 5.37:1 | Accent text, primary buttons |
-| `--color-rose-soft` | `#E7C4B6` | on walnut 6.94:1 | Accents on dark grounds |
+| `--color-rose-soft` | `#E7C4B6` | on walnut 6.94:1 | Accents on flat dark surfaces |
+| `--color-rose-mist` | `#F0D5C9` | over the hero photo 5.11:1 | Accents over photography |
 | `--color-rose-wash` | `#FBF0EB` | surface | Tinted card backgrounds |
+
+`--color-rose-soft` clears 4.5:1 against the flat walnut of the footer, but not
+against the brightest part of the hero photograph. `--color-rose-mist` is the
+over-image variant. The rule is simple: flat ground uses soft, photography uses
+mist.
 
 Rose gold is the only accent in the system. There is no secondary colour, no
 semantic green or red. When something needs emphasis it gets rose, weight, or
@@ -212,6 +218,36 @@ page says Ken. Ken is correct.
 of 8,000 people. The copy says what it does and leaves the superlatives alone.
 
 ---
+
+## The hero
+
+The hero photograph is a render of the entryway looking through to a treatment
+room. Two things about it shaped the layout.
+
+The wall in the render carries the practice's own etched wordmark, including
+the line "Booneville, Mississippi". The hero eyebrow originally read the same
+words, which put them on screen twice, so the eyebrow became "Close to Home".
+
+The bright doorway and window sit in the centre and right of the frame. Text
+placed there measured 2.59:1 against the background, and no reasonable scrim
+fixed it without flattening the render. Mapping the frame band by band showed
+the safe zone for light text is about 34rem wide above the floor line, and the
+full width below it. So the copy column is capped at 34rem, the display size
+comes down to 4.25rem, and the headline breaks to three lines. That keeps every
+run over the dark left mass with no extra darkening of the image.
+
+Narrow viewports crop hard to the centre of the frame, which is the brightest
+part, so below the medium breakpoint the image is positioned at 18 percent and
+the second scrim is switched off. Stacking both scrims on a phone crushed the
+photograph to a flat brown.
+
+Measured against the real rendered background, with the copy hidden and each
+text box read from the DOM: eyebrow 5.11:1, headline 3.58:1 at worst, subhead
+4.98:1. Headlines are 68px, so 3.0:1 is their threshold.
+
+The render is 1672px wide natively, so the srcset is capped there rather than
+letting Next upscale to 3840. A larger export would sharpen it on high density
+desktop displays.
 
 ## What the reference gave us, and what we changed
 

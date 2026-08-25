@@ -29,7 +29,8 @@ const browns = [
 const roses = [
   { name: "Rose", token: "--color-rose", hex: "#B87A68", use: "Flat accent, icons, large type", ratio: "3.24" },
   { name: "Rose Deep", token: "--color-rose-deep", hex: "#96543F", use: "Accent text, primary buttons", ratio: "5.37" },
-  { name: "Rose Soft", token: "--color-rose-soft", hex: "#E7C4B6", use: "Accents on dark grounds", ratio: "6.94" },
+  { name: "Rose Soft", token: "--color-rose-soft", hex: "#E7C4B6", use: "Accents on flat dark surfaces", ratio: "6.94" },
+  { name: "Rose Mist", token: "--color-rose-mist", hex: "#F0D5C9", use: "Accents over photography", ratio: "5.11" },
   { name: "Rose Wash", token: "--color-rose-wash", hex: "#FBF0EB", use: "Tinted card backgrounds", ratio: "1.05" },
 ];
 
@@ -143,7 +144,7 @@ export default function StyleGuidePage() {
         </div>
 
         <h3 className="t-h3 mt-12">Rose gold, the accent</h3>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {roses.map((c) => (
             <Swatch key={c.hex} {...c} />
           ))}

@@ -30,7 +30,8 @@
   /* ---------- Rose gold: the single accent ---------- */
   --color-rose: #b87a68;         /* flat accent, large type, icons */
   --color-rose-deep: #96543f;    /* accessible accent text + buttons */
-  --color-rose-soft: #e7c4b6;    /* soft fills */
+  --color-rose-soft: #e7c4b6;    /* soft fills, flat dark surfaces */
+  --color-rose-mist: #f0d5c9;    /* accents over photography, where the ground is uneven */
   --color-rose-wash: #fbf0eb;    /* tinted card backgrounds */
 
   /* ---------- Type ---------- */
@@ -201,7 +202,7 @@
   .t-display {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(2.75rem, 6.2vw, 5rem);
+    font-size: clamp(2.5rem, 4.8vw, 4.25rem);
     line-height: 1.06;
     letter-spacing: -0.025em;
   }

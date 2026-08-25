@@ -69,18 +69,21 @@ homepage. That is wrong, and it is corrected here.
 
 ## The hero image
 
-The hero reads `/images/hero-entryway.jpg`.
+The entryway render is in place at `public/images/hero-entryway.png`.
 
-There is currently a **placeholder** at that path, a copy of the operatory
-photograph, so the layout is not empty. Drop the rendered entryway image in at
-that exact filename to replace it. No code change needed.
+It is kept as a PNG because the image is mostly dark with wide, smooth
+gradients, which is where a re-encoded JPEG would band. Next serves AVIF and
+WebP from it either way.
 
-```bash
-cp ~/path/to/entryway-render.jpg public/images/hero-entryway.jpg
-```
+The file is 1672px wide, which is its native size. The srcset is capped there
+so Next does not upscale. If a larger export exists it is worth dropping in,
+since 1672px is a little soft on a high density desktop display. Same filename,
+no code change.
 
-Landscape, at least 2400px wide. The hero scrim is tuned for a warm, moody
-image with the light falling to the right, which is how the render is composed.
+The hero layout is tuned to this specific frame. If the image is ever swapped
+for a different composition, re-check the copy against it. There is a note in
+[`docs/DESIGN.md`](docs/DESIGN.md) explaining how the safe text zone was
+measured.
 
 ## Photographs
 

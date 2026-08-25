@@ -45,14 +45,13 @@ export const doctor = {
 } as const;
 
 export const hero = {
-  eyebrow: "Booneville, Mississippi",
+  eyebrow: "Close to Home",
   headline: "Transform Your Smile with Expert Care",
   subhead:
     "From routine check-ups to advanced cosmetic and restorative treatments, we are here to keep your smile healthy, beautiful, and confident.",
   primaryCta: { label: "Book an appointment", href: "/book-an-appointment" },
   secondaryCta: { label: "Explore our services", href: "/services" },
-  image: "/images/hero-entryway.jpg",
-  imageFallback: "/images/operatory-technology.jpg",
+  image: "/images/hero-entryway.png",
   imageAlt:
     "The entry hall at Park Place Dental looking through to a treatment room filled with afternoon light",
 } as const;
