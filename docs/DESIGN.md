@@ -182,6 +182,7 @@ for `whileInView` and `useScroll`.
 | Smile gallery | the two cases drift in opposite directions |
 | Header | frosts past 24px of scroll. Its height never changes |
 | Insurance band | 48 second marquee, masked at both edges |
+| Testimonials | three columns drifting up at 34, 39 and 44 seconds, masked top and bottom, paused on hover |
 | Buttons | lift 2px over 400ms |
 | Text links | rule draws in from the left, retracts to the right |
 
@@ -210,6 +211,24 @@ extra depth is taken from the foreground instead, where it is free.
 
 Scaling up only ever adds coverage, which is why the push in needs no slack of
 its own.
+
+### Marquees
+
+Both marquees are CSS animations rather than JS loops, so they run on the
+compositor and the reduced motion rule switches them off without any
+per-component work.
+
+The list is rendered twice and translated by -50%. For the seam to be
+invisible, that translate has to land on exactly one period. A list of four
+cards with three gaps is 4c + 3g tall, so -50% is 2c + 1.5g, while the real
+period is 2c + 2g. The list is short by half a gap and jumps every cycle. The
+fix is one gap of padding on the trailing edge, which makes the height 4c + 4g
+so -50% is exactly 2c + 2g. Both marquees carry it, and the mismatch is
+measured in the checks.
+
+Testimonial columns pause on hover and on focus within, so a review can be
+read. The duplicated set is `aria-hidden`, so screen readers hear each review
+once.
 
 ### Reduced motion
 

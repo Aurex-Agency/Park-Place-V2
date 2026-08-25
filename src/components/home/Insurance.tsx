@@ -24,7 +24,9 @@ export function Insurance() {
       <Reveal preset="fade" className="mt-14">
         <div className="marquee-mask relative flex overflow-hidden">
           <ul
-            className="animate-marquee flex shrink-0 items-center gap-3"
+            /* pr-3 matches gap-3, so the -50% translate lands exactly on
+               one period instead of half a gap short. */
+            className="animate-marquee flex shrink-0 items-center gap-3 pr-3"
             style={{ ["--marquee-duration" as string]: "48s" }}
           >
             {carriers.map((carrier, i) => (
