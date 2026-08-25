@@ -39,14 +39,15 @@ export function Header() {
         </div>
       </div>
 
-      <motion.header
-        className="sticky top-0 z-50"
-        initial={false}
-        animate={{
-          paddingTop: condensed ? 12 : 20,
-          paddingBottom: condensed ? 12 : 20,
-        }}
-        transition={{ duration: 0.5, ease: EASE }}
+      {/*
+        The header keeps a constant height. It used to animate its padding,
+        which changed its box in normal flow, so crossing the condense
+        threshold shifted every following element up by 16px. Now only paint
+        properties change, and the condensed look comes from a transform on
+        the brand, which does not touch layout.
+      */}
+      <header
+        className="sticky top-0 z-50 py-4"
         style={{
           backgroundColor: condensed ? "rgba(250, 246, 242, 0.82)" : "rgba(250, 246, 242, 0)",
           backdropFilter: condensed ? "blur(14px) saturate(1.4)" : "none",
@@ -54,12 +55,20 @@ export function Header() {
           boxShadow: condensed
             ? "0 1px 0 rgba(226, 214, 202, 0.9), 0 12px 30px rgba(74, 55, 41, 0.05)"
             : "none",
-          transition: "background-color .5s ease, box-shadow .5s ease, backdrop-filter .5s ease",
+          transition:
+            "background-color .45s ease, box-shadow .45s ease, backdrop-filter .45s ease",
         }}
       >
         <div className="shell flex items-center justify-between gap-6">
           <Link href="/" aria-label="Park Place Dental home" className="shrink-0">
-            <BrandLockup />
+            <motion.span
+              className="block origin-left"
+              initial={false}
+              animate={{ scale: condensed ? 0.9 : 1 }}
+              transition={{ duration: 0.45, ease: EASE }}
+            >
+              <BrandLockup />
+            </motion.span>
           </Link>
 
           {/* Desktop navigation */}
@@ -151,7 +160,7 @@ export function Header() {
             </button>
           </div>
         </div>
-      </motion.header>
+      </header>
 
       {/* Mobile navigation */}
       <AnimatePresence>

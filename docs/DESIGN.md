@@ -177,10 +177,10 @@ for `whileInView` and `useScroll`.
 | Section entrance | opacity 0 to 1, y 28 to 0, 850ms, once, at 25 percent visibility |
 | Stagger | 90ms between children |
 | Headline | each line masked by `overflow: hidden` and slid up from beneath over 1100ms |
-| Hero photograph | drifts to 16 percent of scroll, copy drifts to 38 percent and fades out |
+| Hero photograph | parallax, see below |
 | Section images | uncover with a `clip-path` inset tied to scroll |
 | Smile gallery | the two cases drift in opposite directions |
-| Header | condenses and frosts past 24px of scroll |
+| Header | frosts past 24px of scroll. Its height never changes |
 | Insurance band | 48 second marquee, masked at both edges |
 | Buttons | lift 2px over 400ms |
 | Text links | rule draws in from the left, retracts to the right |
@@ -189,13 +189,48 @@ Primitives live in `src/lib/motion.ts` and `src/components/ui/Reveal.tsx`. Use
 `<Reveal>`, `<RevealGroup>` and `<RevealItem>` rather than hand rolling
 variants, so the timing stays consistent as pages are added.
 
+### Hero parallax
+
+The photograph travels down as the page travels up, so it reads as moving
+slower than everything around it. Two rules make it safe.
+
+**The layer must be taller than the section.** It is 130% tall with 15% of
+slack above and below. A layer sized exactly to the section pulls its own top
+edge into view the moment it moves, showing a band of bare background under the
+header. That was a real bug here: at 800px of scroll the layer's top edge had
+separated from the section's by 111px. The gap is now asserted at every scroll
+position rather than trusted.
+
+**Depth comes from the difference between layers, not from one big move.** The
+image travels 12% of the layer, roughly 0.84 of page speed, and gains a slow
+push in from scale 1 to 1.08. The copy moves the other way, up 26%, and fades
+out by 62% of the section. Buying a stronger effect by making the layer taller
+would upscale a 1672px render and soften the hero from the first frame, so the
+extra depth is taken from the foreground instead, where it is free.
+
+Scaling up only ever adds coverage, which is why the push in needs no slack of
+its own.
+
 ### Reduced motion
+
+Scroll-linked transforms are not CSS animations, so the global rule does not
+reach them. The hero reads `useReducedMotion()` and drops its parallax
+entirely: the image holds still and the copy stays at full opacity.
 
 Under `prefers-reduced-motion: reduce`, every animation and transition is cut to
 0.01ms, the marquee and the glint stop entirely, and smooth scrolling is turned
 off. This is handled once in `globals.css` and needs no per-component work.
 
 ---
+
+## The header
+
+The header is sticky and sits in normal flow, so its height is part of the
+document. It used to animate its padding when it condensed, which changed that
+height by 16px and shifted every following element up the moment you started
+scrolling. It now keeps a constant height and changes only paint properties:
+background, blur and shadow. The condensed look comes from a transform on the
+brand lockup, which does not touch layout.
 
 ## Writing
 

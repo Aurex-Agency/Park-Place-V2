@@ -115,9 +115,13 @@ export function Technology() {
                 <motion.div
                   key={current.image}
                   className="absolute inset-0"
+                  /* The outgoing photograph holds at full opacity underneath
+                     while the incoming one fades in over it. Fading both at
+                     once lets the dark panel show through at the midpoint,
+                     which reads as a flicker. */
                   initial={{ opacity: 0, scale: 1.06 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
+                  exit={{ opacity: 1 }}
                   transition={{ duration: 0.9, ease: EASE }}
                 >
                   <Image

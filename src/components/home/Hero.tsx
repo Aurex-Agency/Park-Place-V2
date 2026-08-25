@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { hero, practice } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 import { EASE, lineMask } from "@/lib/motion";
@@ -12,28 +12,62 @@ const HEADLINE_LINES = ["Transform", "Your Smile", "with Expert Care"];
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
 
-  // The photograph drifts slower than the page, which gives the section depth.
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "16%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "38%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+
+  /**
+   * Parallax.
+   *
+   * The photograph travels down as the page travels up, so it appears to move
+   * slower than everything around it. That only works if the layer is taller
+   * than the section it sits in. An exactly section-sized layer pulls its own
+   * top edge into view the moment it moves, which shows as a band of bare
+   * background under the header.
+   *
+   * The layer is 130% tall with 15% of slack above and below. Travel is 10% of
+   * the layer, which is 13% of the section, leaving 2% of margin at the top at
+   * full progress. The gap is asserted in the checks rather than trusted.
+   */
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+
+  /**
+   * A slow push in. Scaling up only ever adds coverage, so unlike travel it
+   * costs no slack. It also keeps the base framing sharp: the source render is
+   * 1672px, and buying a stronger parallax through a taller layer instead
+   * would upscale the photograph and soften it from the first frame.
+   */
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+
+  /**
+   * The copy leaves faster than the page. Depth is the difference between the
+   * layers, so moving the foreground harder reads as parallax without asking
+   * anything more of the image.
+   */
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-26%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.62], [1, 0]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
 
   return (
     <section
       ref={ref}
       className="relative isolate flex min-h-[92svh] items-end overflow-hidden bg-espresso"
     >
-      {/* Photograph */}
+      {/* Photograph. Deliberately taller than the section so the parallax
+          travel can never expose an edge. */}
       <motion.div
-        className="absolute inset-0 z-0"
-        style={{ y: imageY }}
-        initial={{ scale: 1.1, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.8, ease: EASE }}
+        className="absolute inset-x-0 -top-[15%] z-0 h-[130%]"
+        style={{
+          y: reduceMotion ? 0 : imageY,
+          scale: reduceMotion ? 1 : imageScale,
+          willChange: "transform",
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.4, ease: EASE }}
       >
         <Image
           src={hero.image}
@@ -72,7 +106,11 @@ export function Hero() {
 
       <motion.div
         className="shell relative z-10 w-full pb-24 pt-40 md:pb-32"
-        style={{ y: contentY, opacity: contentOpacity }}
+        style={
+          reduceMotion
+            ? undefined
+            : { y: contentY, opacity: contentOpacity, willChange: "transform, opacity" }
+        }
       >
         <div className="max-w-[34rem]">
           {/* Eyebrow */}
@@ -132,13 +170,19 @@ export function Hero() {
       </motion.div>
 
       {/* Scroll cue */}
+      {/* Two layers so the entrance fade and the scroll fade do not both try
+          to own opacity on the same element. */}
       <motion.div
         aria-hidden="true"
-        className="absolute bottom-8 right-6 z-10 hidden items-center gap-3 md:right-10 lg:flex"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 1 }}
+        className="absolute bottom-8 right-6 z-10 hidden md:right-10 lg:block"
+        style={reduceMotion ? undefined : { opacity: cueOpacity }}
       >
+        <motion.div
+          className="flex items-center gap-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6, duration: 1 }}
+        >
         <span className="font-[family-name:var(--font-brand)] text-[0.62rem] uppercase tracking-[0.3em] text-linen/60">
           Scroll
         </span>
@@ -146,9 +190,10 @@ export function Hero() {
           <motion.span
             className="absolute inset-x-0 block h-4 bg-rose-soft"
             animate={{ y: [-16, 48] }}
-            transition={{ duration: 2.4, ease: "easeInOut", repeat: Infinity }}
-          />
-        </span>
+              transition={{ duration: 2.4, ease: "easeInOut", repeat: Infinity }}
+            />
+          </span>
+        </motion.div>
       </motion.div>
     </section>
   );
