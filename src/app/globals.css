@@ -1,0 +1,439 @@
+@import "tailwindcss";
+
+/* ============================================================
+   PARK PLACE DENTAL - DESIGN SYSTEM
+   Booneville, Mississippi
+   ------------------------------------------------------------
+   Canvas is warm linen, never pure white.
+   Ink is brown, never black.
+   Rose gold is the only accent, and it appears in two states:
+   flat (for type and rules) and polished metal (for the brand
+   mark, hairlines and key moments).
+   ============================================================ */
+
+@theme {
+  /* ---------- Neutrals: warm, hometown, never clinical ---------- */
+  --color-white: #ffffff;
+  --color-linen: #faf6f2;        /* page canvas */
+  --color-linen-deep: #f2eae2;   /* alternating section band */
+  --color-blush: #f8e9e2;        /* rose tint wash */
+  --color-sand: #e2d6ca;         /* hairlines, borders */
+  --color-sand-deep: #cbb9a8;
+
+  /* ---------- Browns: the ink ---------- */
+  --color-espresso: #2a1e17;     /* headlines, primary text */
+  --color-walnut: #4a3729;       /* secondary dark surfaces */
+  --color-taupe: #75604f;        /* muted body text, passes AA on every surface */
+  --color-taupe-light: #8b7566;  /* the logo brown. Decorative and large type only */
+  --color-taupe-faint: #a99384;  /* hairline captions on dark, decorative only */
+
+  /* ---------- Rose gold: the single accent ---------- */
+  --color-rose: #b87a68;         /* flat accent, large type, icons */
+  --color-rose-deep: #96543f;    /* accessible accent text + buttons */
+  --color-rose-soft: #e7c4b6;    /* soft fills, flat dark surfaces */
+  --color-rose-mist: #f0d5c9;    /* accents over photography, where the ground is uneven */
+  --color-rose-wash: #fbf0eb;    /* tinted card backgrounds */
+
+  /* ---------- Type ---------- */
+  --font-display: var(--font-source-serif), "Source Serif 4", Georgia, serif;
+  --font-brand: var(--font-cinzel), "Cinzel", Georgia, serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* ---------- Spacing rhythm (8px base) ---------- */
+  --spacing-section: 7.5rem;     /* 120px between major sections */
+  --spacing-section-sm: 4.5rem;
+
+  /* ---------- Radius: soft, architectural ---------- */
+  --radius-pill: 999px;
+  --radius-card: 1.25rem;
+  --radius-arch: 999px 999px 1.25rem 1.25rem;
+
+  /* ---------- Warm shadows only. Never cool gray. ---------- */
+  --shadow-sm: 0 2px 4px rgba(74, 55, 41, 0.05), 0 8px 16px rgba(74, 55, 41, 0.04);
+  --shadow-md: 0 6px 14px rgba(74, 55, 41, 0.07), 0 24px 40px rgba(74, 55, 41, 0.06);
+  --shadow-lg: 0 12px 24px rgba(74, 55, 41, 0.08), 0 40px 72px rgba(74, 55, 41, 0.09);
+
+  /* ---------- Easing ---------- */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   POLISHED ROSE GOLD
+   A believable metal needs banded reflections, not a two stop
+   fade. The narrow near-white stops are the specular highlights
+   that read as a watch case catching a light.
+   ============================================================ */
+:root {
+  --metal-rose: linear-gradient(
+    100deg,
+    #8a4e3d 0%,
+    #b3776a 7%,
+    #e3b3a2 15%,
+    #f9e6dd 22%,
+    #fffaf7 25.5%,
+    #f0cebf 30%,
+    #c68872 39%,
+    #9a5d4a 49%,
+    #b5786a 57%,
+    #e6bcab 67%,
+    #fbeee7 73%,
+    #d9a692 82%,
+    #a56753 91%,
+    #834a3a 100%
+  );
+
+  /* Softer, wider banding for large surfaces */
+  --metal-rose-wide: linear-gradient(
+    115deg,
+    #9a6150 0%,
+    #c58f7c 18%,
+    #f6e0d5 32%,
+    #ffffff 38%,
+    #e8bda9 48%,
+    #ab6b57 62%,
+    #cd9884 78%,
+    #f3ded4 88%,
+    #9e6250 100%
+  );
+
+  /* For type. The bright stops of the display metal vanish against linen,
+     so this variant caps its lightest value at a readable tone. */
+  --metal-rose-text: linear-gradient(
+    100deg,
+    #7a3f2e 0%,
+    #9c5a44 14%,
+    #b8735a 26%,
+    #8d4f3a 40%,
+    #a4614a 54%,
+    #b8735a 68%,
+    #8a4c37 84%,
+    #7a3f2e 100%
+  );
+
+  --metal-rose-hairline: linear-gradient(
+    90deg,
+    #a5674f 0%,
+    #d3a08b 22%,
+    #f4ddd1 42%,
+    #c98d76 62%,
+    #a5674f 82%,
+    #c08a76 100%
+  );
+}
+
+/* Metal fill on text */
+.metal-text {
+  background-image: var(--metal-rose-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Metal fill on any masked shape (the column mark) */
+.metal-text-bright {
+  background-image: var(--metal-rose);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.metal-surface {
+  background-image: var(--metal-rose);
+  background-size: 200% 100%;
+  background-position: 30% 0;
+}
+
+/* Hairline rule with a travelling glint */
+.metal-rule {
+  height: 1px;
+  border: 0;
+  background-image: var(--metal-rose-hairline);
+  background-size: 200% 100%;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-linen);
+    color: var(--color-espresso);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  /* Display serif is used at 400 only. It is never bolded. */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    color: var(--color-espresso);
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background-color: var(--color-rose-soft);
+    color: var(--color-espresso);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rose-deep);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* ============================================================
+   TYPE SCALE
+   ============================================================ */
+@layer components {
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 4.8vw, 4.25rem);
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+  }
+
+  .t-h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.25rem, 4.6vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .t-h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    line-height: 1.14;
+    letter-spacing: -0.015em;
+  }
+
+  .t-h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.25;
+  }
+
+  /* Wide tracked caps, drawn from the wordmark */
+  .t-eyebrow {
+    font-family: var(--font-brand);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-rose-deep);
+  }
+
+  .t-lead {
+    font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+    line-height: 1.62;
+    color: var(--color-taupe);
+  }
+
+  .t-body { color: var(--color-taupe); }
+
+  .t-caption {
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    color: var(--color-taupe);
+  }
+
+  /* ---------- Layout ---------- */
+  .shell {
+    width: 100%;
+    max-width: 78rem;      /* 1248px */
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell { padding-inline: 2.5rem; }
+  }
+
+  .shell-narrow {
+    width: 100%;
+    max-width: 46rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .section {
+    padding-block: 4.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section { padding-block: var(--spacing-section); }
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.95rem 1.9rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      transform 0.4s var(--ease-out-soft),
+      box-shadow 0.4s var(--ease-out-soft),
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary {
+    background-color: var(--color-rose-deep);
+    color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:hover {
+    background-color: #82462f;
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--color-espresso);
+    border: 1px solid var(--color-sand-deep);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-rose);
+    color: var(--color-rose-deep);
+    background-color: var(--color-rose-wash);
+  }
+
+  .btn-ghost {
+    background-color: var(--color-white);
+    color: var(--color-espresso);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-ghost:hover { box-shadow: var(--shadow-md); }
+
+  /* Text link with a rose underline that draws in */
+  .link-underline {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--color-rose-deep);
+    font-weight: 500;
+    font-size: 0.9375rem;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform 0.5s var(--ease-out-soft);
+  }
+
+  .link-underline:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
+  /* ---------- Surfaces ---------- */
+  .card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform 0.5s var(--ease-out-soft),
+      box-shadow 0.5s var(--ease-out-soft);
+  }
+
+  .card-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* The arch echoes the column in the mark */
+  .arch {
+    border-radius: var(--radius-arch);
+    overflow: hidden;
+  }
+
+  .arch-full {
+    border-radius: 999px;
+    overflow: hidden;
+  }
+}
+
+/* ============================================================
+   MOTION
+   ============================================================ */
+@keyframes glint {
+  0%   { background-position: -60% 0; }
+  100% { background-position: 160% 0; }
+}
+
+.animate-glint {
+  animation: glint 7s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 42s) linear infinite;
+}
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Respect the reader */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .animate-glint,
+  .animate-marquee {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
