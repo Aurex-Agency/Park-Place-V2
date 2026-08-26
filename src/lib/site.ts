@@ -1,25 +1,24 @@
 /**
- * The canonical origin for absolute URLs: share card images, the sitemap, and
- * robots.
+ * The canonical origin for absolute URLs: share card images, canonical tags,
+ * the sitemap, and robots.
  *
- * Hardcoding the production domain breaks share cards on every deployment that
- * is not yet served from it, which is every preview and, until the domain is
- * pointed here, production too. The card would reference an image on a host
- * that does not serve this build.
+ * Production is the practice's own domain. Previews stay on their own
+ * deployment URL, because a preview whose share card points at the production
+ * host shows the production image, not the build you are reviewing.
  *
  * Order of preference:
- *   1. NEXT_PUBLIC_SITE_URL, when you want to pin it explicitly.
- *   2. The project's production URL, which Vercel updates to the custom domain
- *      as soon as one is attached, so this needs no edit at launch.
- *   3. The current deployment URL.
- *   4. localhost, for development.
+ *   1. NEXT_PUBLIC_SITE_URL, to pin it explicitly or to test a change.
+ *   2. The production domain, on production deployments.
+ *   3. The current deployment URL, on previews.
+ *   4. localhost, in development.
  */
+export const PRODUCTION_URL = "https://parkplacedentist.com";
+
 function resolveSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
   if (explicit) return explicit.replace(/\/$/, "");
 
-  const production = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  if (production) return `https://${production}`;
+  if (process.env.VERCEL_ENV === "production") return PRODUCTION_URL;
 
   const deployment = process.env.VERCEL_URL;
   if (deployment) return `https://${deployment}`;
@@ -28,3 +27,8 @@ function resolveSiteUrl(): string {
 }
 
 export const siteUrl = resolveSiteUrl();
+
+/** An absolute URL for a route, for canonical tags. */
+export function canonical(path: string): string {
+  return path === "/" ? siteUrl : `${siteUrl}${path}`;
+}

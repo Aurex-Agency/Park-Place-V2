@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { faqs } from "@/content/pages";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: "FAQs",
   description:
     "Answers to the questions we hear most often from patients in Booneville and the surrounding communities.",
+  alternates: { canonical: canonical("/patient-resources/faqs") },
 };
 
 /** Marked up so the answers can appear directly in search results. */

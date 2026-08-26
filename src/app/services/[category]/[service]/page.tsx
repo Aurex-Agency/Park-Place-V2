@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { serviceCategories, findService } from "@/content/services";
+import { canonical } from "@/lib/site";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Blocks } from "@/components/page/Blocks";
 import { CtaBand } from "@/components/page/CtaBand";
@@ -24,6 +25,9 @@ export async function generateMetadata({
   return {
     title: found.service.title,
     description: found.service.metaDescription,
+    alternates: {
+      canonical: canonical(`/services/${category}/${found.service.slug}`),
+    },
   };
 }
 

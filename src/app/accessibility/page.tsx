@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
@@ -7,6 +8,7 @@ export const metadata: Metadata = {
   title: "Accessibility",
   description:
     "Park Place Dental is committed to making this website usable for everyone.",
+  alternates: { canonical: canonical("/accessibility") },
 };
 
 const sections = [

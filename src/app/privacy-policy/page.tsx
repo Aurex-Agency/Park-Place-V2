@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
@@ -6,6 +7,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "How Park Place Dental handles the information you share with us.",
+  alternates: { canonical: canonical("/privacy-policy") },
 };
 
 /*

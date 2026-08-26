@@ -1,6 +1,7 @@
 # Park Place Dental, design system
 
-Booneville, Mississippi. Built for the site at `parkplace-dental.com`.
+Booneville, Mississippi. Built for `parkplacedentist.com`. Copy was ported
+from the practice's previous site at `parkplace-dental.com`.
 
 The brief was the layout, motion and editorial calm of
 [augusthealth.com](https://www.augusthealth.com), recoloured to white, brown

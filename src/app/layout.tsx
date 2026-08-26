@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { practice } from "@/lib/content";
-import { siteUrl } from "@/lib/site";
+import { siteUrl, canonical } from "@/lib/site";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FaqSection } from "@/components/site/FaqSection";
@@ -61,6 +61,7 @@ export const metadata: Metadata = {
     siteName: "Park Place Dental",
     url: "/",
   },
+  alternates: { canonical: canonical("/") },
   twitter: {
     card: "summary_large_image",
     title: "Park Place Dental | Dentist in Booneville, Mississippi",

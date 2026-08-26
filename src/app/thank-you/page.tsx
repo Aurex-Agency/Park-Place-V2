@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Button } from "@/components/ui/Button";
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: "Thank You",
   description: "Thank you for contacting Park Place Dental.",
   robots: { index: false, follow: true },
+  alternates: { canonical: canonical("/thank-you") },
 };
 
 export default function Page() {

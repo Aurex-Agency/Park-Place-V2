@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { patientForms } from "@/content/pages";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title: "Patient Forms",
   description:
     "Complete your Park Place Dental forms before your visit to save time at your appointment.",
+  alternates: { canonical: canonical("/new-patients/patient-forms") },
 };
 
 export default function Page() {

@@ -2,6 +2,9 @@
 
 Website for Park Place Dental, 403 N 3rd St, Booneville, Mississippi.
 
+Production domain: **parkplacedentist.com**. The practice's previous site is at
+parkplace-dental.com, which is where the approved copy was ported from.
+
 Next.js 16 (App Router), React 19, Tailwind v4, and Motion.
 
 ## Getting started
@@ -75,6 +78,31 @@ docs/
 
 All copy lives in `src/lib/content.ts`. Components never hardcode a sentence.
 Change it there and it changes everywhere.
+
+## Domain and absolute URLs
+
+Canonical tags, the share card image, the sitemap and robots all resolve their
+origin through `src/lib/site.ts`. Nothing hardcodes a domain in a page.
+
+| Where | Origin used |
+| --- | --- |
+| Production | `https://parkplacedentist.com` |
+| Preview | that deployment's own URL |
+| Local | `http://localhost:3000` |
+
+Previews deliberately stay on their own URL. A preview whose share card points
+at production shows the production image, not the build being reviewed.
+
+`NEXT_PUBLIC_SITE_URL` overrides all of it. Set it in Vercel if you need to pin
+the origin, for example to keep production on the vercel.app URL while DNS for
+the real domain is still propagating.
+
+Two things worth doing at launch, both outside this repository:
+
+- Point parkplacedentist.com at the Vercel project.
+- 301 redirect the old parkplace-dental.com to the matching page here, so the
+  years of history on the old domain follow the practice across rather than
+  competing with the new site.
 
 ## Two things to know before editing
 

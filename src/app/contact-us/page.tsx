@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
@@ -8,6 +9,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export const metadata: Metadata = {
   title: "Contact Us",
   description: `Park Place Dental, ${practice.address.full}. Call ${practice.phone} to book an appointment.`,
+  alternates: { canonical: canonical("/contact-us") },
 };
 
 export default function Page() {

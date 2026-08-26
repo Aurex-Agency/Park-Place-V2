@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { serviceCategories, findCategory } from "@/content/services";
+import { canonical } from "@/lib/site";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
 import { RelatedServices } from "@/components/page/RelatedServices";
@@ -18,7 +19,11 @@ export async function generateMetadata({
   const { category } = await params;
   const found = findCategory(category);
   if (!found) return {};
-  return { title: found.title, description: found.metaDescription };
+  return {
+    title: found.title,
+    description: found.metaDescription,
+    alternates: { canonical: canonical(`/services/${found.slug}`) },
+  };
 }
 
 export default async function CategoryPage({

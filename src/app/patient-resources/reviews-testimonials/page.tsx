@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { testimonials } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: "Reviews & Testimonials",
   description:
     "What patients in Booneville and the surrounding communities say about Park Place Dental.",
+  alternates: { canonical: canonical("/patient-resources/reviews-testimonials") },
 };
 
 export default function Page() {

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { newPatients } from "@/content/pages";
 import { SimplePageView } from "@/components/page/SimplePageView";
 
 export const metadata: Metadata = {
   title: newPatients.title,
   description: newPatients.metaDescription,
+  alternates: { canonical: canonical("/new-patients") },
 };
 
 export default function Page() {

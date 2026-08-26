@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import Link from "next/link";
 import Image from "next/image";
 import { serviceCategories } from "@/content/services";
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "General, restorative, cosmetic and periodontal dentistry plus facial aesthetics, all under one roof in Booneville, Mississippi.",
+  alternates: { canonical: canonical("/services") },
 };
 
 export default function ServicesPage() {

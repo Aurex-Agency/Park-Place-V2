@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonical } from "@/lib/site";
 import { blogPage } from "@/content/pages";
 import { SimplePageView } from "@/components/page/SimplePageView";
 import { Reveal } from "@/components/ui/Reveal";
@@ -6,6 +7,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export const metadata: Metadata = {
   title: blogPage.title,
   description: blogPage.metaDescription,
+  alternates: { canonical: canonical("/patient-resources/blog") },
 };
 
 export default function Page() {
