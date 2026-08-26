@@ -35,9 +35,13 @@
   --color-rose-wash: #fbf0eb;    /* tinted card backgrounds */
 
   /* ---------- Type ---------- */
-  --font-display: var(--font-source-serif), "Source Serif 4", Georgia, serif;
-  --font-brand: var(--font-cinzel), "Cinzel", Georgia, serif;
-  --font-sans: var(--font-dm-sans), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  /* Zodiak is the voice: headlines, eyebrow labels, pull quotes, figures.
+     Plus Jakarta Sans does the functional work. Two families, no more. The
+     brand token is kept as a separate name because it marks a different job,
+     small tracked capitals, even though it resolves to the same family. */
+  --font-display: var(--font-zodiak), Zodiak, Georgia, "Times New Roman", serif;
+  --font-brand: var(--font-zodiak), Zodiak, Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* ---------- Spacing rhythm (8px base) ---------- */
   --spacing-section: 7.5rem;     /* 120px between major sections */
@@ -202,7 +206,7 @@
   .t-display {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(2.5rem, 4.8vw, 4.25rem);
+    font-size: clamp(2.35rem, 4.5vw, 4rem);
     line-height: 1.06;
     letter-spacing: -0.025em;
   }
@@ -210,7 +214,7 @@
   .t-h1 {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(2.25rem, 4.6vw, 3.5rem);
+    font-size: clamp(2rem, 4.1vw, 3.15rem);
     line-height: 1.08;
     letter-spacing: -0.02em;
   }
@@ -218,7 +222,7 @@
   .t-h2 {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
     line-height: 1.14;
     letter-spacing: -0.015em;
   }

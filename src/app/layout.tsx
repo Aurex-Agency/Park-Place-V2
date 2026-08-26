@@ -1,33 +1,43 @@
 import type { Metadata } from "next";
-import { Cinzel, DM_Sans, Source_Serif_4 } from "next/font/google";
+import localFont from "next/font/local";
 import { practice } from "@/lib/content";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import "./globals.css";
 
-/** Roman capitals, drawn to match the column wordmark. Brand use only. */
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+/**
+ * Zodiak carries the voice of the site: every headline, the eyebrow labels and
+ * the pull quotes. One variable file covers the whole weight range, so the
+ * display weight can be tuned later without another download.
+ */
+const zodiak = localFont({
+  variable: "--font-zodiak",
   display: "swap",
+  src: [
+    {
+      path: "../fonts/Zodiak-Variable.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Zodiak-VariableItalic.woff2",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
 });
 
-/** The editorial voice. Used at 400 only, never bolded. */
-const sourceSerif = Source_Serif_4({
-  variable: "--font-source-serif",
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
+/** Plus Jakarta Sans does the functional work: body, navigation, buttons, forms. */
+const jakarta = localFont({
+  variable: "--font-jakarta",
   display: "swap",
-});
-
-/** Everything functional: body copy, navigation, buttons, forms. */
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
+  src: [
+    {
+      path: "../fonts/PlusJakartaSans-Variable.woff2",
+      weight: "200 800",
+      style: "normal",
+    },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -76,10 +86,13 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${cinzel.variable} ${sourceSerif.variable} ${dmSans.variable} antialiased`}
-      >
+    // The font variables go on <html>, not <body>. The theme tokens that
+    // reference them (--font-display and friends) are defined on :root, and a
+    // custom property is substituted where it is defined, not where it is
+    // used. Declared on <body> the reference resolves against an undefined
+    // value and every element silently falls back to system fonts.
+    <html lang="en" className={`${zodiak.variable} ${jakarta.variable}`}>
+      <body className="antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

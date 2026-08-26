@@ -85,23 +85,38 @@ export function MetalLockup({
   );
 }
 
-/** Horizontal lockup for the header: mark beside the name. */
+/**
+ * Horizontal lockup for the header: the column beside the wordmark.
+ *
+ * The wordmark is the practice's own lettering, masked from their logo art,
+ * rather than a typeface chosen to resemble it. No substitute matches a real
+ * wordmark, and this one is already on disk.
+ */
 export function BrandLockup({ className = "" }: { className?: string }) {
   return (
-    <span className={`flex items-center gap-3 ${className}`}>
+    <span
+      role="img"
+      aria-label="Park Place Dental"
+      className={`flex items-center gap-3 ${className}`}
+    >
       <MetalMark size={54} />
-      <span className="flex flex-col leading-none">
-        <span
-          className="font-[family-name:var(--font-brand)] text-[0.95rem] font-medium tracking-[0.2em] text-espresso"
-        >
-          PARK PLACE
-        </span>
-        <span
-          className="font-[family-name:var(--font-brand)] text-[0.7rem] tracking-[0.36em] text-taupe mt-[3px]"
-        >
-          DENTAL
-        </span>
-      </span>
+      <span
+        aria-hidden="true"
+        style={{
+          display: "block",
+          width: 132,
+          height: 132 * (295 / 782),
+          background: "var(--color-espresso)",
+          WebkitMaskImage: "url(/images/logo-wordmark.png)",
+          maskImage: "url(/images/logo-wordmark.png)",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "left center",
+          maskPosition: "left center",
+        }}
+      />
     </span>
   );
 }

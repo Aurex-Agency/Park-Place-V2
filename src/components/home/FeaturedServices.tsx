@@ -16,7 +16,7 @@ export function FeaturedServices() {
           </Reveal>
           <MaskedHeading
             className="t-h1 mt-6"
-            text="Everything You Need for / a Healthy, Beautiful Smile"
+            text="Everything You Need for / a Healthy, / Beautiful Smile"
           />
           <Reveal delay={0.1}>
             <p className="t-lead mt-5">

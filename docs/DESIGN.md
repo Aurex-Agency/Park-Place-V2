@@ -125,16 +125,26 @@ gradient is painted behind them, so one asset carries any size and any finish.
 
 Three families, each with exactly one job.
 
-**Cinzel** for brand labels only. It is a Roman capital face and it matches the
-lettering in the practice's own wordmark. Used at 12px with 0.24em tracking for
-every eyebrow and footer column heading. Never for anything longer than four
-words.
+Two families, both self-hosted variable fonts from Fontshare under the ITF
+Free Font License. One file each covers the whole weight range, so adding a
+weight later costs no extra download, and nothing is fetched from Fontshare at
+runtime.
 
-**Source Serif 4** at weight 400 for every headline. It is never bolded, on the
-principle borrowed from the reference: an editorial serif used at a single
-weight reads as literary and settled, and bolding it makes it shout.
+**Zodiak** carries the voice: every headline, the eyebrow labels, the pull
+quotes and the counting figures. Used at weight 400, never bolded, on the
+principle borrowed from the reference: an editorial serif at a single weight
+reads as literary and settled, and bolding it makes it shout.
 
-**DM Sans** at 400 and 500 for body copy, navigation, buttons and forms.
+**Plus Jakarta Sans** does the functional work: body copy, navigation, buttons
+and forms.
+
+The header wordmark is no longer type at all. It is the practice's own
+lettering, masked from their logo art, because no substitute matches a real
+wordmark and that art was already on disk.
+
+Zodiak sets wider than the previous display face, so the display scale came
+down a step when it landed. Anything that changes the type has to be followed
+by a check that the authored headline breaks still hold.
 
 ### Scale
 
@@ -285,6 +295,24 @@ text. It is now a static wrapped grid and the motion lives in how it arrives.
 Testimonial columns pause on hover and on focus within, so a review can be
 read. The duplicated set is `aria-hidden`, so screen readers hear each review
 once.
+
+### Font variables belong on the html element
+
+A custom property is substituted where it is **defined**, not where it is used.
+The `--font-display` token is defined on `:root`, so if the font class that
+supplies `--font-zodiak` sits on `<body>` the reference resolves against
+nothing, the token computes to an invalid value, and every element on the page
+silently falls back to a system font. The page still looks deliberate, which is
+what makes it easy to miss. The font classes go on `<html>`.
+
+### The service list ground
+
+Hovering a service lifts that photograph in behind the whole list rather than
+beside the pointer. It starts below the heading block so a headline never sits
+on a photograph, peaks at 16 percent opacity under a linen wash, and is
+measured: every text run over it reads at exactly the same ratio as over bare
+linen, 15.06:1 for the titles and 5.51:1 for the body. If a change makes the
+picture more present, that measurement has to be run again.
 
 ### Never let motion own visibility
 
