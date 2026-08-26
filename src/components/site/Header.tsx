@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
+import { usePathname } from "next/navigation";
 import { nav, practice } from "@/lib/content";
 import { BrandLockup } from "@/components/ui/MetalMark";
 import { Button } from "@/components/ui/Button";
@@ -12,8 +13,25 @@ export function Header() {
   const { scrollY } = useScroll();
   const [condensed, setCondensed] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  // The menu remembers which route it was opened on rather than storing a
+  // bare boolean. A change of route therefore closes it by definition, with no
+  // effect to keep in sync and nothing to forget. Links close it explicitly as
+  // well, which covers tapping through to the page you are already on.
+  const [openedAt, setOpenedAt] = useState<string | null>(null);
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const mobileOpen = openedAt !== null && openedAt === pathname;
+
+  const closeMenu = useCallback(() => {
+    setOpenedAt(null);
+    setOpenSection(null);
+  }, []);
+
+  const openMobileMenu = useCallback(() => {
+    setOpenedAt(pathname);
+    setOpenSection(null);
+  }, [pathname]);
 
   // The bar floats over the hero, then settles into a frosted pill.
   useMotionValueEvent(scrollY, "change", (y) => {
@@ -140,10 +158,7 @@ export function Header() {
 
             <button
               type="button"
-              onClick={() => {
-                setMobileOpen((v) => !v);
-                setOpenSection(null);
-              }}
+              onClick={() => (mobileOpen ? closeMenu() : openMobileMenu())}
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -225,7 +240,7 @@ export function Header() {
                     ) : (
                       <Link
                         href={item.href}
-                        onClick={() => setMobileOpen(false)}
+                        onClick={closeMenu}
                         className="t-h3 block py-5"
                       >
                         {item.label}
@@ -246,7 +261,7 @@ export function Header() {
                             <div className="flex flex-col pb-4">
                               <Link
                                 href={item.href}
-                                onClick={() => setMobileOpen(false)}
+                                onClick={closeMenu}
                                 className="py-2.5 text-[0.975rem] font-medium text-rose-deep"
                               >
                                 All {item.label.toLowerCase()}
@@ -255,7 +270,7 @@ export function Header() {
                                 <Link
                                   key={child.href}
                                   href={child.href}
-                                  onClick={() => setMobileOpen(false)}
+                                  onClick={closeMenu}
                                   className="py-2.5 text-[0.975rem] text-taupe"
                                 >
                                   {child.label}
@@ -271,10 +286,18 @@ export function Header() {
               })}
 
               <div className="mt-8 flex flex-col gap-3">
-                <Button href="/book-an-appointment" variant="primary">
+                <Button
+                  href="/book-an-appointment"
+                  variant="primary"
+                  onClick={closeMenu}
+                >
                   Book an appointment
                 </Button>
-                <Button href={practice.phoneHref} variant="outline">
+                <Button
+                  href={practice.phoneHref}
+                  variant="outline"
+                  onClick={closeMenu}
+                >
                   Call {practice.phone}
                 </Button>
               </div>

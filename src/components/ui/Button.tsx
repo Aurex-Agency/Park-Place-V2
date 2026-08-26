@@ -8,25 +8,28 @@ export function Button({
   children,
   variant = "primary",
   className = "",
+  onClick,
 }: {
   href: string;
   children: ReactNode;
   variant?: Variant;
   className?: string;
+  /** For callers that need to react to the press, such as closing a menu. */
+  onClick?: () => void;
 }) {
   const isExternal = href.startsWith("http") || href.startsWith("tel:") || href.startsWith("mailto:");
   const classes = `btn btn-${variant} ${className}`;
 
   if (isExternal) {
     return (
-      <a href={href} className={classes}>
+      <a href={href} className={classes} onClick={onClick}>
         {children}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={classes}>
+    <Link href={href} className={classes} onClick={onClick}>
       {children}
     </Link>
   );
