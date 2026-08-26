@@ -103,13 +103,17 @@ figure and numeral on the site.
 The style guide page renders both side by side so the reason for the split is
 visible rather than asserted.
 
-**`--metal-rose-hairline`** draws the short rule beside every eyebrow and the
-divider in the footer. A slow glint travels across it on a 7 second loop, and
-stops completely under reduced motion.
+**`--metal-rose-hairline`** draws rules that do structural work: the edge of a
+service row, the top of a technology row, the divider above the footer.
 
-An early version of the hairline faded to transparent at both ends. At the
-32px width used beside an eyebrow that produced two visible strokes, which
-read as a pair of dashes. It is now solid across its width.
+It is not used as decoration beside a label. There was a short stroke next to
+every eyebrow for a while and it had to go: a little dash floating beside a
+tracked-caps label is one of the most worn tells of a generated layout, and the
+capitals carry the job on their own. The travelling glint that lived on those
+strokes went with them, since nothing else wanted it.
+
+The test for whether a rule belongs is whether it is doing something. An edge,
+a division, a boundary: keep. A flourish beside a word: cut.
 
 ### How the mark is rendered
 

@@ -195,11 +195,11 @@ export default function StyleGuidePage() {
 
         <div className="mt-6 rounded-[1.25rem] bg-white p-8 shadow-[var(--shadow-sm)]">
           <p className="t-caption">--metal-rose-hairline, rules</p>
-          <hr className="metal-rule animate-glint mt-5" />
+          <hr className="metal-rule mt-5" />
           <p className="mt-4 text-[0.8rem] text-taupe">
-            Used for section rules and the short stroke beside every eyebrow. A
-            slow glint travels across it, and stops entirely under reduced
-            motion.
+            Used where a rule does structural work: the edge of a service row,
+            the top of a technology row, the divider above the footer. It is
+            deliberately not used as decoration beside a label.
           </p>
         </div>
       </section>
@@ -411,7 +411,7 @@ export default function StyleGuidePage() {
           <Row label="Reduced motion">
             <p className="text-[0.9rem] text-taupe">
               Under prefers-reduced-motion every animation and transition is
-              reduced to 0.01ms, the marquee and the glint stop, and smooth
+              reduced to 0.01ms, the marquee stops, and smooth
               scrolling is switched off.
             </p>
           </Row>

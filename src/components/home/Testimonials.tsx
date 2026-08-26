@@ -49,10 +49,6 @@ function Column({
                 </blockquote>
 
                 <figcaption className="mt-7">
-                  <span
-                    aria-hidden="true"
-                    className="metal-rule mb-4 block h-px w-10"
-                  />
                   <span className="block font-[family-name:var(--font-display)] text-lg leading-tight text-espresso">
                     {item.name}
                   </span>

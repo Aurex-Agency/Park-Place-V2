@@ -1,37 +1,24 @@
 import type { ReactNode } from "react";
 
 /**
- * Small tracked caps set in the brand serif, with a short metal rule.
- * Used to label every section, the way the reference site does.
+ * Small tracked caps, used to label every section.
+ *
+ * There used to be a short metal dash beside the words. It went, because a
+ * little decorative stroke next to a label is one of the most worn tells of a
+ * generated layout, and the tracked capitals carry the job on their own. Rules
+ * still exist in this system, but only where they do structural work: the edge
+ * of a row, the divider above the footer.
  */
 export function Eyebrow({
   children,
   align = "left",
-  rule = true,
 }: {
   children: ReactNode;
   align?: "left" | "center";
-  rule?: boolean;
 }) {
   return (
-    <p
-      className={`t-eyebrow flex items-center gap-3 ${
-        align === "center" ? "justify-center" : ""
-      }`}
-    >
-      {rule && (
-        <span
-          aria-hidden="true"
-          className="metal-rule animate-glint block h-px w-8 shrink-0"
-        />
-      )}
+    <p className={`t-eyebrow ${align === "center" ? "text-center" : ""}`}>
       {children}
-      {rule && align === "center" && (
-        <span
-          aria-hidden="true"
-          className="metal-rule animate-glint block h-px w-8 shrink-0"
-        />
-      )}
     </p>
   );
 }

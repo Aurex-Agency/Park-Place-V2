@@ -115,15 +115,11 @@ export function Hero() {
         <div className="max-w-[34rem]">
           {/* Eyebrow */}
           <motion.p
-            className="t-eyebrow flex items-center gap-3 !text-rose-mist"
+            className="t-eyebrow !text-rose-mist"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8, ease: EASE }}
           >
-            <span
-              aria-hidden="true"
-              className="metal-rule animate-glint block h-px w-10 shrink-0"
-            />
             {hero.eyebrow}
           </motion.p>
 
