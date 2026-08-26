@@ -165,9 +165,18 @@ weight reads as literary and settled, and bolding it makes it shout.
 
 ## Motion
 
-One easing curve across the entire site, `cubic-bezier(0.16, 1, 0.3, 1)`. A
-long ease out: quick to leave, slow to arrive. Content settles rather than
-bounces. Nothing springs.
+Two curves, two jobs.
+
+`EASE`, `cubic-bezier(0.16, 1, 0.3, 1)`, is a long ease out for entrances.
+Things arrive and settle.
+
+`SNAP`, `cubic-bezier(0.165, 0.84, 0.44, 1)`, is ease out quart, for hovers and
+micro-interactions. It leaves quickly and lands sooner, which is what makes a
+hover feel answered rather than sleepy. This is the curve the reference site
+uses for every one of its own micro-interactions, at 0.32s and 0.44s.
+
+Nothing springs except the pointer-following preview, where a spring is the
+point.
 
 Built on Motion (`motion/react`), following the patterns in the Motion codex
 for `whileInView` and `useScroll`.
@@ -211,6 +220,44 @@ extra depth is taken from the foreground instead, where it is free.
 
 Scaling up only ever adds coverage, which is why the push in needs no slack of
 its own.
+
+### Headline reveals
+
+Every section headline rises out from behind a mask, one line at a time, 85ms
+apart. Lines are split on an explicit separator rather than by measuring the
+wrap, so the break points are a typographic decision.
+
+The trigger watches the heading, not the moving spans. Each span starts
+translated a full line below its own `overflow-hidden` mask, so it is clipped
+out of rendering entirely. An `IntersectionObserver` on the span itself never
+reports it visible, `whileInView` never fires, and the line stays hidden
+forever. This is a real deadlock that shipped hidden headings across the whole
+homepage before it was caught. Observe the unclipped parent.
+
+### The two showcase hovers
+
+**Comprehensive Care Under One Roof.** Pointing at a row springs a photograph
+of that service to the pointer and trails it, tilting slightly with the speed
+of the move. Underneath, a rose wash and a rose rule wipe in from the left, the
+title and body shift right, the service chips lift in sequence, the index
+numeral brightens, and the arrow leaves its circle while a second arrives.
+
+The preview only renders where `(hover: hover) and (pointer: fine)` matches. A
+panel that chases a pointer is meaningless on a touch screen, so it is not
+built there at all rather than shown and left stranded.
+
+**Advanced Dental Technology.** Selection drives the copy, so the section stays
+keyboard and screen reader friendly. Hover only previews the photograph, which
+is decorative, so pointing at a row shows it without committing and leaving
+restores the selected one. Photographs wipe in behind a clip path rather than
+cross-fading, so a change of row reads as a deliberate change of slide.
+
+### Counting figures
+
+The proof points and the years medallion count up when they scroll into view.
+Years count from a near value rather than zero. Figures are set in tabular
+numerals so a number counting up cannot nudge the layout, and the static value
+is rendered first so it is correct before hydration and in search results.
 
 ### Marquees
 

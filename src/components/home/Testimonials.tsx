@@ -1,6 +1,7 @@
 import { testimonials, testimonialsSection } from "@/lib/content";
 import { TextLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 type Testimonial = (typeof testimonials)[number];
 
@@ -86,9 +87,10 @@ export function Testimonials() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.06}>
-            <h2 className="t-h1 mt-7">{testimonialsSection.headline}</h2>
-          </Reveal>
+          <MaskedHeading
+            className="t-h1 mt-7"
+            text="Hearing from real / patients can make / all the difference"
+          />
 
           <Reveal delay={0.1}>
             <p className="t-lead mt-5">{testimonialsSection.body}</p>

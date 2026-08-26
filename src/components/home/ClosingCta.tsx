@@ -3,6 +3,7 @@ import { closingCta, practice } from "@/lib/content";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
 import { MetalMark } from "@/components/ui/MetalMark";
 
 export function ClosingCta() {
@@ -38,11 +39,10 @@ export function ClosingCta() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <h2 className="t-h1 mx-auto mt-6 max-w-2xl !text-linen">
-            {closingCta.headline}
-          </h2>
-        </Reveal>
+        <MaskedHeading
+          className="t-h1 mx-auto mt-6 max-w-2xl !text-linen"
+          text="Ready to Smile / with Confidence?"
+        />
 
         <Reveal delay={0.14}>
           <p className="mx-auto mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-linen/70">

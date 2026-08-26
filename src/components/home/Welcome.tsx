@@ -7,6 +7,8 @@ import { welcome, proofPoints, veteransNote } from "@/lib/content";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { TextLink } from "@/components/ui/Button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
+import { CountUp } from "@/components/ui/CountUp";
 
 export function Welcome() {
   const imageRef = useRef<HTMLDivElement>(null);
@@ -63,9 +65,10 @@ export function Welcome() {
             <Eyebrow>{welcome.eyebrow}</Eyebrow>
           </Reveal>
 
-          <Reveal delay={0.06}>
-            <h2 className="t-h1 mt-6">{welcome.headline}</h2>
-          </Reveal>
+          <MaskedHeading
+            className="t-h1 mt-6"
+            text="Your Trusted Dentist / in Booneville"
+          />
 
           <Reveal delay={0.1}>
             <p className="mt-5 font-[family-name:var(--font-display)] text-xl italic text-rose-deep">
@@ -94,8 +97,7 @@ export function Welcome() {
               <RevealItem as="li" preset="riseSmall" key={point.label}>
                 <p className="font-[family-name:var(--font-display)] text-4xl leading-none text-espresso">
                   <span className="metal-text">
-                    {point.value}
-                    {point.suffix}
+                    <CountUp value={point.value} suffix={point.suffix} />
                   </span>
                 </p>
                 <p className="mt-2.5 text-[0.85rem] leading-snug text-taupe">

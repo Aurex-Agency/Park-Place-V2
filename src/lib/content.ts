@@ -108,6 +108,8 @@ export const featuredServices = [
 export const serviceCategories = [
   {
     title: "General Dentistry",
+    image: "/images/hygienist-with-child.jpg",
+    imageAlt: "A hygienist with a young patient at Park Place Dental",
     slug: "/services/general-dentistry",
     blurb:
       "Gentle, effective care for patients of all ages, from routine check-ups and cleanings to same-day emergency visits.",
@@ -115,6 +117,8 @@ export const serviceCategories = [
   },
   {
     title: "Restorative Dentistry",
+    image: "/images/procedure-closeup.jpg",
+    imageAlt: "A restorative procedure underway",
     slug: "/services/restorative-dentistry",
     blurb:
       "Lasting solutions that bring your smile back to full function and beauty, crafted in our own lab.",
@@ -122,6 +126,8 @@ export const serviceCategories = [
   },
   {
     title: "Cosmetic Dentistry",
+    image: "/images/smile-closeup.jpg",
+    imageAlt: "A finished cosmetic case",
     slug: "/services/cosmetic-dentistry",
     blurb:
       "Advanced techniques that enhance the beauty and function of your teeth, from whitening to a full smile makeover.",
@@ -129,6 +135,8 @@ export const serviceCategories = [
   },
   {
     title: "Periodontal Care",
+    image: "/images/goodwin-and-assistant.jpg",
+    imageAlt: "Dr. Goodwin and a team member prepared for treatment",
     slug: "/services/periodontal-care",
     blurb:
       "Healthy gums are the foundation of a strong smile. We prevent, detect, and treat gum disease early.",
@@ -136,6 +144,8 @@ export const serviceCategories = [
   },
   {
     title: "Facial Aesthetics",
+    image: "/images/team-member-desk.jpg",
+    imageAlt: "A Park Place Dental team member in the office",
     slug: "/services/facial-aesthetics",
     blurb:
       "Subtle, natural-looking treatments that enhance your features, offered in the office you already trust.",
@@ -143,6 +153,8 @@ export const serviceCategories = [
   },
   {
     title: "Advanced Technology",
+    image: "/images/operatory-technology.jpg",
+    imageAlt: "Scanning equipment in a treatment room",
     slug: "/advanced-dental-technology",
     blurb:
       "Facial scanning, laser dentistry, and an in-house lab that together make care more comfortable and precise.",

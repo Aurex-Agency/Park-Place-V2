@@ -1,25 +1,40 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import { technology } from "@/lib/content";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { TextLink } from "@/components/ui/Button";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { EASE } from "@/lib/motion";
+import { EASE, SNAP } from "@/lib/motion";
 
 /**
- * The three pieces of technology, shown one at a time. Selecting one
- * cross-fades the photograph and slides the copy, so the section reads as a
- * single considered story rather than three stacked cards.
+ * The three pieces of technology, shown one at a time.
+ *
+ * Selection is what drives the copy, so it stays keyboard and screen reader
+ * friendly. Hover only previews the photograph, which is decorative, so
+ * pointing at a row shows it without committing and leaving puts the selected
+ * one back.
  */
 export function Technology() {
-  const [active, setActive] = useState(0);
-  const current = technology.items[active];
+  const sectionRef = useRef<HTMLElement>(null);
+  const [selected, setSelected] = useState(0);
+  const [hovered, setHovered] = useState<number | null>(null);
+
+  const shown = hovered ?? selected;
+  const current = technology.items[shown];
+
+  // The panel drifts against the page for a little depth.
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const panelY = useTransform(scrollYProgress, [0, 1], ["6%", "-6%"]);
 
   return (
-    <section className="section overflow-hidden bg-espresso text-linen">
+    <section ref={sectionRef} className="section overflow-hidden bg-espresso text-linen">
       <div className="shell">
         <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-20">
           {/* Copy column */}
@@ -28,9 +43,10 @@ export function Technology() {
               <Eyebrow>{technology.eyebrow}</Eyebrow>
             </Reveal>
 
-            <Reveal delay={0.06}>
-              <h2 className="t-h1 mt-6 !text-linen">{technology.headline}</h2>
-            </Reveal>
+            <MaskedHeading
+              className="t-h1 mt-6 !text-linen"
+              text="Modern Dental / Technology for a / Better Experience"
+            />
 
             <Reveal delay={0.1}>
               <p className="mt-5 text-[1.05rem] leading-relaxed text-linen/70">
@@ -38,34 +54,80 @@ export function Technology() {
               </p>
             </Reveal>
 
-            {/* Selector */}
             <Reveal delay={0.14}>
-              <div className="mt-10 flex flex-col">
+              <div className="mt-10" onPointerLeave={() => setHovered(null)}>
                 {technology.items.map((item, i) => {
-                  const isActive = i === active;
+                  const isSelected = i === selected;
+                  const isLit = i === shown;
+
                   return (
                     <button
                       key={item.name}
                       type="button"
-                      onClick={() => setActive(i)}
-                      aria-expanded={isActive}
-                      className="group relative border-t border-linen/15 py-5 text-left last:border-b"
+                      onClick={() => setSelected(i)}
+                      onPointerEnter={() => setHovered(i)}
+                      onFocus={() => setHovered(i)}
+                      onBlur={() => setHovered(null)}
+                      aria-expanded={isSelected}
+                      className="group relative isolate w-full overflow-hidden border-t border-linen/15 py-5 text-left last:border-b"
                     >
-                      <span className="flex items-center justify-between gap-4">
-                        <span
-                          className={`font-[family-name:var(--font-display)] text-xl transition-colors duration-500 ${
-                            isActive ? "text-rose-soft" : "text-linen/70 group-hover:text-linen"
-                          }`}
+                      {/* A warm wash sweeps in from the left under the row. */}
+                      <motion.span
+                        aria-hidden="true"
+                        className="absolute inset-0 -z-10 origin-left bg-linen/[0.06]"
+                        initial={false}
+                        animate={{ scaleX: isLit ? 1 : 0 }}
+                        transition={{ duration: 0.55, ease: EASE }}
+                      />
+                      {/* A rose gold rule rides the top edge on the same sweep. */}
+                      <motion.span
+                        aria-hidden="true"
+                        className="metal-rule absolute inset-x-0 top-0 origin-left"
+                        initial={false}
+                        animate={{ scaleX: isLit ? 1 : 0 }}
+                        transition={{ duration: 0.65, ease: EASE, delay: isLit ? 0.04 : 0 }}
+                      />
+
+                      <motion.span
+                        className="flex items-center gap-4 px-1"
+                        initial={false}
+                        animate={{ x: isLit ? 10 : 0 }}
+                        transition={{ duration: 0.45, ease: SNAP }}
+                      >
+                        <motion.span
+                          aria-hidden="true"
+                          className="font-[family-name:var(--font-brand)] text-[0.7rem] tracking-[0.16em]"
+                          initial={false}
+                          animate={{
+                            color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.4)",
+                          }}
+                          transition={{ duration: 0.4, ease: SNAP }}
+                        >
+                          {String(i + 1).padStart(2, "0")}
+                        </motion.span>
+
+                        <motion.span
+                          className="flex-1 font-[family-name:var(--font-display)] text-xl"
+                          initial={false}
+                          animate={{ color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.72)" }}
+                          transition={{ duration: 0.4, ease: SNAP }}
                         >
                           {item.name}
-                        </span>
-                        <span
+                        </motion.span>
+
+                        <motion.span
                           aria-hidden="true"
-                          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
-                            isActive
-                              ? "rotate-45 border-rose-soft text-rose-soft"
-                              : "border-linen/25 text-linen/50"
-                          }`}
+                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border"
+                          initial={false}
+                          animate={{
+                            rotate: isSelected ? 45 : 0,
+                            borderColor: isLit
+                              ? "rgba(240,213,201,0.9)"
+                              : "rgba(250,246,242,0.25)",
+                            color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.5)",
+                            scale: isLit ? 1.08 : 1,
+                          }}
+                          transition={{ duration: 0.45, ease: SNAP }}
                         >
                           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                             <path
@@ -75,11 +137,11 @@ export function Technology() {
                               strokeLinecap="round"
                             />
                           </svg>
-                        </span>
-                      </span>
+                        </motion.span>
+                      </motion.span>
 
                       <AnimatePresence initial={false}>
-                        {isActive && (
+                        {isSelected && (
                           <motion.div
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
@@ -87,7 +149,7 @@ export function Technology() {
                             transition={{ duration: 0.55, ease: EASE }}
                             className="overflow-hidden"
                           >
-                            <p className="pt-4 pr-10 text-[0.925rem] leading-relaxed text-linen/65">
+                            <p className="px-1 pt-4 pr-10 text-[0.925rem] leading-relaxed text-linen/65">
                               {item.body}
                             </p>
                           </motion.div>
@@ -101,7 +163,7 @@ export function Technology() {
 
             <Reveal delay={0.18}>
               <div className="mt-9">
-                <TextLink href={technology.cta.href} className="!text-rose-soft">
+                <TextLink href={technology.cta.href} className="!text-rose-mist">
                   {technology.cta.label}
                 </TextLink>
               </div>
@@ -110,54 +172,61 @@ export function Technology() {
 
           {/* Image column */}
           <Reveal preset="fade" className="relative">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] bg-walnut lg:aspect-[4/4.4]">
-              <AnimatePresence mode="sync">
+            <motion.div
+              style={{ y: panelY }}
+              className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] bg-walnut lg:aspect-[4/4.4]"
+            >
+              {/* Each photograph wipes in behind a clip rather than cross-fading,
+                  so switching rows reads as a deliberate change of slide. */}
+              {technology.items.map((item, i) => (
                 <motion.div
-                  key={current.image}
+                  key={item.image}
                   className="absolute inset-0"
-                  /* The outgoing photograph holds at full opacity underneath
-                     while the incoming one fades in over it. Fading both at
-                     once lets the dark panel show through at the midpoint,
-                     which reads as a flicker. */
-                  initial={{ opacity: 0, scale: 1.06 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 1 }}
-                  transition={{ duration: 0.9, ease: EASE }}
+                  initial={false}
+                  animate={{
+                    clipPath:
+                      i === shown
+                        ? "inset(0% 0% 0% 0%)"
+                        : "inset(0% 0% 100% 0%)",
+                    scale: i === shown ? 1 : 1.12,
+                  }}
+                  transition={{ duration: 0.8, ease: EASE }}
+                  style={{ zIndex: i === shown ? 2 : 1 }}
                 >
                   <Image
-                    src={current.image}
-                    alt={current.imageAlt}
+                    src={item.image}
+                    alt={item.imageAlt}
                     fill
                     sizes="(max-width: 1024px) 90vw, 50vw"
                     className="object-cover"
                   />
                 </motion.div>
-              </AnimatePresence>
+              ))}
 
               <div
                 aria-hidden="true"
-                className="absolute inset-0"
+                className="absolute inset-0 z-[3]"
                 style={{
                   background:
-                    "linear-gradient(180deg, rgba(42,30,23,0) 55%, rgba(42,30,23,0.7) 100%)",
+                    "linear-gradient(180deg, rgba(42,30,23,0) 55%, rgba(42,30,23,0.72) 100%)",
                 }}
               />
 
-              <div className="absolute inset-x-0 bottom-0 p-7">
+              <div className="absolute inset-x-0 bottom-0 z-[4] p-7">
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={current.name}
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.5, ease: EASE }}
-                    className="font-[family-name:var(--font-brand)] text-[0.7rem] uppercase tracking-[0.24em] text-rose-soft"
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.42, ease: SNAP }}
+                    className="font-[family-name:var(--font-brand)] text-[0.7rem] uppercase tracking-[0.24em] text-rose-mist"
                   >
                     {current.name}
                   </motion.p>
                 </AnimatePresence>
               </div>
-            </div>
+            </motion.div>
           </Reveal>
         </div>
       </div>

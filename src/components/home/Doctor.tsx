@@ -3,6 +3,8 @@ import { doctor, doctorSection } from "@/lib/content";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
+import { CountUp } from "@/components/ui/CountUp";
 
 export function Doctor() {
   return (
@@ -10,20 +12,20 @@ export function Doctor() {
       <div className="shell grid items-center gap-14 lg:grid-cols-[0.85fr_1fr] lg:gap-20">
         {/* Portrait in a full arch, the strongest nod to the column mark */}
         <Reveal preset="fade" className="relative mx-auto w-full max-w-sm lg:mx-0">
-          <div className="arch relative aspect-[4/5] w-full overflow-hidden bg-linen-deep">
+          <div className="arch group relative aspect-[4/5] w-full overflow-hidden bg-linen-deep">
             <Image
               src={doctor.portrait}
               alt={`${doctor.name}, dentist at Park Place Dental in Booneville`}
               fill
               sizes="(max-width: 1024px) 80vw, 34vw"
-              className="object-cover object-top"
+              className="object-cover object-top transition-transform duration-[1200ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.06]"
             />
           </div>
 
           {/* Years of service, set as a metal medallion */}
           <div className="absolute -right-4 bottom-8 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-white text-center shadow-[var(--shadow-md)] ring-1 ring-sand/60">
             <span className="metal-text font-[family-name:var(--font-display)] text-3xl leading-none">
-              43
+              <CountUp value="43" />
             </span>
             <span className="mt-1 font-[family-name:var(--font-brand)] text-[0.55rem] uppercase tracking-[0.18em] text-taupe">
               Years of
@@ -39,9 +41,7 @@ export function Doctor() {
             <Eyebrow>{doctorSection.eyebrow}</Eyebrow>
           </Reveal>
 
-          <Reveal delay={0.06}>
-            <h2 className="t-h1 mt-6">{doctorSection.headline}</h2>
-          </Reveal>
+          <MaskedHeading className="t-h1 mt-6" text="Expert Care, / Trusted Results" />
 
           <Reveal delay={0.1}>
             <p className="mt-5 font-[family-name:var(--font-display)] text-xl italic text-rose-deep">

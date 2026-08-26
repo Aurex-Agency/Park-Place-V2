@@ -7,6 +7,7 @@ import { smileGallery } from "@/lib/content";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { TextLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 export function SmileGallery() {
   const ref = useRef<HTMLDivElement>(null);
@@ -16,8 +17,8 @@ export function SmileGallery() {
   });
 
   // The two cases drift in opposite directions, which keeps the pair alive.
-  const leftY = useTransform(scrollYProgress, [0, 1], ["6%", "-6%"]);
-  const rightY = useTransform(scrollYProgress, [0, 1], ["-4%", "8%"]);
+  const leftY = useTransform(scrollYProgress, [0, 1], ["12%", "-12%"]);
+  const rightY = useTransform(scrollYProgress, [0, 1], ["-8%", "16%"]);
   const offsets = [leftY, rightY];
 
   return (
@@ -27,9 +28,10 @@ export function SmileGallery() {
           <Reveal>
             <Eyebrow>{smileGallery.eyebrow}</Eyebrow>
           </Reveal>
-          <Reveal delay={0.06}>
-            <h2 className="t-h1 mt-6">{smileGallery.headline}</h2>
-          </Reveal>
+          <MaskedHeading
+            className="t-h1 mt-6"
+            text="See the stunning / results for yourself"
+          />
           <Reveal delay={0.1}>
             <p className="t-lead mt-5">{smileGallery.body}</p>
           </Reveal>
@@ -49,13 +51,13 @@ export function SmileGallery() {
               style={{ y: offsets[i] }}
               className={i === 1 ? "mt-8" : ""}
             >
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.25rem] bg-linen-deep shadow-[var(--shadow-sm)]">
+              <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[1.25rem] bg-linen-deep shadow-[var(--shadow-sm)] transition-shadow duration-[600ms] hover:shadow-[var(--shadow-lg)]">
                 <Image
                   src={item.image}
                   alt={item.alt}
                   fill
                   sizes="(max-width: 1024px) 45vw, 24vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.08]"
                 />
               </div>
               <figcaption className="t-caption mt-3 text-center">
