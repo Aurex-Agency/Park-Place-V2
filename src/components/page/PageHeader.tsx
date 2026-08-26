@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { Button } from "@/components/ui/Button";
+import { practice } from "@/lib/content";
 
 export type Crumb = { label: string; href?: string };
 
@@ -20,6 +22,7 @@ export function PageHeader({
   imageAlt,
   crumbs = [],
   note,
+  cta = true,
 }: {
   eyebrow: string;
   headline: string;
@@ -28,6 +31,8 @@ export function PageHeader({
   imageAlt?: string;
   crumbs?: Crumb[];
   note?: string;
+  /** Set false on pages that are themselves the booking step. */
+  cta?: boolean;
 }) {
   const paragraphs = Array.isArray(lead) ? lead : lead ? [lead] : [];
 
@@ -89,6 +94,19 @@ export function PageHeader({
                 <p className="mt-7 inline-block rounded-[1rem] bg-white px-5 py-3.5 text-[0.95rem] text-espresso shadow-[var(--shadow-sm)] ring-1 ring-sand/70">
                   {note}
                 </p>
+              </Reveal>
+            )}
+
+            {cta && (
+              <Reveal delay={0.22}>
+                <div className="mt-9 flex flex-wrap items-center gap-3">
+                  <Button href="/book-an-appointment" variant="primary">
+                    Book an appointment
+                  </Button>
+                  <Button href={practice.phoneHref} variant="ghost">
+                    Call {practice.phone}
+                  </Button>
+                </div>
               </Reveal>
             )}
           </div>

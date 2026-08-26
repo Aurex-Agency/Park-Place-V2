@@ -304,6 +304,30 @@ Testimonial columns pause on hover and on focus within, so a review can be
 read. The duplicated set is `aria-hidden`, so screen readers hear each review
 once.
 
+### Sections that must be on every page live in the layout
+
+The FAQ block and the location block are rendered by the root layout, not by
+each page. A page cannot be added without them, which is the point: coverage by
+construction rather than coverage by discipline.
+
+The two routes that already own that content, the FAQs page and the contact
+page, opt out through a small route gate rather than showing it twice.
+
+The site-wide FAQ block carries six of the ten questions and links to the rest.
+All ten on thirty seven pages would bury every page under the same block and
+hand search engines the same answers thirty seven times. The FAQPage structured
+data stays on the FAQs page alone for the same reason.
+
+### Ask more than once
+
+Every interior page carries a call to action in the header, one in the middle
+of the copy, one in the closing band, and one beside the map. Between seven and
+eleven booking or calling links per page. A reader who is convinced part way
+down should never have to scroll to find the ask.
+
+The booking page suppresses its own header call to action, since inviting
+somebody to book on the page where they are already booking is noise.
+
 ### Interior pages are data
 
 Every interior page is a header, a stack of blocks and a closing band. The

@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/page/PageHeader";
 import { Blocks } from "@/components/page/Blocks";
 import { CtaBand } from "@/components/page/CtaBand";
 import { RelatedServices } from "@/components/page/RelatedServices";
+import { InlineCta } from "@/components/page/InlineCta";
 
 export function generateStaticParams() {
   return serviceCategories.flatMap((c) =>
@@ -60,6 +61,13 @@ export default async function ServicePage({
       <div className="section">
         <div className="shell">
           <Blocks blocks={item.blocks} />
+
+          <div className="mt-16">
+            <InlineCta
+              heading={`Ready to talk about ${item.title.toLowerCase()}?`}
+              body="Book online in under a minute, or call the office and we will find you a time."
+            />
+          </div>
         </div>
       </div>
 

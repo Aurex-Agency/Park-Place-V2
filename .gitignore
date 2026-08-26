@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Some file sync tools mirror files with a " 2" suffix. They are never source.
+* 2.ts
+* 2.tsx
+* 2.json
+* 2.js

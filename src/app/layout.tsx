@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import { practice } from "@/lib/content";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { FaqSection } from "@/components/site/FaqSection";
+import { LocationSection } from "@/components/site/LocationSection";
+import { RouteGate } from "@/components/site/RouteGate";
 import "./globals.css";
 
 /**
@@ -105,6 +108,16 @@ export default function RootLayout({
         </a>
         <Header />
         <main id="main">{children}</main>
+
+        {/* Both sections live here so no page can ship without them. The two
+            routes that already own this content opt out rather than repeat it. */}
+        <RouteGate hideOn={["/patient-resources/faqs"]}>
+          <FaqSection />
+        </RouteGate>
+        <RouteGate hideOn={["/contact-us"]}>
+          <LocationSection />
+        </RouteGate>
+
         <Footer />
       </body>
     </html>

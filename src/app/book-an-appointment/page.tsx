@@ -17,6 +17,7 @@ export default function Page() {
         headline="Let us find you / a time"
         lead="Patients from Booneville and surrounding communities trust Park Place Dental for high-quality care, clear communication, and a comfortable experience from start to finish. Complete the form below and our team will contact you shortly."
         crumbs={[{ label: "Home", href: "/" }, { label: "Book an Appointment" }]}
+        cta={false}
       />
 
       <div className="section">
