@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
-  AnimatePresence,
   frame,
   motion,
   useMotionValue,
@@ -67,7 +66,12 @@ export function ServiceIndex() {
     return () => el.removeEventListener("pointermove", onMove);
   }, [canHover, reduced, pointerX, pointerY]);
 
-  const showPreview = canHover && !reduced && active !== null;
+  // The panel is mounted as soon as we know there is a real pointer, rather
+  // than on first hover, so the six preview images are already fetched by the
+  // time one is needed. They are 176px wide, so the cost is negligible, and a
+  // touch device never mounts them at all.
+  const canPreview = canHover && !reduced;
+  const isShowing = active !== null;
 
   return (
     <section className="section">
@@ -92,16 +96,17 @@ export function ServiceIndex() {
         </div>
 
         {/* The preview panel. Decorative, so it is hidden from assistive tech. */}
-        <AnimatePresence>
-          {showPreview && (
+        {canPreview && (
             <motion.div
               aria-hidden="true"
               className="pointer-events-none absolute left-0 top-0 z-20 hidden lg:block"
               style={{ x, y, rotate }}
-              initial={{ opacity: 0, scale: 0.82 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.24, ease: SNAP } }}
-              transition={{ duration: 0.44, ease: SNAP }}
+              initial={false}
+              animate={{
+                opacity: isShowing ? 1 : 0,
+                scale: isShowing ? 1 : 0.82,
+              }}
+              transition={{ duration: isShowing ? 0.44 : 0.24, ease: SNAP }}
             >
               <div className="-translate-x-1/2 -translate-y-1/2">
                 <div className="relative h-56 w-44 overflow-hidden rounded-[1.1rem] bg-linen-deep shadow-[var(--shadow-lg)] ring-1 ring-white/40">
@@ -128,8 +133,7 @@ export function ServiceIndex() {
                 </div>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
+        )}
 
         <RevealGroup as="ul" gap={0.07} className="relative mt-16 border-t border-sand">
           {serviceCategories.map((cat, i) => {
