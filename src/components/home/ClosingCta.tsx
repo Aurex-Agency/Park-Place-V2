@@ -35,7 +35,7 @@ export function ClosingCta() {
 
         <Reveal delay={0.06}>
           <div className="mt-8 flex justify-center">
-            <Eyebrow align="center">{closingCta.eyebrow}</Eyebrow>
+            <Eyebrow align="center" tone="dark">{closingCta.eyebrow}</Eyebrow>
           </div>
         </Reveal>
 

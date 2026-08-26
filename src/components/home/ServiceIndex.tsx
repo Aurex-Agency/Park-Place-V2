@@ -113,9 +113,11 @@ export function ServiceIndex() {
                   >
                     <motion.span
                       aria-hidden="true"
-                      className="font-[family-name:var(--font-brand)] text-[0.78rem] tracking-[0.16em] text-rose-deep"
+                      className="font-[family-name:var(--font-brand)] text-[0.78rem] tracking-[0.16em]"
                       initial={false}
-                      animate={{ opacity: isActive ? 1 : 0.35 }}
+                      /* Fading these to 0.35 put them at 1.65:1. The state now
+                         reads as a colour shift, and both ends clear AA. */
+                      animate={{ color: isActive ? "#96543f" : "#75604f" }}
                       transition={{ duration: 0.4, ease: SNAP }}
                     >
                       {String(i + 1).padStart(2, "0")}

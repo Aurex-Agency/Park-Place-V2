@@ -12,12 +12,22 @@ import type { ReactNode } from "react";
 export function Eyebrow({
   children,
   align = "left",
+  tone = "light",
 }: {
   children: ReactNode;
   align?: "left" | "center";
+  /** "dark" for sections on espresso or walnut. */
+  tone?: "light" | "dark";
 }) {
+  // The default rose reads at 5.37:1 on linen but only 2.80:1 on espresso, so
+  // dark sections take the lighter rose. Passing the wrong one is a contrast
+  // failure, which is why it is a named tone rather than a colour class.
   return (
-    <p className={`t-eyebrow ${align === "center" ? "text-center" : ""}`}>
+    <p
+      className={`t-eyebrow ${align === "center" ? "text-center" : ""} ${
+        tone === "dark" ? "!text-rose-mist" : ""
+      }`}
+    >
       {children}
     </p>
   );

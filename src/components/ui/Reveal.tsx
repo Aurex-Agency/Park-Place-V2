@@ -2,7 +2,14 @@
 
 import * as motion from "motion/react-client";
 import type { ReactNode } from "react";
-import { riseIn, riseInSmall, fadeIn, stagger, viewportOnce } from "@/lib/motion";
+import {
+  riseIn,
+  riseInSmall,
+  fadeIn,
+  stagger,
+  viewportOnce,
+  viewportEarly,
+} from "@/lib/motion";
 
 type Preset = "rise" | "riseSmall" | "fade";
 
@@ -63,7 +70,10 @@ export function RevealGroup({
       variants={stagger(gap, delay)}
       initial="hidden"
       whileInView="visible"
-      viewport={viewportOnce}
+      /* Groups are tall by nature. Requiring a quarter of a ten item list to
+         be on screen leaves it blank well after the reader has reached it, so
+         groups trigger earlier than single blocks do. */
+      viewport={viewportEarly}
     >
       {children}
     </Tag>

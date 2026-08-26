@@ -40,7 +40,7 @@ export function Technology() {
           {/* Copy column */}
           <div>
             <Reveal>
-              <Eyebrow>{technology.eyebrow}</Eyebrow>
+              <Eyebrow tone="dark">{technology.eyebrow}</Eyebrow>
             </Reveal>
 
             <MaskedHeading
@@ -102,7 +102,7 @@ export function Technology() {
                             className="font-[family-name:var(--font-brand)] text-[0.78rem] tracking-[0.16em]"
                             initial={false}
                             animate={{
-                              color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.4)",
+                              color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.62)",
                             }}
                             transition={{ duration: 0.4, ease: SNAP }}
                           >

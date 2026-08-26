@@ -304,6 +304,29 @@ Testimonial columns pause on hover and on focus within, so a review can be
 read. The duplicated set is `aria-hidden`, so screen readers hear each review
 once.
 
+### Interior pages are data
+
+Every interior page is a header, a stack of blocks and a closing band. The
+blocks come in four shapes only: running prose, a plain list, defined terms,
+and a numbered sequence. Thirty seven pages share them.
+
+Resist adding a fifth shape. Each one multiplies across every page that might
+use it, and a page that needs something genuinely new is usually a page whose
+copy has not been thought through yet.
+
+### Colour on dark sections is not the same colour
+
+`--color-rose-deep` reads at 5.37:1 on linen and 2.80:1 on espresso. An eyebrow
+that is correct on a light section is a contrast failure on a dark one. That is
+why `Eyebrow` takes a named `tone` rather than a colour class: the decision is
+which ground the component is standing on, and naming it that way makes the
+wrong choice hard to make by accident.
+
+The same trap caught two figures. Fading a numeral to 35 percent opacity put it
+at 1.65:1, and an inactive row numeral at 40 percent white on espresso sat at
+3.55:1. Both now shift colour rather than fade. If a state change needs to be
+quieter, move the colour, do not thin it.
+
 ### Transitions must name the property that actually changes
 
 Tailwind v4 compiles `-translate-y-2` to the `translate` property and `scale-*`

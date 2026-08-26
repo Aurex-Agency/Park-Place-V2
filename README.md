@@ -21,17 +21,35 @@ Then open http://localhost:3000.
 | `npm run check:copy` | Fails if an em dash reaches the copy |
 | `npm run check` | Copy check, then TypeScript, then lint |
 
-## What is here so far
+## What is here
 
-- The full design system, documented at [`docs/DESIGN.md`](docs/DESIGN.md) and
+All 37 pages, the full design system, and every link on the site resolving.
+
+- The design system, documented at [`docs/DESIGN.md`](docs/DESIGN.md) and
   rendered as a live reference at `/style-guide`.
 - The homepage, complete, with all ten sections and their motion.
-- Site header, navigation and footer.
-- All approved copy, ported from the live site into `src/lib/content.ts`.
+- Every interior page: five service categories, fourteen treatment pages,
+  three about pages, the technology page, new patient pages, patient
+  resources, contact, booking, and the legal pages.
+- A sitemap and robots file generated from the same data the pages are built
+  from, so a new service cannot ship without appearing in both.
+- All approved copy, ported from the live site.
 - Twenty photographs from the practice, plus the logo prepared as a mask.
 
-The interior pages are not built yet. Links to them resolve to 404 for now, so
-you will see prefetch 404s in the console. That is expected at this stage.
+### How the pages are built
+
+Interior pages are data, not markup. `src/content/services.ts` and
+`src/content/pages.ts` hold the copy as a small block vocabulary: running
+prose, a plain list, defined terms, a numbered sequence. `Blocks.tsx` renders
+those four shapes, and `SimplePageView.tsx` composes a header, blocks and a
+closing band.
+
+Keeping the vocabulary that small is deliberate. It is what stops thirty pages
+drifting into thirty layouts, and it means a copy change is a text edit rather
+than a component edit. The service routes are dynamic with
+`generateStaticParams`, so adding a treatment is one entry in the data file and
+it appears in the navigation, the category page, the sibling links and the
+sitemap at once.
 
 ## Where things live
 
