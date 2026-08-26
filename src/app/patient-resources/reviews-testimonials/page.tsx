@@ -46,7 +46,7 @@ export default function Page() {
                     <span className="block font-[family-name:var(--font-display)] text-lg leading-tight text-espresso">
                       {item.name}
                     </span>
-                    <span className="mt-1.5 block font-[family-name:var(--font-brand)] text-[0.72rem] uppercase tracking-[0.2em] text-rose-deep">
+                    <span className="mt-1.5 block font-[family-name:var(--font-brand)] text-[0.8rem] uppercase tracking-[0.2em] text-rose-deep">
                       {item.role}
                     </span>
                   </figcaption>

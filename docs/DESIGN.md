@@ -318,6 +318,22 @@ All ten on thirty seven pages would bury every page under the same block and
 hand search engines the same answers thirty seven times. The FAQPage structured
 data stays on the FAQs page alone for the same reason.
 
+### Mobile is checked, not assumed
+
+Every page is audited at 360, 390, 430 and 768 for four things: whether the
+page scrolls sideways, whether any unclipped element pokes past the viewport,
+whether any text falls under 12px, and whether any link or button is shorter
+than 24px. An element clipped by an ancestor is not an overflow, so the check
+has to walk up for `overflow: hidden` before reporting one.
+
+That audit found three things a visual pass would have missed: attribution
+lines at 11.5px, a medallion label at 9.9px, and phone and email links inside
+sentences with an 18px tap area.
+
+Inline contact links carry `.tap-inline`. Vertical padding on an inline element
+grows the hit area without affecting the line box, so a phone number in the
+middle of a sentence becomes comfortably tappable and nothing moves.
+
 ### Ask more than once
 
 Every interior page carries a call to action in the header, one in the middle

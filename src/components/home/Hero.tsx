@@ -183,7 +183,7 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.6, duration: 1 }}
         >
-        <span className="font-[family-name:var(--font-brand)] text-[0.7rem] uppercase tracking-[0.3em] text-linen/60">
+        <span className="font-[family-name:var(--font-brand)] text-[0.78rem] uppercase tracking-[0.3em] text-linen/70">
           Scroll
         </span>
         <span className="relative block h-12 w-px overflow-hidden bg-linen/25">

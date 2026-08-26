@@ -35,7 +35,7 @@ export function LocationSection() {
                     href={practice.mapsHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[1.05rem] text-espresso transition-colors hover:text-rose-deep"
+                    className="tap-inline text-[1.05rem] text-espresso transition-colors hover:text-rose-deep"
                   >
                     {practice.address.street}
                     <br />
@@ -62,7 +62,7 @@ export function LocationSection() {
                 <dd className="mt-2">
                   <a
                     href={practice.emailHref}
-                    className="text-[1.05rem] text-espresso transition-colors hover:text-rose-deep"
+                    className="tap-inline text-[1.05rem] text-espresso transition-colors hover:text-rose-deep"
                   >
                     {practice.email}
                   </a>

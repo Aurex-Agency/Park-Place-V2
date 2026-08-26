@@ -344,6 +344,13 @@
 
   .btn-ghost:hover { box-shadow: var(--shadow-md); }
 
+  /* A phone number or address sitting inside a sentence is still something
+     people tap. Vertical padding on an inline element enlarges the hit area
+     without affecting the line box, so the target grows and nothing shifts. */
+  .tap-inline {
+    padding-block: 0.55rem;
+  }
+
   /* Text link with a rose underline that draws in */
   .link-underline {
     position: relative;

@@ -125,7 +125,7 @@ export function AppointmentForm() {
         </button>
         <p className="text-[0.9rem] text-taupe">
           Or call us on{" "}
-          <a href={practice.phoneHref} className="font-medium text-rose-deep underline underline-offset-4">
+          <a href={practice.phoneHref} className="tap-inline font-medium text-rose-deep underline underline-offset-4">
             {practice.phone}
           </a>
         </p>

@@ -69,7 +69,7 @@ export default function Page() {
                 first visit is simple and stress-free. Call us on{" "}
                 <a
                   href={practice.phoneHref}
-                  className="font-medium text-rose-deep underline underline-offset-4"
+                  className="tap-inline font-medium text-rose-deep underline underline-offset-4"
                 >
                   {practice.phone}
                 </a>

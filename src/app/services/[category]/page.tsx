@@ -54,7 +54,7 @@ export default async function CategoryPage({
         }))}
       />
 
-      <div className="shell pt-20">
+      <div className="shell pb-20 pt-20">
         <InlineCta
           heading={`Questions about ${found.title.toLowerCase()}?`}
           body="Our team is glad to talk it through before you commit to anything."

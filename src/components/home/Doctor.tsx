@@ -23,11 +23,11 @@ export function Doctor() {
           </div>
 
           {/* Years of service, set as a metal medallion */}
-          <div className="absolute -right-4 bottom-8 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-white text-center shadow-[var(--shadow-md)] ring-1 ring-sand/60">
+          <div className="absolute -right-4 bottom-8 flex h-32 w-32 flex-col items-center justify-center rounded-full bg-white text-center shadow-[var(--shadow-md)] ring-1 ring-sand/60">
             <span className="metal-text font-[family-name:var(--font-display)] text-3xl leading-none">
               <CountUp value="43" />
             </span>
-            <span className="mt-1 font-[family-name:var(--font-brand)] text-[0.62rem] uppercase tracking-[0.18em] text-taupe">
+            <span className="mt-1 font-[family-name:var(--font-brand)] text-[0.75rem] uppercase tracking-[0.14em] text-taupe">
               Years of
               <br />
               Care
