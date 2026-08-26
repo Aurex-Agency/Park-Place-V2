@@ -49,6 +49,11 @@
 
   /* ---------- Radius: soft, architectural ---------- */
   --radius-pill: 999px;
+  /* Buttons are rounded but not pills. One token, so the whole site's button
+     shape moves together. Chips and the circular icon controls stay round:
+     a chip is a label, and a circle is a circle. */
+  --radius-button: 0.75rem;
+  --radius-field: 0.75rem;
   --radius-card: 1.25rem;
   --radius-arch: 999px 999px 1.25rem 1.25rem;
 
@@ -295,7 +300,7 @@
     justify-content: center;
     gap: 0.6rem;
     padding: 0.95rem 1.9rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-button);
     font-family: var(--font-sans);
     font-size: 0.9375rem;
     font-weight: 500;

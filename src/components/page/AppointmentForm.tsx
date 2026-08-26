@@ -12,7 +12,7 @@ import { practice } from "@/lib/content";
  * exists, replace handleSubmit and delete this note.
  */
 const field =
-  "w-full rounded-[0.9rem] border border-sand bg-white px-4 py-3.5 text-[1rem] text-espresso outline-none transition-[border-color,box-shadow] duration-300 placeholder:text-taupe-light focus:border-rose focus:shadow-[0_0_0_3px_rgba(184,122,104,0.16)]";
+  "w-full rounded-[var(--radius-field)] border border-sand bg-white px-4 py-3.5 text-[1rem] text-espresso outline-none transition-[border-color,box-shadow] duration-300 placeholder:text-taupe-light focus:border-rose focus:shadow-[0_0_0_3px_rgba(184,122,104,0.16)]";
 const label = "block text-[0.9rem] font-medium text-espresso";
 
 export function AppointmentForm() {

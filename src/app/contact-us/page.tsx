@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { ContactForm } from "@/components/page/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -109,6 +110,33 @@ export default function Page() {
           </Reveal>
         </div>
       </div>
+
+      <section className="section bg-linen-deep">
+        <div className="shell grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <div>
+            <Reveal>
+              <h2 className="t-h2">Send us a message</h2>
+            </Reveal>
+            <Reveal delay={0.06}>
+              <p className="t-lead mt-5">
+                Tell us what you need and our front desk will get back to you.
+                For anything urgent, calling is faster and we will do our best
+                to see you the same day.
+              </p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 text-[0.975rem] leading-relaxed text-taupe">
+                Our hours are {practice.hours}, and we answer messages in the
+                order they arrive.
+              </p>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.08}>
+            <ContactForm />
+          </Reveal>
+        </div>
+      </section>
 
       <CtaBand
         heading="Schedule your visit"
