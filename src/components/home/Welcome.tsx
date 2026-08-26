@@ -52,7 +52,7 @@ export function Welcome() {
           >
             <div className="rounded-[1.1rem] bg-white p-6 shadow-[var(--shadow-md)] ring-1 ring-sand/60">
               <p className="t-eyebrow">VA Provider</p>
-              <p className="mt-3 text-[0.9rem] leading-relaxed text-taupe">
+              <p className="mt-3 text-[0.975rem] leading-relaxed text-taupe">
                 {veteransNote}
               </p>
             </div>
@@ -100,7 +100,7 @@ export function Welcome() {
                     <CountUp value={point.value} suffix={point.suffix} />
                   </span>
                 </p>
-                <p className="mt-2.5 text-[0.85rem] leading-snug text-taupe">
+                <p className="mt-2.5 text-[0.925rem] leading-snug text-taupe">
                   {point.label}
                 </p>
               </RevealItem>

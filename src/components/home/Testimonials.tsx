@@ -41,9 +41,9 @@ function Column({
               aria-hidden={pass === 1 ? "true" : undefined}
               className="group w-full max-w-sm"
             >
-              <figure className="m-0 rounded-[1.25rem] bg-white p-8 shadow-[var(--shadow-sm)] ring-1 ring-sand/60 transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1.5 group-hover:shadow-[var(--shadow-lg)]">
+              <figure className="m-0 translate-y-0 rounded-[1.25rem] bg-white p-8 shadow-[var(--shadow-sm)] ring-1 ring-sand/60 transition-[translate,scale,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1.5 group-hover:shadow-[var(--shadow-lg)]">
                 <blockquote>
-                  <p className="text-[0.95rem] leading-relaxed text-taupe">
+                  <p className="text-[1.0125rem] leading-relaxed text-taupe">
                     {item.quote}
                   </p>
                 </blockquote>
@@ -56,7 +56,7 @@ function Column({
                   <span className="block font-[family-name:var(--font-display)] text-lg leading-tight text-espresso">
                     {item.name}
                   </span>
-                  <span className="mt-1.5 block font-[family-name:var(--font-brand)] text-[0.65rem] uppercase tracking-[0.2em] text-rose-deep">
+                  <span className="mt-1.5 block font-[family-name:var(--font-brand)] text-[0.72rem] uppercase tracking-[0.2em] text-rose-deep">
                     {item.role}
                   </span>
                 </figcaption>
@@ -82,7 +82,7 @@ export function Testimonials() {
       <div className="shell">
         <div className="mx-auto flex max-w-xl flex-col items-center text-center">
           <Reveal>
-            <p className="rounded-full bg-white/70 px-4 py-1.5 font-[family-name:var(--font-brand)] text-[0.68rem] font-medium uppercase tracking-[0.24em] text-rose-deep ring-1 ring-sand">
+            <p className="rounded-full bg-white/70 px-4 py-1.5 font-[family-name:var(--font-brand)] text-[0.75rem] font-medium uppercase tracking-[0.24em] text-rose-deep ring-1 ring-sand">
               {testimonialsSection.badge}
             </p>
           </Reveal>

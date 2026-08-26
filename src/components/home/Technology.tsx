@@ -99,7 +99,7 @@ export function Technology() {
                         >
                           <motion.span
                             aria-hidden="true"
-                            className="font-[family-name:var(--font-brand)] text-[0.7rem] tracking-[0.16em]"
+                            className="font-[family-name:var(--font-brand)] text-[0.78rem] tracking-[0.16em]"
                             initial={false}
                             animate={{
                               color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.4)",
@@ -152,7 +152,7 @@ export function Technology() {
                             transition={{ duration: 0.55, ease: EASE }}
                             className="overflow-hidden"
                           >
-                            <p className="px-2 pt-4 pr-12 text-[0.925rem] leading-relaxed text-linen/65">
+                            <p className="px-2 pt-4 pr-12 text-[1rem] leading-relaxed text-linen/65">
                               {item.body}
                             </p>
                           </motion.div>
@@ -223,7 +223,7 @@ export function Technology() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.42, ease: SNAP }}
-                    className="font-[family-name:var(--font-brand)] text-[0.7rem] uppercase tracking-[0.24em] text-rose-mist"
+                    className="font-[family-name:var(--font-brand)] text-[0.78rem] uppercase tracking-[0.24em] text-rose-mist"
                   >
                     {current.name}
                   </motion.p>

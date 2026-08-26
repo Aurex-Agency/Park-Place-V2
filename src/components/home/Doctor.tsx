@@ -18,7 +18,7 @@ export function Doctor() {
               alt={`${doctor.name}, dentist at Park Place Dental in Booneville`}
               fill
               sizes="(max-width: 1024px) 80vw, 34vw"
-              className="object-cover object-top transition-transform duration-[1200ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.06]"
+              className="scale-100 object-cover object-top transition-transform duration-[1200ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.06]"
             />
           </div>
 
@@ -27,7 +27,7 @@ export function Doctor() {
             <span className="metal-text font-[family-name:var(--font-display)] text-3xl leading-none">
               <CountUp value="43" />
             </span>
-            <span className="mt-1 font-[family-name:var(--font-brand)] text-[0.55rem] uppercase tracking-[0.18em] text-taupe">
+            <span className="mt-1 font-[family-name:var(--font-brand)] text-[0.62rem] uppercase tracking-[0.18em] text-taupe">
               Years of
               <br />
               Care

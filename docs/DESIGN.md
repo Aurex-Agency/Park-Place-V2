@@ -148,15 +148,19 @@ by a check that the authored headline breaks still hold.
 
 ### Scale
 
-| Class | Size | Line height | Use |
+| Class | Size | Weight | Use |
 | --- | --- | --- | --- |
-| `.t-display` | `clamp(2.75rem, 6.2vw, 5rem)` | 1.06 | Hero only |
-| `.t-h1` | `clamp(2.25rem, 4.6vw, 3.5rem)` | 1.08 | Section headlines |
-| `.t-h2` | `clamp(1.75rem, 3.2vw, 2.5rem)` | 1.14 | Sub-sections |
-| `.t-h3` | `clamp(1.3rem, 2vw, 1.6rem)` | 1.25 | Card titles |
-| `.t-eyebrow` | 12px, 0.24em tracking | | Section labels |
-| `.t-lead` | `clamp(1.06rem, 1.35vw, 1.25rem)` | 1.62 | Section intros |
-| body | 17px | 1.65 | Everything else |
+| `.t-display` | `clamp(2.35rem, 4.5vw, 4rem)` | 500 | Hero only |
+| `.t-h1` | `clamp(2rem, 4.1vw, 3.15rem)` | 500 | Section headlines |
+| `.t-h2` | `clamp(1.6rem, 3vw, 2.3rem)` | 500 | Sub-sections |
+| `.t-h3` | `clamp(1.35rem, 2vw, 1.65rem)` | 500 | Card titles |
+| `.t-eyebrow` | 13px, 0.2em tracking | 600 | Section labels |
+| `.t-lead` | `clamp(1.15rem, 1.45vw, 1.35rem)` | 460 | Section intros |
+| body | 18px | 480 | Everything else |
+
+Headlines are set at 500 rather than 400. The single weight rule came from the
+reference site, not from this brand, and Zodiak at 500 still reads editorial
+rather than loud. Both families are variable, so a weight costs no download.
 
 ---
 
@@ -296,6 +300,23 @@ Testimonial columns pause on hover and on focus within, so a review can be
 read. The duplicated set is `aria-hidden`, so screen readers hear each review
 once.
 
+### Transitions must name the property that actually changes
+
+Tailwind v4 compiles `-translate-y-2` to the `translate` property and `scale-*`
+to `scale`, not to `transform`. A transition list naming only `transform` never
+animates them, so the element snaps to its hover position while whatever else
+is in the list animates around it. That is what a broken hover looks like: not
+missing, just wrong.
+
+Worse, `translate: none` and `scale: none` are not interpolable with a length
+or a number. Even with the property correctly named, an element with no resting
+value jumps. Every hover that moves or scales carries an explicit
+`translate-y-0` or `scale-100` at rest so the pair can be interpolated.
+
+Both faults were live at once on the service cards. The check is to record
+computed values across the transition and count the distinct ones: fewer than
+about three means it snapped.
+
 ### Font variables belong on the html element
 
 A custom property is substituted where it is **defined**, not where it is used.
@@ -305,14 +326,22 @@ nothing, the token computes to an invalid value, and every element on the page
 silently falls back to a system font. The page still looks deliberate, which is
 what makes it easy to miss. The font classes go on `<html>`.
 
-### The service list ground
+### The service list sheen
 
-Hovering a service lifts that photograph in behind the whole list rather than
-beside the pointer. It starts below the heading block so a headline never sits
-on a photograph, peaks at 16 percent opacity under a linen wash, and is
-measured: every text run over it reads at exactly the same ratio as over bare
-linen, 15.06:1 for the titles and 5.51:1 for the body. If a change makes the
-picture more present, that measurement has to be run again.
+Hovering a service wipes polished rose gold across that row, with a brighter
+glint travelling over it once on entry, which is what sells it as metal rather
+than a tint.
+
+A photograph sat here through two attempts and never earned its place. As a
+panel chasing the pointer it covered the words. As a ground behind the list it
+was either loud enough to compete or quiet enough to be pointless. The metal is
+the brand's own material, carries no subject to compete with, and stays a
+surface. That is the lesson worth keeping: when a decorative layer keeps
+needing to be tuned down to be tolerable, it is the wrong layer.
+
+The sheen is held at 16 percent, and it is measured. Every text run over it
+reads at exactly the same ratio as over bare linen, 15.06:1 for titles and
+5.51:1 for body and chips. If a change makes it more present, run that again.
 
 ### Never let motion own visibility
 

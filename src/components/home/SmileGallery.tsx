@@ -57,7 +57,7 @@ export function SmileGallery() {
                   alt={item.alt}
                   fill
                   sizes="(max-width: 1024px) 45vw, 24vw"
-                  className="object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.08]"
+                  className="scale-100 object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-[1.08]"
                 />
               </div>
               <figcaption className="t-caption mt-3 text-center">

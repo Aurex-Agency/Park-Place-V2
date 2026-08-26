@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "motion/react";
@@ -12,63 +11,22 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { EASE, SNAP } from "@/lib/motion";
 
 /**
- * The service list, with the hovered category surfacing behind it.
+ * The service list, lit with polished rose gold on hover.
  *
- * The photograph is not a card and not a cursor companion. It sits underneath
- * the whole list, at low opacity behind a linen wash, and lifts into view as
- * though the page were being drawn back off it. It is deliberately quiet: it
- * gives the list a sense of place without competing with the words, which are
- * the thing being read.
+ * A photograph sat behind this list for a while and it never earned its place:
+ * either it was loud enough to compete with the words or quiet enough to be
+ * pointless. The metal is the brand's own material, it carries no subject to
+ * compete with, and it stays a surface rather than becoming a picture.
  *
- * Because it lives behind the copy rather than beside it, the wash above it is
- * load bearing. Every text colour in this section is still measured against
- * the composited result, not against bare linen.
+ * The sheen is held at 16 percent so the row stays a row. A brighter glint
+ * travels across once on entry, which is what sells it as metal rather than a
+ * tint.
  */
 export function ServiceIndex() {
   const [active, setActive] = useState<number | null>(null);
 
   return (
-    <section className="section relative isolate overflow-hidden">
-      {/* The revealed photograph, beneath everything. It starts below the
-          heading block so the headline always sits on clean linen, and never
-          climbs past a whisper of opacity. */}
-      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 top-[38%] -z-10">
-        {serviceCategories.map((cat, i) => (
-          <motion.div
-            key={cat.slug}
-            className="absolute inset-0"
-            initial={false}
-            animate={{
-              opacity: active === i ? 0.16 : 0,
-              scale: active === i ? 1 : 1.04,
-            }}
-            transition={{
-              opacity: { duration: 0.9, ease: EASE },
-              scale: { duration: 1.4, ease: EASE },
-            }}
-          >
-            <Image
-              src={cat.image}
-              alt=""
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-          </motion.div>
-        ))}
-
-        {/* The wash that keeps the list readable and the picture in its place.
-            Opaque enough that the copy never fights the photograph, open
-            enough that the photograph still reads as a room. */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, var(--color-linen) 0%, rgba(250,246,242,0.55) 18%, rgba(250,246,242,0.45) 50%, rgba(250,246,242,0.6) 82%, var(--color-linen) 100%)",
-          }}
-        />
-      </div>
-
+    <section className="section relative">
       <div className="shell relative">
         <div className="max-w-2xl">
           <Reveal>
@@ -104,10 +62,44 @@ export function ServiceIndex() {
                   onBlur={() => setActive((cur) => (cur === i ? null : cur))}
                   className="group relative isolate grid items-start gap-4 overflow-hidden border-b border-sand py-8 md:grid-cols-[minmax(0,21rem)_1fr_auto] md:gap-10 md:px-6"
                 >
-                  {/* A rose rule rides the bottom edge as the row lights up. */}
+                  {/* Polished rose gold wipes across the row from the left,
+                      held at a low opacity so it reads as a sheen on the
+                      surface rather than a block of colour. */}
                   <motion.span
                     aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0 h-px origin-left bg-rose"
+                    className="absolute inset-0 -z-10 origin-left"
+                    initial={false}
+                    animate={{ scaleX: isActive ? 1 : 0, opacity: isActive ? 0.16 : 0 }}
+                    transition={{
+                      scaleX: { duration: 0.62, ease: EASE },
+                      opacity: { duration: 0.4, ease: SNAP },
+                    }}
+                    style={{ backgroundImage: "var(--metal-rose)" }}
+                  />
+
+                  {/* A brighter travelling glint over the sheen. */}
+                  <motion.span
+                    aria-hidden="true"
+                    className="absolute inset-y-0 -z-10 w-1/3"
+                    initial={false}
+                    animate={{
+                      x: isActive ? "260%" : "-60%",
+                      opacity: isActive ? 0.5 : 0,
+                    }}
+                    transition={{
+                      x: { duration: 1.15, ease: EASE },
+                      opacity: { duration: 0.45, ease: SNAP },
+                    }}
+                    style={{
+                      background:
+                        "linear-gradient(90deg, transparent, rgba(255,244,238,0.85), transparent)",
+                    }}
+                  />
+
+                  {/* The metal hairline rides the bottom edge on the same sweep. */}
+                  <motion.span
+                    aria-hidden="true"
+                    className="metal-rule absolute inset-x-0 bottom-0 origin-left"
                     initial={false}
                     animate={{ scaleX: isActive ? 1 : 0 }}
                     transition={{ duration: 0.6, ease: EASE }}
@@ -121,7 +113,7 @@ export function ServiceIndex() {
                   >
                     <motion.span
                       aria-hidden="true"
-                      className="font-[family-name:var(--font-brand)] text-[0.7rem] tracking-[0.16em] text-rose-deep"
+                      className="font-[family-name:var(--font-brand)] text-[0.78rem] tracking-[0.16em] text-rose-deep"
                       initial={false}
                       animate={{ opacity: isActive ? 1 : 0.35 }}
                       transition={{ duration: 0.4, ease: SNAP }}
@@ -142,14 +134,14 @@ export function ServiceIndex() {
                     animate={{ x: isActive ? 10 : 0 }}
                     transition={{ duration: 0.5, ease: SNAP, delay: 0.03 }}
                   >
-                    <p className="text-[0.95rem] leading-relaxed text-taupe">
+                    <p className="text-[1.0125rem] leading-relaxed text-taupe">
                       {cat.blurb}
                     </p>
                     <ul className="mt-4 flex flex-wrap gap-2">
                       {cat.items.map((item, j) => (
                         <motion.li
                           key={item}
-                          className="rounded-full bg-white px-3.5 py-1.5 text-[0.75rem] tracking-[0.02em] text-taupe ring-1 ring-sand/70"
+                          className="rounded-full bg-white px-3.5 py-1.5 text-[0.82rem] tracking-[0.02em] text-taupe ring-1 ring-sand/70"
                           initial={false}
                           animate={
                             isActive

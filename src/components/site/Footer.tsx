@@ -13,7 +13,7 @@ export function Footer() {
           <div>
             <MetalLockup width={128} />
 
-            <address className="mt-8 not-italic text-[0.95rem] leading-relaxed text-linen/75">
+            <address className="mt-8 not-italic text-[1.0125rem] leading-relaxed text-linen/75">
               <a
                 href={practice.mapsHref}
                 target="_blank"
@@ -41,7 +41,7 @@ export function Footer() {
               </a>
             </address>
 
-            <div className="mt-6 text-[0.9rem] text-linen/70">
+            <div className="mt-6 text-[0.975rem] text-linen/70">
               <p>{practice.hours}</p>
               <p className="mt-1 text-linen/65">{practice.hoursNote}</p>
             </div>
@@ -53,7 +53,7 @@ export function Footer() {
               .filter((group) => group.children.length > 0)
               .map((group) => (
                 <div key={group.label}>
-                  <h2 className="whitespace-nowrap font-[family-name:var(--font-brand)] text-[0.72rem] font-medium uppercase tracking-[0.2em] text-rose-soft">
+                  <h2 className="whitespace-nowrap font-[family-name:var(--font-brand)] text-[0.8rem] font-medium uppercase tracking-[0.2em] text-rose-soft">
                     {group.label}
                   </h2>
                   <ul className="mt-4 flex flex-col gap-1">
@@ -61,7 +61,7 @@ export function Footer() {
                       <li key={child.href}>
                         <Link
                           href={child.href}
-                          className="block py-1 text-[0.9rem] text-linen/70 transition-colors hover:text-linen"
+                          className="block py-1 text-[0.975rem] text-linen/70 transition-colors hover:text-linen"
                         >
                           {child.label}
                         </Link>
@@ -75,7 +75,7 @@ export function Footer() {
 
         <hr className="metal-rule mt-16 opacity-70" />
 
-        <div className="mt-8 flex flex-col gap-4 text-[0.8rem] text-linen/65 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-4 text-[0.875rem] text-linen/65 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {year} {practice.name}. All rights reserved.
           </p>

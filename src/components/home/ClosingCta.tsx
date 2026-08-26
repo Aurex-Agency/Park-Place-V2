@@ -62,7 +62,7 @@ export function ClosingCta() {
         </Reveal>
 
         <Reveal delay={0.22}>
-          <p className="mt-10 text-[0.85rem] text-linen/70">
+          <p className="mt-10 text-[0.925rem] text-linen/70">
             {practice.address.full}
           </p>
         </Reveal>

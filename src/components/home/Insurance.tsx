@@ -42,7 +42,7 @@ export function Insurance() {
         >
           {insurance.carriers.map((carrier) => (
             <RevealItem as="li" preset="riseSmall" key={carrier}>
-              <span className="block cursor-default whitespace-nowrap rounded-full bg-white px-6 py-3.5 text-[0.875rem] text-taupe shadow-[var(--shadow-sm)] ring-1 ring-transparent transition-[transform,box-shadow,color] duration-[420ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:-translate-y-1 hover:text-espresso hover:shadow-[var(--shadow-md)] hover:ring-sand">
+              <span className="block translate-y-0 cursor-default whitespace-nowrap rounded-full bg-white px-6 py-3.5 text-[0.95rem] text-taupe shadow-[var(--shadow-sm)] ring-1 ring-transparent transition-[translate,scale,box-shadow,color] duration-[420ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:-translate-y-1 hover:text-espresso hover:shadow-[var(--shadow-md)] hover:ring-sand">
                 {carrier}
               </span>
             </RevealItem>

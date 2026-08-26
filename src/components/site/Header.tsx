@@ -23,7 +23,7 @@ export function Header() {
     <>
       {/* Utility strip. Carries the phone number above everything else. */}
       <div className="hidden bg-walnut text-linen md:block">
-        <div className="shell flex h-10 items-center justify-between text-[0.8rem]">
+        <div className="shell flex h-10 items-center justify-between text-[0.875rem]">
           <p className="tracking-[0.04em] text-linen/80">
             {practice.address.full}
           </p>
@@ -85,7 +85,7 @@ export function Header() {
               >
                 <Link
                   href={item.href}
-                  className="flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[0.9rem] text-espresso/85 transition-colors hover:text-rose-deep"
+                  className="flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[0.975rem] text-espresso/85 transition-colors hover:text-rose-deep"
                 >
                   {item.label}
                   {item.children.length > 0 && (
@@ -115,7 +115,7 @@ export function Header() {
                           <Link
                             key={child.href}
                             href={child.href}
-                            className="block rounded-[0.7rem] px-4 py-2.5 text-[0.875rem] text-espresso/85 transition-colors hover:bg-rose-wash hover:text-rose-deep"
+                            className="block rounded-[0.7rem] px-4 py-2.5 text-[0.95rem] text-espresso/85 transition-colors hover:bg-rose-wash hover:text-rose-deep"
                           >
                             {child.label}
                           </Link>
@@ -132,7 +132,7 @@ export function Header() {
             <Button
               href="/book-an-appointment"
               variant="primary"
-              className="hidden !px-6 !py-3 text-[0.875rem] sm:inline-flex"
+              className="hidden !px-6 !py-3 text-[0.95rem] sm:inline-flex"
             >
               Book an appointment
             </Button>
@@ -196,7 +196,7 @@ export function Header() {
                           key={child.href}
                           href={child.href}
                           onClick={() => setMobileOpen(false)}
-                          className="text-[0.9rem] text-taupe"
+                          className="text-[0.975rem] text-taupe"
                         >
                           {child.label}
                         </Link>
