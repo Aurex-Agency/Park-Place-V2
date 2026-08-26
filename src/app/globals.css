@@ -173,6 +173,10 @@
   }
 
   body {
+    /* Room for the fixed call and book bar on small screens, so it never
+       covers the end of the page. The bar measures 73px, so this is that plus
+       a little air. Cleared once the bar is gone at lg. */
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
     background-color: var(--color-linen);
     color: var(--color-espresso);
     font-family: var(--font-sans);
@@ -192,6 +196,10 @@
   }
 
   p { text-wrap: pretty; }
+
+  @media (min-width: 1024px) {
+    body { padding-bottom: 0; }
+  }
 
   ::selection {
     background-color: var(--color-rose-soft);

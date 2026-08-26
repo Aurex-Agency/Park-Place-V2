@@ -7,6 +7,8 @@ import { Footer } from "@/components/site/Footer";
 import { FaqSection } from "@/components/site/FaqSection";
 import { LocationSection } from "@/components/site/LocationSection";
 import { RouteGate } from "@/components/site/RouteGate";
+import { ScrollToTop } from "@/components/site/ScrollToTop";
+import { MobileActionBar } from "@/components/site/MobileActionBar";
 import "./globals.css";
 
 /**
@@ -122,6 +124,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <ScrollToTop />
         <Header />
         <main id="main">{children}</main>
 
@@ -135,6 +138,7 @@ export default function RootLayout({
         </RouteGate>
 
         <Footer />
+        <MobileActionBar />
       </body>
     </html>
   );

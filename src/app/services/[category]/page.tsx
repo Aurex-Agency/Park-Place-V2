@@ -5,7 +5,6 @@ import { canonical } from "@/lib/site";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
 import { RelatedServices } from "@/components/page/RelatedServices";
-import { InlineCta } from "@/components/page/InlineCta";
 
 export function generateStaticParams() {
   return serviceCategories.map((c) => ({ category: c.slug }));
@@ -58,13 +57,6 @@ export default async function CategoryPage({
           lead: child.lead,
         }))}
       />
-
-      <div className="shell pb-20 pt-20">
-        <InlineCta
-          heading={`Questions about ${found.title.toLowerCase()}?`}
-          body="Our team is glad to talk it through before you commit to anything."
-        />
-      </div>
 
       <CtaBand heading={found.closing.heading} body={found.closing.body} />
     </>

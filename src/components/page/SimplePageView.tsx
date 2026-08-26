@@ -3,19 +3,16 @@ import type { Crumb } from "@/components/page/PageHeader";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Blocks } from "@/components/page/Blocks";
 import { CtaBand } from "@/components/page/CtaBand";
-import { InlineCta } from "@/components/page/InlineCta";
 
 /** Renders any page that is a header, a stack of blocks and a closing band. */
 export function SimplePageView({
   page,
   crumbs,
   children,
-  inlineCta,
 }: {
   page: SimplePage;
   crumbs: Crumb[];
   children?: React.ReactNode;
-  inlineCta?: { heading: string; body?: string };
 }) {
   return (
     <>
@@ -33,15 +30,6 @@ export function SimplePageView({
           <div className="shell">
             <Blocks blocks={page.blocks} />
 
-            <div className="mt-16">
-              <InlineCta
-                heading={inlineCta?.heading ?? "Ready when you are"}
-                body={
-                  inlineCta?.body ??
-                  "Book online in under a minute, or call the office and we will find you a time."
-                }
-              />
-            </div>
           </div>
         </div>
       )}

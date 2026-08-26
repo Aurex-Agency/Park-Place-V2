@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import { technology } from "@/lib/content";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -23,7 +23,20 @@ export function Technology() {
   const [selected, setSelected] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
 
-  const shown = hovered ?? selected;
+  // Hover preview only where there is a real pointer. On a touch screen
+  // pointerenter fires as part of the tap, so a finger would light one row
+  // while another was still open, and nothing ever fires pointerleave to undo
+  // it. On touch, selection alone drives everything.
+  const [canHover, setCanHover] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setCanHover(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  const shown = canHover ? (hovered ?? selected) : selected;
   const current = technology.items[shown];
 
   // The panel drifts against the page for a little depth.
@@ -55,7 +68,7 @@ export function Technology() {
             </Reveal>
 
             <Reveal delay={0.14}>
-              <div className="mt-10" onPointerLeave={() => setHovered(null)}>
+              <div className="mt-10" onPointerLeave={canHover ? () => setHovered(null) : undefined}>
                 {technology.items.map((item, i) => {
                   const isSelected = i === selected;
                   const isLit = i === shown;
@@ -65,19 +78,23 @@ export function Technology() {
                       key={item.name}
                       type="button"
                       onClick={() => setSelected(i)}
-                      onPointerEnter={() => setHovered(i)}
-                      onFocus={() => setHovered(i)}
-                      onBlur={() => setHovered(null)}
+                      onPointerEnter={canHover ? () => setHovered(i) : undefined}
+                      onFocus={canHover ? () => setHovered(i) : undefined}
+                      onBlur={canHover ? () => setHovered(null) : undefined}
                       aria-expanded={isSelected}
                       className="group relative isolate w-full overflow-hidden border-t border-linen/15 py-5 text-left last:border-b"
                     >
                       {/* A warm wash sweeps in from the left under the row. */}
+                      {/* Fades rather than sweeps. This element covers the
+                          panel that is expanding, so animating its width at
+                          the same time as the row's height reads as a
+                          stretching box. The rule below keeps the sweep. */}
                       <motion.span
                         aria-hidden="true"
-                        className="absolute inset-0 -z-10 origin-left bg-linen/[0.06]"
+                        className="absolute inset-0 -z-10 bg-linen/[0.06]"
                         initial={false}
-                        animate={{ scaleX: isLit ? 1 : 0 }}
-                        transition={{ duration: 0.55, ease: EASE }}
+                        animate={{ opacity: isLit ? 1 : 0 }}
+                        transition={{ duration: 0.4, ease: SNAP }}
                       />
                       {/* A rose gold rule rides the top edge on the same sweep. */}
                       <motion.span
