@@ -166,6 +166,26 @@
    BASE
    ============================================================ */
 @layer base {
+  html,
+  body {
+    /* The page must never scroll sideways.
+       `clip` rather than `hidden` on purpose: `hidden` turns the element into
+       a scroll container, which would break the sticky header. `clip` cuts the
+       overflow without creating one, and it can be set on one axis while the
+       other stays visible.
+       This is a guarantee, not a substitute for fixing a cause. Everything
+       measured here fits, but iOS Safari sizes iframes to their content rather
+       than to the CSS you give them, and the map embed is on every page. */
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
+
+  /* iOS ignores width on an iframe and lets the content decide. Both of these
+     stop the map embed from setting the width of the page. */
+  iframe {
+    max-width: 100%;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
