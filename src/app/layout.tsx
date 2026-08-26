@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { practice } from "@/lib/content";
+import { siteUrl } from "@/lib/site";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FaqSection } from "@/components/site/FaqSection";
@@ -44,7 +45,7 @@ const jakarta = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.parkplace-dental.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Park Place Dental | Dentist in Booneville, Mississippi",
     template: "%s | Park Place Dental",
@@ -57,7 +58,21 @@ export const metadata: Metadata = {
       "Comprehensive dental care with an in-house lab, advanced technology, and a family-oriented team in Booneville, Mississippi.",
     type: "website",
     locale: "en_US",
+    siteName: "Park Place Dental",
+    url: "/",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Park Place Dental | Dentist in Booneville, Mississippi",
+    description:
+      "Comprehensive dental care with an in-house lab, advanced technology, and a family-oriented team in Booneville, Mississippi.",
+  },
+  /*
+    The share card and the icons are picked up from the files beside this one:
+    opengraph-image.png, twitter-image.png, icon.png, apple-icon.png and
+    favicon.ico. Next fingerprints them and writes the tags, so there is no
+    hardcoded path here to fall out of date.
+  */
 };
 
 /** Local business markup so the practice reads correctly in search. */

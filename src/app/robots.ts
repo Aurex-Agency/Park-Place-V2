@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { siteUrl } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       // Internal reference and post-submit pages carry no search value.
       disallow: ["/style-guide", "/thank-you"],
     },
-    sitemap: "https://www.parkplace-dental.com/sitemap.xml",
+    sitemap: `${siteUrl}/sitemap.xml`,
   };
 }

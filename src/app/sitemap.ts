@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { serviceCategories } from "@/content/services";
+import { siteUrl } from "@/lib/site";
 
-const BASE = "https://www.parkplace-dental.com";
+const BASE = siteUrl;
 
 /**
  * Every indexable route, generated from the same data the pages are built
