@@ -20,6 +20,13 @@ import { EASE, lineMask } from "@/lib/motion";
  *
  * The whole string is exposed through aria-label and the visible spans are
  * hidden, so a screen reader hears one clean sentence instead of fragments.
+ *
+ * Reduced motion is enforced in CSS, not here. useReducedMotion returns the
+ * server value on the hydration render and does not schedule a re-render, so a
+ * structural branch on it can stay on the animated path forever and leave every
+ * heading translated out of sight. The stylesheet pins these spans back to
+ * their resting position, which nothing can defeat. The branch below is kept
+ * because it produces cleaner markup whenever it does resolve in time.
  */
 export function MaskedHeading({
   text,
@@ -51,6 +58,7 @@ export function MaskedHeading({
           className="block overflow-hidden py-[0.06em] [&:not(:first-child)]:-mt-[0.12em]"
         >
           <motion.span
+            data-line-mask=""
             className="block"
             variants={lineMask}
             initial="hidden"
@@ -61,7 +69,11 @@ export function MaskedHeading({
               delay: delay + i * 0.085,
             }}
           >
+            {/* Trailing space collapses visually in a block, but keeps the
+                heading's textContent a properly spaced sentence for anything
+                reading the DOM rather than the accessible name. */}
             {line}
+            {i < lines.length - 1 ? " " : ""}
           </motion.span>
         </span>
       ))}

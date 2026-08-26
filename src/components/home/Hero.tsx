@@ -132,13 +132,17 @@ export function Hero() {
             {HEADLINE_LINES.map((line, i) => (
               <span key={line} className="block overflow-hidden py-[0.09em]">
                 <motion.span
+                  data-line-mask=""
                   className="block"
                   variants={lineMask}
                   initial="hidden"
                   animate="visible"
                   transition={{ delay: 0.65 + i * 0.12, duration: 1.1, ease: EASE }}
                 >
+                  {/* Trailing space collapses in a block but keeps the
+                      headline's textContent a properly spaced sentence. */}
                   {line}
+                  {i < HEADLINE_LINES.length - 1 ? " " : ""}
                 </motion.span>
               </span>
             ))}

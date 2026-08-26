@@ -88,31 +88,35 @@ export function Technology() {
                         transition={{ duration: 0.65, ease: EASE, delay: isLit ? 0.04 : 0 }}
                       />
 
-                      <motion.span
-                        className="flex items-center gap-4 px-1"
-                        initial={false}
-                        animate={{ x: isLit ? 10 : 0 }}
-                        transition={{ duration: 0.45, ease: SNAP }}
-                      >
+                      <span className="flex items-center gap-4 px-2">
+                        {/* Only the label group slides. The control stays put, so
+                            it can never be pushed into the clipped edge. */}
                         <motion.span
-                          aria-hidden="true"
-                          className="font-[family-name:var(--font-brand)] text-[0.7rem] tracking-[0.16em]"
+                          className="flex min-w-0 flex-1 items-center gap-4"
                           initial={false}
-                          animate={{
-                            color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.4)",
-                          }}
-                          transition={{ duration: 0.4, ease: SNAP }}
+                          animate={{ x: isLit ? 10 : 0 }}
+                          transition={{ duration: 0.45, ease: SNAP }}
                         >
-                          {String(i + 1).padStart(2, "0")}
-                        </motion.span>
+                          <motion.span
+                            aria-hidden="true"
+                            className="font-[family-name:var(--font-brand)] text-[0.7rem] tracking-[0.16em]"
+                            initial={false}
+                            animate={{
+                              color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.4)",
+                            }}
+                            transition={{ duration: 0.4, ease: SNAP }}
+                          >
+                            {String(i + 1).padStart(2, "0")}
+                          </motion.span>
 
-                        <motion.span
-                          className="flex-1 font-[family-name:var(--font-display)] text-xl"
-                          initial={false}
-                          animate={{ color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.72)" }}
-                          transition={{ duration: 0.4, ease: SNAP }}
-                        >
-                          {item.name}
+                          <motion.span
+                            className="font-[family-name:var(--font-display)] text-xl"
+                            initial={false}
+                            animate={{ color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.72)" }}
+                            transition={{ duration: 0.4, ease: SNAP }}
+                          >
+                            {item.name}
+                          </motion.span>
                         </motion.span>
 
                         <motion.span
@@ -125,7 +129,6 @@ export function Technology() {
                               ? "rgba(240,213,201,0.9)"
                               : "rgba(250,246,242,0.25)",
                             color: isLit ? "#f0d5c9" : "rgba(250,246,242,0.5)",
-                            scale: isLit ? 1.08 : 1,
                           }}
                           transition={{ duration: 0.45, ease: SNAP }}
                         >
@@ -138,7 +141,7 @@ export function Technology() {
                             />
                           </svg>
                         </motion.span>
-                      </motion.span>
+                      </span>
 
                       <AnimatePresence initial={false}>
                         {isSelected && (
@@ -149,7 +152,7 @@ export function Technology() {
                             transition={{ duration: 0.55, ease: EASE }}
                             className="overflow-hidden"
                           >
-                            <p className="px-1 pt-4 pr-10 text-[0.925rem] leading-relaxed text-linen/65">
+                            <p className="px-2 pt-4 pr-12 text-[0.925rem] leading-relaxed text-linen/65">
                               {item.body}
                             </p>
                           </motion.div>

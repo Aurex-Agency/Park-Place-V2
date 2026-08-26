@@ -21,6 +21,14 @@ import { EASE, SNAP } from "@/lib/motion";
 /** Spring for the preview panel. Loose enough to trail the pointer visibly. */
 const FOLLOW = { stiffness: 260, damping: 32, mass: 0.7, restDelta: 0.001 };
 
+/** Panel geometry, kept here so the clamping and the markup cannot drift. */
+const PANEL_W = 168;
+const PANEL_H = 212;
+const PANEL_OFFSET_X = 28;
+const PANEL_OFFSET_Y = 14;
+/** The title column is 18rem of a 78rem shell. Clearing 42% clears it at any width. */
+const TITLE_COLUMN_FRACTION = 0.42;
+
 export function ServiceIndex() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<number | null>(null);
@@ -28,6 +36,10 @@ export function ServiceIndex() {
   const reduced = useReducedMotion();
 
   // Raw pointer position, then a spring so the panel trails rather than snaps.
+  // The position is the panel's top left corner, offset up and to the right of
+  // the pointer, so the panel never sits under the cursor and cannot cover the
+  // row being pointed at. Both axes are clamped to the section box so it can
+  // never hang outside and force the page to scroll sideways.
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const x = useSpring(pointerX, FOLLOW);
@@ -57,8 +69,31 @@ export function ServiceIndex() {
     const onMove = (event: PointerEvent) => {
       frame.read(() => {
         const rect = el.getBoundingClientRect();
-        pointerX.set(event.clientX - rect.left);
-        pointerY.set(event.clientY - rect.top);
+        const clamp = (v: number, lo: number, hi: number) =>
+          Math.max(lo, Math.min(hi, v));
+
+        // The row title occupies the left column. Holding the panel to the
+        // right of that column means it can never cover the words being
+        // pointed at, whatever part of the row the pointer is over.
+        const titleColumnEnd = rect.width * TITLE_COLUMN_FRACTION;
+
+        pointerX.set(
+          clamp(
+            Math.max(
+              event.clientX - rect.left + PANEL_OFFSET_X,
+              titleColumnEnd,
+            ),
+            0,
+            Math.max(0, rect.width - PANEL_W),
+          ),
+        );
+        pointerY.set(
+          clamp(
+            event.clientY - rect.top - PANEL_H - PANEL_OFFSET_Y,
+            0,
+            Math.max(0, rect.height - PANEL_H),
+          ),
+        );
       });
     };
 
@@ -108,8 +143,11 @@ export function ServiceIndex() {
               }}
               transition={{ duration: isShowing ? 0.44 : 0.24, ease: SNAP }}
             >
-              <div className="-translate-x-1/2 -translate-y-1/2">
-                <div className="relative h-56 w-44 overflow-hidden rounded-[1.1rem] bg-linen-deep shadow-[var(--shadow-lg)] ring-1 ring-white/40">
+              <div>
+                <div
+                  className="relative overflow-hidden rounded-[1.1rem] bg-linen-deep shadow-[var(--shadow-lg)] ring-1 ring-white/40"
+                  style={{ width: PANEL_W, height: PANEL_H }}
+                >
                   {serviceCategories.map((cat, i) => (
                     <motion.div
                       key={cat.slug}
@@ -125,7 +163,7 @@ export function ServiceIndex() {
                         src={cat.image}
                         alt=""
                         fill
-                        sizes="176px"
+                        sizes="168px"
                         className="object-cover"
                       />
                     </motion.div>

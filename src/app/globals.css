@@ -406,15 +406,6 @@
   animation: glint 7s linear infinite;
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  animation: marquee var(--marquee-duration, 42s) linear infinite;
-}
-
 /* Vertical marquee for the testimonial columns. Written as a CSS animation
    rather than a JS loop so it runs on the compositor, costs no main thread,
    and is switched off by the reduced motion rule below without extra work. */
@@ -438,19 +429,22 @@
   mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent);
 }
 
-.marquee-mask {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-}
-
 /* Respect the reader */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
   .animate-glint,
-  .animate-marquee,
   .animate-marquee-y {
     animation: none !important;
+  }
+
+  /* Headline lines start translated a full line below their own mask, so a
+     failure to animate leaves them invisible rather than merely still. The JS
+     hook that should catch reduced motion returns the server value on the
+     hydration render and never schedules a re-render, so it cannot be trusted
+     with content visibility. Pin the lines back to their resting position. */
+  [data-line-mask] {
+    transform: none !important;
   }
 
   *,

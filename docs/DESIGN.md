@@ -261,8 +261,8 @@ is rendered first so it is correct before hydration and in search results.
 
 ### Marquees
 
-Both marquees are CSS animations rather than JS loops, so they run on the
-compositor and the reduced motion rule switches them off without any
+The testimonial columns are a CSS animation rather than a JS loop, so they run
+on the compositor and the reduced motion rule switches them off without any
 per-component work.
 
 The list is rendered twice and translated by -50%. For the seam to be
@@ -270,12 +270,42 @@ invisible, that translate has to land on exactly one period. A list of four
 cards with three gaps is 4c + 3g tall, so -50% is 2c + 1.5g, while the real
 period is 2c + 2g. The list is short by half a gap and jumps every cycle. The
 fix is one gap of padding on the trailing edge, which makes the height 4c + 4g
-so -50% is exactly 2c + 2g. Both marquees carry it, and the mismatch is
-measured in the checks.
+so -50% is exactly 2c + 2g. The testimonial columns carry it, and the
+mismatch is measured in the checks.
+
+The accepted carriers used to scroll the same way and it could not work.
+Eleven carriers is a track about 1457px wide, so on any display wider than that
+the loop seam is on screen and the same carrier appears twice at once, which
+reads as a data error rather than a loop. On a 2560px display over a thousand
+pixels of the set repeats. No amount of padding closes that gap. It is also the
+wrong behaviour for the content, since the one job of that list is letting a
+patient find their own insurer and moving text is harder to scan than still
+text. It is now a static wrapped grid and the motion lives in how it arrives.
 
 Testimonial columns pause on hover and on focus within, so a review can be
 read. The duplicated set is `aria-hidden`, so screen readers hear each review
 once.
+
+### Never let motion own visibility
+
+A headline line starts translated a full line below its own `overflow-hidden`
+mask. If the animation that brings it back never runs, the text is not merely
+still, it is gone.
+
+`useReducedMotion` cannot be trusted with that. It returns the server value on
+the hydration render and does not schedule a re-render, so a component that
+branches on it can stay on the animated path indefinitely. That shipped once:
+every masked heading was invisible to anyone browsing with reduced motion on,
+while hydration, axe and the build were all healthy.
+
+The stylesheet now pins `[data-line-mask]` back to `transform: none` under
+reduced motion. CSS cannot be defeated by hydration timing or by a library
+changing its mind. The JS branch is kept because it produces cleaner markup
+when it does resolve in time, but it is no longer what guarantees the text is
+on screen.
+
+The general rule: when an animation is the only thing standing between the
+reader and the content, the fallback belongs in CSS.
 
 ### Reduced motion
 
