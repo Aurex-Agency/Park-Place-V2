@@ -33,8 +33,17 @@ export type AppointmentSubmission = {
 
 export type Submission = ContactSubmission | AppointmentSubmission;
 
-/** The field a real person never sees and a crawler nearly always fills. */
-export const HONEYPOT_FIELD = "company";
+/**
+ * The field a real person never sees and a crawler nearly always fills.
+ *
+ * The name is deliberately meaningless. This was called "company" with a
+ * matching label, which browser autofill recognised and filled from the
+ * visitor's saved profile, so genuine submissions were being classified as
+ * bot traffic and thrown away. Anything a browser can recognise is unusable
+ * here: no name, label, id or autocomplete value that maps to a real world
+ * field.
+ */
+export const HONEYPOT_FIELD = "pp_verify";
 
 /** Longest we will accept for each field, in characters. */
 const LIMITS = {

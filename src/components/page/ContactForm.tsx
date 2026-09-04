@@ -4,6 +4,7 @@ import { practice } from "@/lib/content";
 import { fieldClass, labelClass } from "@/components/page/formStyles";
 import { useSubmit } from "@/components/page/useSubmit";
 import { Honeypot } from "@/components/page/Honeypot";
+import { HONEYPOT_FIELD } from "@/lib/forms";
 import { FormSuccess } from "@/components/page/FormSuccess";
 
 /**
@@ -29,7 +30,7 @@ export function ContactForm() {
       phone: get("phone"),
       subject: get("subject"),
       message: get("message"),
-      company: get("company"),
+      [HONEYPOT_FIELD]: get(HONEYPOT_FIELD),
     });
 
     if (sent) form.reset();

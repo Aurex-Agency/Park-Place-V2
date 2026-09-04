@@ -67,11 +67,19 @@ export async function POST(request: Request) {
     );
   }
 
-  // Silently accept and discard. Never tell a crawler which check it tripped.
+  /*
+   * The honeypot flags, it does not discard.
+   *
+   * This used to return a fake success and drop the submission. When browser
+   * autofill started filling the field, every affected visitor saw a success
+   * message while their enquiry went nowhere, and there was no trace of it
+   * anywhere. For a practice that lives on enquiries, silently losing a real
+   * patient is far more expensive than delivering an occasional spam message
+   * that someone can glance at and delete. So a tripped honeypot now marks
+   * the subject line and sends it anyway.
+   */
   const honeypot = (body as Record<string, unknown>)?.[HONEYPOT_FIELD];
-  if (typeof honeypot === "string" && honeypot.trim() !== "") {
-    return NextResponse.json({ ok: true });
-  }
+  const suspectedSpam = typeof honeypot === "string" && honeypot.trim() !== "";
 
   if (rateLimited(clientKey(request))) {
     return NextResponse.json(
@@ -95,10 +103,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: GENERIC_FAILURE }, { status: 500 });
   }
 
+  if (suspectedSpam) {
+    console.warn("[submit] honeypot tripped, delivering anyway and flagging");
+  }
+
   const notice = noticeEmail(data);
   const noticeResult = await sendEmail({
     to: CONTACT_TO,
-    subject: notice.subject,
+    subject: suspectedSpam ? `[possible spam] ${notice.subject}` : notice.subject,
     html: notice.html,
     text: notice.text,
     // The front desk replies in one keystroke, straight to the patient.
