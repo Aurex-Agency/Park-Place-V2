@@ -106,9 +106,13 @@ export async function POST(request: Request) {
   });
 
   if (!noticeResult.ok) {
-    console.error("[submit] notice failed:", noticeResult.error);
+    console.error("[submit] notice FAILED:", noticeResult.error);
     return NextResponse.json({ ok: false, error: GENERIC_FAILURE }, { status: 502 });
   }
+  // Logged so any submission can be traced to a specific message in Resend
+  // without having to reproduce it. "It did not arrive" is otherwise
+  // impossible to tell apart from "it was never sent".
+  console.log("[submit] notice sent:", noticeResult.id, "kind:", data.kind);
 
   const confirmation = confirmationEmail(data);
   const confirmationResult = await sendEmail({
@@ -120,9 +124,16 @@ export async function POST(request: Request) {
     replyTo: CONTACT_TO,
   });
 
-  if (!confirmationResult.ok) {
-    console.error("[submit] confirmation failed:", confirmationResult.error);
+  if (confirmationResult.ok) {
+    console.log("[submit] confirmation sent:", confirmationResult.id);
+  } else {
+    console.error("[submit] confirmation FAILED:", confirmationResult.error);
   }
 
-  return NextResponse.json({ ok: true, confirmed: confirmationResult.ok });
+  return NextResponse.json({
+    ok: true,
+    confirmed: confirmationResult.ok,
+    // The Resend message id, so a submission can be looked up directly.
+    ref: noticeResult.id,
+  });
 }
