@@ -1,84 +1,53 @@
 "use client";
 
-import { useState } from "react";
 import { practice } from "@/lib/content";
 import { fieldClass, labelClass } from "@/components/page/formStyles";
-
-type Status = "idle" | "sending" | "sent" | "error";
+import { useSubmit } from "@/components/page/useSubmit";
+import { Honeypot } from "@/components/page/Honeypot";
+import { FormSuccess } from "@/components/page/FormSuccess";
 
 /**
  * General contact form.
  *
- * There is no backend yet. To wire one up, set NEXT_PUBLIC_CONTACT_ENDPOINT to
- * a URL that accepts a JSON POST. That is the only change needed: the fields,
- * validation, states and messages below all stay as they are.
- *
- * Until that variable is set, submitting composes an email to the front desk
- * with the answers filled in. That is deliberate. A form that shows a success
- * message while dropping the message on the floor is worse than no form, and
- * this one is going live before the endpoint exists.
+ * Posts to the site's own endpoint, which emails the front desk and sends the
+ * visitor a confirmation. Validation runs again on the server, so the required
+ * attributes below are a courtesy to the visitor rather than the real gate.
  */
-const ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
-
 export function ContactForm() {
-  const [status, setStatus] = useState<Status>("idle");
+  const { status, error, submit } = useSubmit();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
-    const get = (k: string) => String(data.get(k) ?? "").trim();
+    const get = (key: string) => String(data.get(key) ?? "").trim();
 
-    const payload = {
+    const sent = await submit({
+      kind: "contact",
       name: get("name"),
       email: get("email"),
       phone: get("phone"),
       subject: get("subject"),
       message: get("message"),
-    };
+      company: get("company"),
+    });
 
-    if (ENDPOINT) {
-      setStatus("sending");
-      try {
-        const res = await fetch(ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error(String(res.status));
-        setStatus("sent");
-        form.reset();
-      } catch {
-        setStatus("error");
-      }
-      return;
-    }
+    if (sent) form.reset();
+  }
 
-    // No endpoint configured: hand the message to the visitor's email app so
-    // it actually reaches the practice.
-    const body = [
-      `Name: ${payload.name}`,
-      `Phone: ${payload.phone}`,
-      `Email: ${payload.email}`,
-      "",
-      payload.message,
-    ].join("\n");
-
-    const subject = payload.subject
-      ? `Website enquiry: ${payload.subject}`
-      : "Website enquiry";
-
-    window.open(
-      `${practice.emailHref}?subject=${encodeURIComponent(
-        subject,
-      )}&body=${encodeURIComponent(body)}`,
-      "_self",
+  if (status === "sent") {
+    return (
+      <FormSuccess
+        heading="Thank you, your message is on its way"
+        body="Someone from our front desk will be back to you shortly. If anything is urgent, please call us rather than waiting on a reply."
+      />
     );
-    setStatus("sent");
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate={false}>
+    <form onSubmit={handleSubmit} className="relative flex flex-col gap-6">
+      <Honeypot />
+
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className={labelClass}>
@@ -169,13 +138,9 @@ export function ContactForm() {
       </div>
 
       <p aria-live="polite" className="text-[0.9rem] text-taupe">
-        {status === "sent" && ENDPOINT
-          ? "Thank you. Your message is with our front desk and we will be back to you shortly."
-          : status === "sent"
-            ? "Your email app should have opened with your message ready to send. If it did not, please call the office."
-            : status === "error"
-              ? "Something went wrong sending that. Please call the office and we will help straight away."
-              : "Please do not send medical history, insurance numbers or payment details through this form."}
+        {status === "error" && error
+          ? error
+          : "Please do not send medical history, insurance numbers or payment details through this form."}
       </p>
     </form>
   );
