@@ -67,32 +67,9 @@ export async function sendEmail(email: Email): Promise<SendResult> {
     };
   }
 
-  const raw = await response.text();
-  const payload = (() => {
-    try {
-      return JSON.parse(raw) as { id?: string; message?: string; name?: string };
-    } catch {
-      return null;
-    }
-  })();
-
-  // TEMPORARY DIAGNOSTIC. Records exactly what was asked of Resend and exactly
-  // what came back, so a submission that reports success can be checked
-  // against the provider rather than taken on trust. Remove once the missing
-  // messages are accounted for.
-  console.log(
-    "[resend]",
-    JSON.stringify({
-      key: key.slice(0, 11),
-      keyLength: key.length,
-      from: CONTACT_FROM,
-      to: email.to,
-      subject: email.subject,
-      status: response.status,
-      quota: response.headers.get("x-resend-monthly-quota"),
-      body: raw.slice(0, 400),
-    }),
-  );
+  const payload = (await response.json().catch(() => null)) as
+    | { id?: string; message?: string; name?: string }
+    | null;
 
   if (!response.ok) {
     return {
