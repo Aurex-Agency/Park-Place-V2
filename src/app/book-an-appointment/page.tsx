@@ -1,19 +1,29 @@
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { AppointmentForm } from "@/components/page/AppointmentForm";
 import { Reveal } from "@/components/ui/Reveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/book-an-appointment", {
   title: "Book an Appointment",
   description: `Request an appointment at Park Place Dental in Booneville, Mississippi, or call ${practice.phone}.`,
-  alternates: { canonical: canonical("/book-an-appointment") },
-};
+});
 
 export default function Page() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/book-an-appointment",
+          name: seoFor("/book-an-appointment", { title: "book-an-appointment", description: "" }).title,
+          description: seoFor("/book-an-appointment", { title: "", description: "" }).description,
+          crumbs: [{ label: "Home", href: "/" }, { label: "Book an Appointment" }],
+        })}
+      />
+
       <PageHeader
         eyebrow="Book an Appointment"
         headline="Let us find you / a time"

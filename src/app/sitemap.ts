@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { serviceCategories } from "@/content/services";
+import { posts } from "@/content/posts";
+import { locations } from "@/content/locations";
 import { siteUrl } from "@/lib/site";
 
 const BASE = siteUrl;
@@ -24,6 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/patient-resources/faqs",
     "/patient-resources/reviews-testimonials",
     "/patient-resources/blog",
+    "/locations",
+    "/veterans",
     "/contact-us",
     "/book-an-appointment",
     "/privacy-policy",
@@ -35,9 +39,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...category.children.map((child) => `/services/${category.slug}/${child.slug}`),
   ]);
 
-  return [...staticPaths, ...servicePaths].map((path) => ({
-    url: `${BASE}${path}`,
-    changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : path.split("/").length > 2 ? 0.6 : 0.8,
+  const locationPaths = locations.map((place) => `/locations/${place.slug}`);
+
+  /*
+   * Articles carry a real `lastModified` taken from the content itself. The
+   * rest do not: a date generated at build time would claim every page changed
+   * every time the site was deployed, which is worse than saying nothing.
+   */
+  const articles = posts.map((post) => ({
+    url: `${BASE}/patient-resources/blog/${post.slug}`,
+    lastModified: new Date(post.updated),
+    changeFrequency: "yearly" as const,
+    priority: 0.7,
   }));
+
+  const pages = [...staticPaths, ...servicePaths, ...locationPaths].map(
+    (path) => ({
+      url: `${BASE}${path}`,
+      changeFrequency:
+        path === "" ? ("weekly" as const) : ("monthly" as const),
+      priority: path === "" ? 1 : path.split("/").length > 2 ? 0.6 : 0.8,
+    }),
+  );
+
+  return [...pages, ...articles];
 }

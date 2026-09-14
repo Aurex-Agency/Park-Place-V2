@@ -1,14 +1,15 @@
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/privacy-policy", {
   title: "Privacy Policy",
   description: "How Park Place Dental handles the information you share with us.",
-  alternates: { canonical: canonical("/privacy-policy") },
-};
+});
 
 /*
   This is a plain-language starting point written to match what the site
@@ -40,7 +41,9 @@ const sections = [
   {
     heading: "Cookies and analytics",
     body: [
-      "This website does not set advertising cookies and does not track you across other sites.",
+      "This website uses Google Analytics to understand how people find and use it: which pages are read, which are not, and whether anything is broken. Google Analytics sets first-party cookies in your browser to tell one visit apart from the next.",
+      "We use it to see patterns across everybody who visits, not to identify you. We do not sell the information, we do not use it for advertising, and we do not combine it with your patient records.",
+      "Most browsers let you block or delete cookies in their settings, and Google publishes a browser add-on that opts you out of Google Analytics entirely. Nothing on this site stops working if you do either.",
     ],
   },
   {
@@ -54,6 +57,15 @@ const sections = [
 export default function Page() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/privacy-policy",
+          name: seoFor("/privacy-policy", { title: "privacy-policy", description: "" }).title,
+          description: seoFor("/privacy-policy", { title: "", description: "" }).description,
+          crumbs: [{ label: "Home", href: "/" }, { label: "Privacy Policy" }],
+        })}
+      />
+
       <PageHeader
         eyebrow="Privacy Policy"
         headline="How we handle / your information"

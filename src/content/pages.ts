@@ -76,17 +76,62 @@ export const meetTheDentist: SimplePage = {
   eyebrow: "Our Doctor",
   headline: "Meet Dr. Ken Goodwin",
   lead: [
-    "Dr. Ken Goodwin is a dedicated and experienced dentist with over 43 years of providing exceptional patient care.",
+    "Dr. Ken Goodwin, DMD, has practised dentistry in Booneville, Mississippi for over 43 years, in the town he grew up in. He graduated from the University of Mississippi School of Dentistry in 1982 and has been treating patients here ever since.",
+    "Patients travel to him from across North Mississippi, and a good number of them have been coming for decades.",
   ],
   image: "/images/dr-ken-goodwin-portrait.jpg",
   imageAlt: "Dr. Ken Goodwin, dentist at Park Place Dental in Booneville",
   blocks: [
+    /*
+     * This page used to be 183 words, which is thin for the page carrying the
+     * practice's entire expertise signal. Health content is held to a higher
+     * standard than ordinary local business content, and the credentials that
+     * were sitting on two pages of the site now need to be visible where they
+     * matter.
+     */
     {
       kind: "prose",
+      heading: "Training and qualifications",
       body: [
-        "A proud graduate of the University of Mississippi, where he earned his Bachelor of Arts in 1978, he went on to receive his Doctor of Dental Medicine degree from the University of Mississippi School of Dentistry in 1982.",
-        "Originally from Booneville, Dr. Goodwin returned to his hometown with a passion for serving those around him. He is committed to creating beautiful, confident smiles while building lasting relationships with his patients. His practice offers a family-oriented work environment and strives to be a welcoming, comforting place for every patient.",
-        "Dr. Goodwin is also dedicated to staying at the forefront of dentistry, utilizing cutting-edge technology and maintaining the highest quality equipment. Outside the office, he enjoys spending time with his family, duck hunting, and supporting the Ole Miss Rebels.",
+        "Dr. Goodwin earned his Bachelor of Arts from the University of Mississippi in 1978, and his Doctor of Dental Medicine from the University of Mississippi School of Dentistry in 1982. He has practised in Booneville ever since, which makes this his forty-third year in the same community.",
+        "He is a general dentist, which means the whole range of everyday care rather than a single narrow field: examinations and cleanings, fillings, root canals, crowns and bridges, dentures and partials, implant restoration, and the emergencies that do not wait for a convenient appointment.",
+      ],
+    },
+    {
+      kind: "prose",
+      heading: "Why Booneville",
+      body: [
+        "Originally from Booneville, Dr. Goodwin came back here to practise rather than settling somewhere larger, and that decision is the reason the practice looks the way it does. Over four decades he has treated three generations of some Prentiss County families, and patients who first came to him as children now bring their own.",
+        "Continuity is the thing patients mention most. Seeing the same dentist each visit, in a practice where the front desk knows who you are, is increasingly unusual, and for nervous patients in particular it matters more than any piece of equipment.",
+      ],
+    },
+    {
+      kind: "terms",
+      heading: "How he practises",
+      items: [
+        {
+          term: "The whole family, in one place",
+          text: "Children, parents and grandparents are seen in the same practice, which for families driving in from Baldwyn, Ripley or Fulton means one trip rather than several.",
+        },
+        {
+          term: "Work made in the building",
+          text: "Park Place Dental has its own dental laboratory, so crowns, dentures, partials and repairs are made and adjusted here rather than posted to an outside laboratory. It is the single most common reason patients travel to this practice.",
+        },
+        {
+          term: "Technology chosen for the patient, not the brochure",
+          text: "The Solea dental laser allows many fillings to be completed with little or no anaesthetic, and RAYFace 3D facial scanning lets cosmetic and implant treatment be planned against the whole face rather than a single tooth. Both were brought in because they change what a visit is like.",
+        },
+        {
+          term: "Time to explain",
+          text: "Appointments here are not run against a stopwatch. If you want to understand what is happening and why before agreeing to it, that is a reasonable thing to want and there is room for it.",
+        },
+      ],
+    },
+    {
+      kind: "prose",
+      heading: "Away from the practice",
+      body: [
+        "Outside the office, Dr. Goodwin spends his time with his family, duck hunting, and supporting the Ole Miss Rebels.",
       ],
     },
   ],
@@ -483,3 +528,88 @@ export const patientForms = [
   { label: "Medical History Form", description: "Your health history helps us treat you safely." },
   { label: "Insurance Information Form", description: "So we can verify your benefits ahead of time." },
 ] as const;
+
+
+/**
+ * The veterans page.
+ *
+ * Prentiss County alone is home to roughly eleven hundred veterans, the
+ * practice already describes itself as a VA provider, and no competing site in
+ * the region explains veteran dental access at all. That combination is the
+ * clearest content gap found in the audit.
+ *
+ * It is also the one with the highest accuracy bar on the site, because the
+ * audience will know when it is wrong. Nothing here states an individual's
+ * entitlement; the page explains how the system is structured and sends the
+ * reader to the VA for a determination.
+ *
+ * TODO(kalob): confirm with the practice exactly what "VA provider" means
+ * operationally here, so the "What we can do" block can be made specific
+ * rather than general.
+ */
+export const veteransPage: SimplePage = {
+  title: "Dentist for Veterans",
+  metaDescription:
+    "Park Place Dental serves veterans across North Mississippi. What VA dental eligibility actually covers, and how to arrange care with us.",
+  eyebrow: "For Our Veterans",
+  headline: "Dental care for / North Mississippi veterans",
+  image: "/images/goodwin-and-assistant.jpg",
+  imageAlt: "Dr. Ken Goodwin with a patient at Park Place Dental in Booneville",
+  lead: [
+    "Park Place Dental has served veterans and their families in Booneville and across North Mississippi for over forty years. Prentiss County alone is home to more than a thousand veterans, and a great many of them have been told something about VA dental benefits that turns out not to apply to them.",
+    "This page explains how VA dental eligibility is actually structured, so that you know which questions to ask before you make any appointments.",
+  ],
+  blocks: [
+    {
+      kind: "prose",
+      heading: "Enrolment and dental eligibility are not the same thing",
+      body: [
+        "You can be fully enrolled in VA health care, use the VA for everything else, and still have no dental entitlement whatsoever. That is not a backlog or an oversight, it is how the benefit is written, and it is the single most common misunderstanding we encounter.",
+        "VA dental care is granted through a set of eligibility classes. Only three of them provide any needed dental care on an ongoing basis: Class I, for a service-connected compensable dental disability; Class IIC, for former prisoners of war; and Class IV, for veterans rated 100% disabled or receiving benefits at that rate through individual unemployability.",
+        "The other classes exist and are real, but they are narrower: one-time courses of treatment, care limited to a specific interacting condition, or treatment tied to a rehabilitation program.",
+      ],
+    },
+    {
+      kind: "list",
+      heading: "What to find out before you book anything",
+      intro:
+        "Whether you are calling the VA or calling us, these are the details that shorten the conversation:",
+      items: [
+        "Your disability rating, if you have one, and whether it is schedular or through individual unemployability",
+        "Whether your dental condition is recorded as service-connected, and whether it is compensable",
+        "Your discharge date, which governs the one-time entitlement some veterans have",
+        "Any referral or authorisation paperwork the VA has already given you",
+        "Whether you hold VADIP dental insurance, which is a separate thing from VA-provided care",
+      ],
+    },
+    {
+      kind: "terms",
+      heading: "Where we fit",
+      items: [
+        {
+          term: "We see veterans from across the region",
+          text: "Booneville, Baldwyn, Corinth, New Albany, Ripley, Fulton and Tupelo. Tell the front desk how far you are driving when you book and we will group what can sensibly be grouped into one trip.",
+        },
+        {
+          term: "Call and tell us where you stand",
+          text: "What we can arrange depends on how your care is being paid for. We would far rather spend a few minutes on the telephone working that out than have you drive over on an assumption.",
+        },
+        {
+          term: "Restorative work is made here",
+          text: "Crowns, dentures, partials and repairs are made in our own laboratory rather than posted to an outside one. For older veterans in particular, that tends to mean fewer trips and shorter waits.",
+        },
+      ],
+    },
+    {
+      kind: "prose",
+      heading: "A note on accuracy",
+      body: [
+        "Everything above describes how the VA structures dental eligibility. It is not a determination of your entitlement, which only the VA can make, and benefit rules change. Check your own position at va.gov or with your VA facility before making decisions based on this page.",
+      ],
+    },
+  ],
+  closing: {
+    heading: "Thank you for your service. Now let us look after your teeth.",
+    body: "Call the practice and tell us your situation. If we are not the right answer for how your care is funded, we will tell you that too.",
+  },
+};
