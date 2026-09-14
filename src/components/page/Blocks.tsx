@@ -11,7 +11,18 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 export function Blocks({ blocks }: { blocks: Block[] }) {
   return (
     <div className="flex flex-col gap-14 md:gap-20">
-      {blocks.map((block, i) => (
+      {blocks.map((block, i) => {
+        const headed = "heading" in block && Boolean(block.heading);
+        /*
+         * Item headings sit one level under the block's own heading. Where a
+         * block has none, they are the first heading in the section and must
+         * be h2, or the page reads h1 straight to h3 and a screen reader is
+         * told a level has been skipped. Only the level moves; the type is
+         * set by the class either way.
+         */
+        const Term = headed ? "h3" : "h2";
+
+        return (
         <section key={i}>
           {"heading" in block && block.heading && (
             <Reveal>
@@ -78,9 +89,9 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
                       </span>
                     )}
                     <div>
-                      <h3 className="font-[family-name:var(--font-display)] text-[1.2rem] leading-snug text-espresso">
+                      <Term className="font-[family-name:var(--font-display)] text-[1.2rem] leading-snug text-espresso">
                         {item.term}
-                      </h3>
+                      </Term>
                       <p className="mt-2 text-[0.975rem] leading-relaxed text-taupe">
                         {item.text}
                       </p>
@@ -91,7 +102,8 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
             </div>
           )}
         </section>
-      ))}
+        );
+      })}
     </div>
   );
 }

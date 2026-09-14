@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { usePathname } from "next/navigation";
 import { nav, practice } from "@/lib/content";
@@ -23,6 +23,12 @@ export function Header() {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const mobileOpen = openedAt !== null && openedAt === pathname;
 
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  // Set when the menu is closed by keyboard, so focus is handed back to the
+  // button that opened it rather than being dropped on the document.
+  const returnFocus = useRef(false);
+
   const closeMenu = useCallback(() => {
     setOpenedAt(null);
     setOpenSection(null);
@@ -37,6 +43,73 @@ export function Header() {
   useMotionValueEvent(scrollY, "change", (y) => {
     setCondensed(y > 24);
   });
+
+  /*
+   * While the mobile menu is open it is the whole screen, so the page behind
+   * it does not scroll. Without this, flicking a finger over a gap in the menu
+   * scrolls the article underneath and the reader loses their place in it for
+   * no reason they can see.
+   */
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [mobileOpen]);
+
+  /*
+   * Everything the keyboard needs from an open dialog: escape closes it, tab
+   * stays inside it, and focus starts in it rather than back on the button.
+   * Without the first of those the only way out is to find the close control
+   * by touch; without the second, tabbing walks invisibly through the page
+   * lying underneath.
+   */
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const panel = panelRef.current;
+    panel?.querySelector<HTMLElement>("a, button")?.focus();
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        returnFocus.current = true;
+        closeMenu();
+        return;
+      }
+
+      if (event.key !== "Tab" || !panel) return;
+
+      const focusable = panel.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      // The toggle sits outside the panel, so it is treated as the step before
+      // the first item and the step after the last one.
+      if (event.shiftKey && (active === first || active === toggleRef.current)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        toggleRef.current?.focus();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mobileOpen, closeMenu]);
+
+  useEffect(() => {
+    if (mobileOpen || !returnFocus.current) return;
+    returnFocus.current = false;
+    toggleRef.current?.focus();
+  }, [mobileOpen]);
 
   return (
     <>
@@ -96,55 +169,112 @@ export function Header() {
             className="hidden items-center gap-1 lg:flex"
             onMouseLeave={() => setOpenMenu(null)}
           >
-            {nav.map((item) => (
-              <div
-                key={item.label}
-                className="relative"
-                onMouseEnter={() => setOpenMenu(item.children.length ? item.label : null)}
-              >
-                <Link
-                  href={item.href}
-                  className="flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[0.975rem] text-espresso/85 transition-colors hover:text-rose-deep"
-                >
-                  {item.label}
-                  {item.children.length > 0 && (
-                    <svg width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true">
-                      <path
-                        d="M1 1l3.5 3.5L8 1"
-                        stroke="currentColor"
-                        strokeWidth="1.3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  )}
-                </Link>
+            {nav.map((item) => {
+              const hasChildren = item.children.length > 0;
+              const isOpen = openMenu === item.label;
+              const panelId = `nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`;
 
-                <AnimatePresence>
-                  {openMenu === item.label && item.children.length > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 6 }}
-                      transition={{ duration: 0.28, ease: EASE }}
-                      className="absolute left-0 top-full w-64 pt-3"
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => setOpenMenu(hasChildren ? item.label : null)}
+                  /*
+                    Focus leaving the group closes it. `focusout` is used rather
+                    than `blur` because it is the one that bubbles, so moving
+                    between the trigger and the items inside the panel does not
+                    read as leaving.
+                  */
+                  onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                      setOpenMenu((current) => (current === item.label ? null : current));
+                    }
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape" && isOpen) setOpenMenu(null);
+                  }}
+                >
+                  <span className="flex items-center">
+                    <Link
+                      href={item.href}
+                      className="flex items-center rounded-full py-2.5 pl-4 text-[0.975rem] text-espresso/85 transition-colors hover:text-rose-deep"
+                      onClick={() => setOpenMenu(null)}
                     >
-                      <div className="overflow-hidden rounded-[1.1rem] bg-white p-2 shadow-[var(--shadow-md)] ring-1 ring-sand/70">
-                        {item.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className="block rounded-[0.7rem] px-4 py-2.5 text-[0.95rem] text-espresso/85 transition-colors hover:bg-rose-wash hover:text-rose-deep"
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+                      {item.label}
+                    </Link>
+
+                    {/*
+                      The chevron is a real button, not decoration on a link.
+
+                      These panels used to open on hover and nothing else, so
+                      the pages inside them could not be reached from the
+                      keyboard at all. Splitting the two jobs is what fixes it:
+                      the label still goes to the section's own page, and the
+                      chevron beside it opens the list. That also gives the
+                      state somewhere honest to live, which is what a screen
+                      reader reads out of aria-expanded.
+                    */}
+                    {hasChildren ? (
+                      <button
+                        type="button"
+                        aria-expanded={isOpen}
+                        aria-controls={panelId}
+                        aria-label={`${isOpen ? "Hide" : "Show"} ${item.label.toLowerCase()} pages`}
+                        onClick={() => setOpenMenu(isOpen ? null : item.label)}
+                        className="flex items-center rounded-full py-2.5 pl-1.5 pr-4 text-espresso/85 transition-colors hover:text-rose-deep"
+                      >
+                        <motion.svg
+                          width="9"
+                          height="6"
+                          viewBox="0 0 9 6"
+                          fill="none"
+                          aria-hidden="true"
+                          initial={false}
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.28, ease: SNAP }}
+                        >
+                          <path
+                            d="M1 1l3.5 3.5L8 1"
+                            stroke="currentColor"
+                            strokeWidth="1.3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </motion.svg>
+                      </button>
+                    ) : (
+                      <span className="pr-4" />
+                    )}
+                  </span>
+
+                  <AnimatePresence>
+                    {isOpen && hasChildren && (
+                      <motion.div
+                        id={panelId}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 6 }}
+                        transition={{ duration: 0.28, ease: EASE }}
+                        className="absolute left-0 top-full w-64 pt-3"
+                      >
+                        <div className="overflow-hidden rounded-[1.1rem] bg-white p-2 shadow-[var(--shadow-md)] ring-1 ring-sand/70">
+                          {item.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              onClick={() => setOpenMenu(null)}
+                              className="block rounded-[0.7rem] px-4 py-2.5 text-[0.95rem] text-espresso/85 transition-colors hover:bg-rose-wash hover:text-rose-deep"
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-3">
@@ -157,6 +287,7 @@ export function Header() {
             </Button>
 
             <button
+              ref={toggleRef}
               type="button"
               onClick={() => (mobileOpen ? closeMenu() : openMobileMenu())}
               aria-expanded={mobileOpen}
@@ -185,6 +316,7 @@ export function Header() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={panelRef}
             id="mobile-nav"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

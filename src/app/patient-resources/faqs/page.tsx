@@ -44,7 +44,7 @@ export default function Page() {
 
       <div className="section">
         <div className="shell max-w-4xl">
-          <FaqList items={faqs} />
+          <FaqList items={faqs} headingLevel="h2" />
         </div>
       </div>
 

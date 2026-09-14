@@ -14,11 +14,18 @@ import { practice } from "@/lib/content";
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
-export const CONTACT_TO =
-  process.env.CONTACT_TO_EMAIL ?? practice.email;
+/*
+ * `||` rather than `??`, deliberately. A variable that exists but is empty is
+ * the likelier mistake here: a dashboard field saved blank, or a value cleared
+ * while rotating a key. `??` treats that empty string as a considered choice,
+ * hands it to Resend as the destination, and every enquiry from that moment
+ * fails. Falling back on any falsy value means the worst case is mail going to
+ * the practice's own address, which is where it was going anyway.
+ */
+export const CONTACT_TO = process.env.CONTACT_TO_EMAIL || practice.email;
 
 export const CONTACT_FROM =
-  process.env.CONTACT_FROM_EMAIL ??
+  process.env.CONTACT_FROM_EMAIL ||
   "Park Place Dental <support@team.parkplacedentist.com>";
 
 export type SendResult =
