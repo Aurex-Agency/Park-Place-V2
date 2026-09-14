@@ -10,7 +10,14 @@ export type Block =
   | { kind: "prose"; heading?: string; body: string[] }
   | { kind: "list"; heading?: string; intro?: string; items: string[] }
   | { kind: "terms"; heading?: string; intro?: string; items: { term: string; text: string }[] }
-  | { kind: "steps"; heading?: string; intro?: string; items: { term: string; text: string }[] };
+  | { kind: "steps"; heading?: string; intro?: string; items: { term: string; text: string }[] }
+  /** Named sources, or the pages a reader should go to next. */
+  | {
+      kind: "links";
+      heading?: string;
+      intro?: string;
+      items: { label: string; href: string; note?: string }[];
+    };
 
 export type ServiceDetail = {
   slug: string;
@@ -20,6 +27,15 @@ export type ServiceDetail = {
   image: string;
   imageAlt: string;
   note?: string;
+  /**
+   * Whether the honest next step is a telephone call rather than a form.
+   *
+   * Set only where waiting for a callback is the wrong outcome. It flips the
+   * page's calls to action so the number is the filled button and the form is
+   * the quiet one, which is what this page's own copy and its own search
+   * listing already tell people to do.
+   */
+  urgent?: boolean;
   blocks: Block[];
   closing: { heading: string; body: string };
 };
@@ -197,6 +213,7 @@ export const serviceCategories: ServiceCategory[] = [
       },
       {
         slug: "emergency-dentistry",
+        urgent: true,
         title: "Emergency Dentistry",
         metaDescription:
           "Same-day emergency dental care in Booneville, Mississippi. Call (662) 728-8171.",

@@ -25,6 +25,7 @@ export function MobileActionBar() {
       <div className="flex items-stretch gap-2.5 px-4 py-3">
         <a
           href={practice.phoneHref}
+          data-call-placement="mobile-bar"
           className="btn btn-outline flex-1 whitespace-nowrap !bg-white !px-4 !text-[0.875rem]"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">

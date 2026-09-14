@@ -8,6 +8,7 @@ import { LocationSection } from "@/components/site/LocationSection";
 import { RouteGate } from "@/components/site/RouteGate";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 import { MobileActionBar } from "@/components/site/MobileActionBar";
+import { CallTracking } from "@/components/site/CallTracking";
 import { MotionProvider } from "@/components/site/MotionProvider";
 import { JsonLd } from "@/components/site/JsonLd";
 import { siteGraph } from "@/lib/schema";
@@ -100,7 +101,7 @@ export const metadata: Metadata = {
   },
   /*
     The share card and the icons are picked up from the files beside this one:
-    opengraph-image.png, twitter-image.png, icon.png, apple-icon.png and
+    opengraph-image.jpg, twitter-image.jpg, icon.png, apple-icon.png and
     favicon.ico. Next fingerprints them and writes the tags, so there is no
     hardcoded path here to fall out of date.
   */
@@ -171,6 +172,7 @@ export default function RootLayout({
           <Footer />
           <MobileActionBar />
         </MotionProvider>
+        <CallTracking />
         <Analytics />
         <SpeedInsights />
         {/*

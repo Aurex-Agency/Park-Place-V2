@@ -87,7 +87,6 @@ export default async function PostPage({
           image: post.image,
           crumbs,
           faqs: post.faqs,
-          howTo: post.howTo,
         })}
       />
 

@@ -36,12 +36,12 @@ export async function generateMetadata({
       title: meta.title,
       description: meta.description,
       url: path,
-      images: ["/opengraph-image.png"],
+      images: ["/opengraph-image.jpg"],
     },
     twitter: {
       title: meta.title,
       description: meta.description,
-      images: ["/opengraph-image.png"],
+      images: ["/opengraph-image.jpg"],
     },
   };
 }
@@ -78,6 +78,7 @@ export default async function CategoryPage({
           primaryImage: found.image,
           serviceName: found.title,
           serviceType: found.title,
+          faqs,
         })}
       />
 

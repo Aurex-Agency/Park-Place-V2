@@ -35,12 +35,12 @@ export async function generateMetadata({
       description: place.metaDescription,
       url: path,
       type: "website",
-      images: ["/opengraph-image.png"],
+      images: ["/opengraph-image.jpg"],
     },
     twitter: {
       title: place.title,
       description: place.metaDescription,
-      images: ["/opengraph-image.png"],
+      images: ["/opengraph-image.jpg"],
     },
   };
 }
@@ -99,11 +99,25 @@ export default async function LocationPage({
         })}
       />
 
+      {/*
+        These pages carried no photograph at all, which for a set of fourteen
+        town pages is the visual signature of exactly the templated lead-gen
+        content they were written to be the opposite of. The building itself is
+        the right picture: it is the thing a reader is deciding whether to
+        drive to, and the alt text names their town rather than repeating one
+        generic caption fourteen times.
+      */}
       <PageHeader
         eyebrow={place.home ? "Our Booneville Office" : `Serving ${place.county}`}
         headline={headline}
         lead={place.lead}
         crumbs={crumbs}
+        image="/images/team-group-porch.jpg"
+        imageAlt={
+          place.home
+            ? `The Park Place Dental team outside the practice at ${practice.address.street} in Booneville, Mississippi`
+            : `The Park Place Dental team outside the Booneville practice, about ${place.miles} miles from ${place.town}, Mississippi`
+        }
       />
 
       <section className="section">
