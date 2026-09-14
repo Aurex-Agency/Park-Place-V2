@@ -169,7 +169,7 @@ export const technology = {
   headline: "Modern Dental Technology for a Better Experience",
   intro:
     "At Park Place Dental, we use advanced technology to make your care more comfortable, precise, and convenient.",
-  cta: { label: "Read more", href: "/advanced-dental-technology" },
+  cta: { label: "Explore our technology", href: "/advanced-dental-technology" },
   items: [
     {
       name: "RAYFace Facial Scanner",
@@ -197,7 +197,7 @@ export const doctorSection = {
   headline: "Expert Care, Trusted Results",
   subhead: `Meet Your Dentist, ${doctor.name}`,
   body: "Dr. Goodwin and the entire team at Park Place Dental are dedicated to providing personalized, high-quality care to each patient. With a focus on comfort, modern techniques, and a commitment to excellence, we ensure that you leave every visit with a smile.",
-  cta: { label: "Read more", href: "/about-us/meet-the-dentist" },
+  cta: { label: "Meet Dr. Goodwin", href: "/about-us/meet-the-dentist" },
 } as const;
 
 export const commitment = {

@@ -90,7 +90,7 @@ export function PageHeader({
               <Eyebrow>{eyebrow}</Eyebrow>
             </div>
 
-            <MaskedHeading as="h1" className="t-h1 mt-6" text={headline} />
+            <MaskedHeading as="h1" className="t-h1 mt-6" text={headline} immediate />
 
             {paragraphs.map((text, i) => (
               <p key={i} className="page-in page-in-1 t-lead mt-5">
