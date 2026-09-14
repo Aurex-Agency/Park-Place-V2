@@ -41,7 +41,9 @@ const sections = [
   {
     heading: "Cookies and analytics",
     body: [
-      "This website does not set advertising cookies and does not track you across other sites.",
+      "This website uses Google Analytics to understand how people find and use it: which pages are read, which are not, and whether anything is broken. Google Analytics sets first-party cookies in your browser to tell one visit apart from the next.",
+      "We use it to see patterns across everybody who visits, not to identify you. We do not sell the information, we do not use it for advertising, and we do not combine it with your patient records.",
+      "Most browsers let you block or delete cookies in their settings, and Google publishes a browser add-on that opts you out of Google Analytics entirely. Nothing on this site stops working if you do either.",
     ],
   },
   {

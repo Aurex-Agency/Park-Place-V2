@@ -11,6 +11,8 @@ import { MobileActionBar } from "@/components/site/MobileActionBar";
 import { MotionProvider } from "@/components/site/MotionProvider";
 import { JsonLd } from "@/components/site/JsonLd";
 import { siteGraph } from "@/lib/schema";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { GA_MEASUREMENT_ID, analyticsEnabled } from "@/lib/analytics";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -146,6 +148,13 @@ export default function RootLayout({
         </MotionProvider>
         <Analytics />
         <SpeedInsights />
+        {/*
+          Google Analytics, loaded after the page is interactive so it cannot
+          delay first paint. GA4's enhanced measurement follows History API
+          navigations on its own, which is what the App Router performs, so
+          client-side route changes are counted without anything further here.
+        */}
+        {analyticsEnabled && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
       </body>
     </html>
   );
