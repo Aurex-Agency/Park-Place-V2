@@ -287,6 +287,107 @@ export function serviceGraph(
   return json({ "@context": "https://schema.org", "@graph": nodes });
 }
 
+/**
+ * A location page.
+ *
+ * The temptation on a page like this is to emit a second `Dentist` node with
+ * the town's name on it. That would be a lie: there is one practice, at one
+ * address, and a second business node with a different locality is exactly the
+ * pattern search engines treat as location spam. It would also put a second,
+ * conflicting NAP into the index, which is the one thing local SEO cannot
+ * survive.
+ *
+ * So what is emitted instead is true: the existing practice, referenced by
+ * `@id`, offers a service whose `areaServed` is this town. One business, many
+ * served places, described once.
+ */
+export function locationGraph(options: {
+  path: string;
+  name: string;
+  description: string;
+  crumbs: Crumb[];
+  town: string;
+  county: string;
+  zip: string;
+  /** The smaller communities this page also speaks for. */
+  nearby: readonly string[];
+  faqs: readonly { q: string; a: string }[];
+}): string {
+  const url = canonical(options.path);
+
+  /* The town, and the communities around it, as places rather than as a string
+     of keywords.
+
+     `containedInPlace` is asserted only for the town the page is about, and
+     only from that town's own `county` field. The surrounding communities get
+     a locality and nothing more: several of them sit across a county line from
+     the town they are near, and inheriting the page's county would put a false
+     claim into the markup for the sake of one extra property. */
+  const place = (name: string): Node => ({
+    "@type": "Place",
+    name: `${name}, Mississippi`,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: name,
+      addressRegion: "MS",
+      addressCountry: "US",
+    },
+  });
+
+  /* Baldwyn straddles a county line, and its `county` reads "Prentiss and Lee
+     Counties". Emitted whole that is not the name of any administrative area,
+     so it is split back into the two that exist. */
+  const counties = options.county
+    .replace(/\s+Count(y|ies)$/i, "")
+    .split(/\s+and\s+/)
+    .map((name) => ({
+      "@type": "AdministrativeArea",
+      name: `${name} County, Mississippi`,
+    }));
+
+  const townPlace: Node = {
+    ...place(options.town),
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: options.town,
+      addressRegion: "MS",
+      postalCode: options.zip,
+      addressCountry: "US",
+    },
+    containedInPlace: counties.length === 1 ? counties[0] : counties,
+  };
+
+  const nodes: Node[] = [
+    webPageNode({
+      path: options.path,
+      name: options.name,
+      description: options.description,
+      crumbs: options.crumbs,
+    }),
+    {
+      "@type": "Service",
+      "@id": `${url}#service`,
+      name: `Dental care for ${options.town}, Mississippi`,
+      serviceType: "Dentistry",
+      description: options.description,
+      url,
+      provider: { "@id": PRACTICE_ID },
+      areaServed: [townPlace, ...options.nearby.map((n) => place(n))],
+      availableChannel: {
+        "@type": "ServiceChannel",
+        servicePhone: { "@type": "ContactPoint", telephone: TELEPHONE },
+        serviceUrl: `${siteUrl}/book-an-appointment`,
+      },
+    },
+  ];
+
+  const crumbs = breadcrumbNode(options.path, options.crumbs);
+  if (crumbs) nodes.push(crumbs);
+  if (options.faqs.length) nodes.push(faqNode(options.faqs, options.path));
+
+  return json({ "@context": "https://schema.org", "@graph": nodes });
+}
+
 /** Questions and answers, for the AI systems that still read them. */
 export function faqNode(items: readonly { q: string; a: string }[], path: string): Node {
   return {

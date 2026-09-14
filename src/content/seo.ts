@@ -118,9 +118,9 @@ export const seo: Record<string, SeoEntry> = {
       "Park Place Dental serves veterans across North Mississippi. What VA dental eligibility actually covers, and how to arrange care with us.",
   },
   "/locations": {
-    title: "Serving North Mississippi",
+    title: "Dentist Serving North Mississippi",
     description:
-      "Patients travel to Park Place Dental in Booneville from Baldwyn, Corinth, New Albany, Ripley, Fulton and across North Mississippi. Find your drive.",
+      "Patients drive to Park Place Dental in Booneville from Corinth, Tupelo, Saltillo, Iuka, Baldwyn and across seven counties. Find your drive and your route.",
   },
   "/privacy-policy": {
     title: "Privacy Policy",
