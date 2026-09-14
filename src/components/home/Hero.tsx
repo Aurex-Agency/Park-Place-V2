@@ -5,7 +5,6 @@ import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { hero, practice } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
-import { EASE, lineMask } from "@/lib/motion";
 
 /** Splits a headline so each line can be masked and revealed separately. */
 const HEADLINE_LINES = ["Transform", "Your Smile", "with Expert Care"];
@@ -59,15 +58,12 @@ export function Hero() {
       {/* Photograph. Deliberately taller than the section so the parallax
           travel can never expose an edge. */}
       <motion.div
-        className="absolute inset-x-0 -top-[15%] z-0 h-[130%]"
+        className="hero-photo absolute inset-x-0 -top-[15%] z-0 h-[130%]"
         style={{
           y: reduceMotion ? 0 : imageY,
           scale: reduceMotion ? 1 : imageScale,
           willChange: "transform",
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.4, ease: EASE }}
       >
         <Image
           src={hero.image}
@@ -114,58 +110,48 @@ export function Hero() {
       >
         <div className="max-w-[34rem]">
           {/* Eyebrow */}
-          <motion.p
-            className="t-eyebrow !text-rose-mist"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: EASE }}
-          >
+          <p className="hero-eyebrow t-eyebrow !text-rose-mist">
             {hero.eyebrow}
-          </motion.p>
+          </p>
 
           {/* Headline, revealed line by line from behind a mask */}
           <h1 className="t-display mt-6 !text-linen [&>span]:-my-[0.045em]">
             {HEADLINE_LINES.map((line, i) => (
               <span key={line} className="block overflow-hidden py-[0.09em]">
-                <motion.span
+                <span
                   data-line-mask=""
-                  className="block"
-                  variants={lineMask}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: 0.65 + i * 0.12, duration: 1.1, ease: EASE }}
+                  className={`hero-line hero-line-${i + 1} block`}
                 >
                   {/* Trailing space collapses in a block but keeps the
                       headline's textContent a properly spaced sentence. */}
                   {line}
                   {i < HEADLINE_LINES.length - 1 ? " " : ""}
-                </motion.span>
+                </span>
               </span>
             ))}
           </h1>
 
-          <motion.p
-            className="mt-7 max-w-[30rem] text-[1.0625rem] leading-relaxed text-linen/85 md:text-[1.15rem]"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.9, ease: EASE }}
-          >
-            {hero.subhead}
-          </motion.p>
+          {/*
+            No entrance animation here, deliberately.
 
-          <motion.div
-            className="mt-10 flex flex-wrap items-center gap-3"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.15, duration: 0.9, ease: EASE }}
-          >
+            This paragraph is the Largest Contentful Paint element on the
+            homepage. LCP does not count an element while it sits at opacity
+            zero, so animating it in cost the whole metric: it previously
+            waited for hydration plus a one second delay. Painted immediately,
+            LCP lands with first paint instead.
+          */}
+          <p className="mt-7 max-w-[30rem] text-[1.0625rem] leading-relaxed text-linen/85 md:text-[1.15rem]">
+            {hero.subhead}
+          </p>
+
+          <div className="hero-actions mt-10 flex flex-wrap items-center gap-3">
             <Button href={hero.primaryCta.href} variant="primary">
               {hero.primaryCta.label}
             </Button>
             <Button href={practice.phoneHref} variant="ghost">
               Call {practice.phone}
             </Button>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
 
@@ -177,12 +163,7 @@ export function Hero() {
         className="absolute bottom-8 right-6 z-10 hidden md:right-10 lg:block"
         style={reduceMotion ? undefined : { opacity: cueOpacity }}
       >
-        <motion.div
-          className="flex items-center gap-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6, duration: 1 }}
-        >
+        <div className="hero-cue flex items-center gap-3">
         <span className="font-[family-name:var(--font-brand)] text-[0.78rem] uppercase tracking-[0.3em] text-linen/70">
           Scroll
         </span>
@@ -193,7 +174,7 @@ export function Hero() {
               transition={{ duration: 2.4, ease: "easeInOut", repeat: Infinity }}
             />
           </span>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );

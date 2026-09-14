@@ -71,7 +71,7 @@ export function Welcome() {
           />
 
           <Reveal delay={0.1}>
-            <p className="mt-5 font-[family-name:var(--font-display)] text-xl italic text-rose-deep">
+            <p className="mt-5 font-[family-name:var(--font-display-italic)] text-xl italic text-rose-deep">
               {welcome.subhead}
             </p>
           </Reveal>

@@ -31,6 +31,28 @@ const zodiak = localFont({
       weight: "100 900",
       style: "normal",
     },
+  ],
+});
+
+/**
+ * The italic, deliberately not preloaded.
+ *
+ * It appears twice on the whole site, in pull quotes well below the fold, and
+ * it is 44KB. Preloaded alongside the two faces that are actually needed for
+ * the first screen, it competed with them for bandwidth on exactly the slow
+ * mobile connection where that bandwidth is scarcest. It loads on demand now,
+ * which is when the reader has scrolled far enough to see it.
+ *
+ * It is a separate family rather than a second face of the first, because
+ * next/font preloads per loader and there is no way to preload one face of a
+ * family and not another. `--font-display-italic` is what the pull quotes ask
+ * for.
+ */
+const zodiakItalic = localFont({
+  variable: "--font-zodiak-italic",
+  display: "swap",
+  preload: false,
+  src: [
     {
       path: "../fonts/Zodiak-VariableItalic.woff2",
       weight: "100 900",
@@ -93,7 +115,10 @@ export default function RootLayout({
     // custom property is substituted where it is defined, not where it is
     // used. Declared on <body> the reference resolves against an undefined
     // value and every element silently falls back to system fonts.
-    <html lang="en" className={`${zodiak.variable} ${jakarta.variable}`}>
+    <html
+      lang="en"
+      className={`${zodiak.variable} ${zodiakItalic.variable} ${jakarta.variable}`}
+    >
       <body className="antialiased">
         {/*
           A safety net for the visit where the JavaScript never arrives.
@@ -148,6 +173,24 @@ export default function RootLayout({
         </MotionProvider>
         <Analytics />
         <SpeedInsights />
+        {/*
+          The handshake with Google's origins, started early.
+
+          gtag.js is fetched from one host and posts its measurements to
+          another, and on a throttled mobile connection the DNS lookup, TCP
+          connection and TLS negotiation for each cost real time that is
+          otherwise spent doing nothing. Lighthouse measured 300ms of it.
+        */}
+        {analyticsEnabled && (
+          <>
+            <link rel="preconnect" href="https://www.googletagmanager.com" />
+            <link
+              rel="preconnect"
+              href="https://www.google-analytics.com"
+              crossOrigin=""
+            />
+          </>
+        )}
         {/*
           Google Analytics, loaded after the page is interactive so it cannot
           delay first paint. GA4's enhanced measurement follows History API
