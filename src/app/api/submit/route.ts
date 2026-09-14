@@ -71,12 +71,15 @@ function clientKey(request: Request): string {
  * reason stays in the log: a bot that learns which check it tripped simply
  * comes back in a different shape.
  */
-function reject(reason: string) {
+function reject(reason: string, retry = false) {
   console.warn("[submit] rejected:", reason);
   return NextResponse.json(
     {
       ok: false,
       error: `We could not accept that message. Please call the office on ${practice.phone} and we will help straight away.`,
+      // Set only where a second attempt can honestly succeed. See the token
+      // check below for the one case that qualifies.
+      ...(retry ? { retry: true } : {}),
     },
     { status: 400 },
   );
@@ -118,7 +121,17 @@ export async function POST(request: Request) {
    */
   if (isTokenConfigured()) {
     const verdict = verifyFormToken((body as Record<string, unknown>)?.formToken);
-    if (verdict !== "ok") return reject(`token:${verdict}`);
+    /*
+     * An expired token is the one rejection worth telling the browser about.
+     * It is correctly signed, so it can only have come from a page this
+     * server rendered: a form left open on a desk past the four hour window,
+     * not a forgery. Saying "ask for a fresh one and send it again" therefore
+     * gives a script nothing it did not already have, and it stops a real
+     * enquiry being thrown away for the sin of being typed slowly. Every
+     * other verdict stays silent, because every other verdict means the token
+     * was absent, malformed or forged.
+     */
+    if (verdict !== "ok") return reject(`token:${verdict}`, verdict === "expired");
   } else {
     console.error("[submit] FORM_TOKEN_SECRET is not set, token check skipped");
   }

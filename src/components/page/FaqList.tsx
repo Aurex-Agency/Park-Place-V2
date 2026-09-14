@@ -14,8 +14,18 @@ import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
  */
 export function FaqList({
   items,
+  headingLevel: Heading = "h3",
 }: {
   items: readonly { q: string; a: string }[];
+  /**
+   * The level the questions sit at.
+   *
+   * In the section that appears at the foot of most pages they follow that
+   * section's own h2, so h3 is right. On the FAQs page itself the questions
+   * are the page's top level content and there is no h2 above them, so the
+   * default would skip a level.
+   */
+  headingLevel?: "h2" | "h3";
 }) {
   const [open, setOpen] = useState<number | null>(0);
 
@@ -26,7 +36,7 @@ export function FaqList({
         return (
           <RevealItem as="li" preset="riseSmall" key={item.q}>
             <div className="border-b border-sand">
-              <h3>
+              <Heading>
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : i)}
@@ -65,7 +75,7 @@ export function FaqList({
                     </svg>
                   </motion.span>
                 </button>
-              </h3>
+              </Heading>
 
               <AnimatePresence initial={false}>
                 {isOpen && (

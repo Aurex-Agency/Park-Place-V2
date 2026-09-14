@@ -6,6 +6,7 @@ import { useSubmit } from "@/components/page/useSubmit";
 import { Honeypot } from "@/components/page/Honeypot";
 import { HONEYPOT_FIELD } from "@/lib/forms";
 import { FormSuccess } from "@/components/page/FormSuccess";
+import { FormError } from "@/components/page/FormError";
 
 /**
  * General contact form.
@@ -15,7 +16,7 @@ import { FormSuccess } from "@/components/page/FormSuccess";
  * attributes below are a courtesy to the visitor rather than the real gate.
  */
 export function ContactForm() {
-  const { status, error, submit } = useSubmit();
+  const { status, error, confirmed, submit } = useSubmit();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -39,6 +40,7 @@ export function ContactForm() {
   if (status === "sent") {
     return (
       <FormSuccess
+        confirmed={confirmed}
         heading="Thank you, your message is on its way"
         body="Someone from our front desk will be back to you shortly. If anything is urgent, please call us rather than waiting on a reply."
       />
@@ -123,6 +125,8 @@ export function ContactForm() {
         />
       </div>
 
+      {status === "error" && error && <FormError message={error} />}
+
       <div className="flex flex-wrap items-center gap-5">
         <button type="submit" className="btn btn-primary" disabled={status === "sending"}>
           {status === "sending" ? "Sending" : "Send message"}
@@ -138,10 +142,8 @@ export function ContactForm() {
         </p>
       </div>
 
-      <p aria-live="polite" className="text-[0.9rem] text-taupe">
-        {status === "error" && error
-          ? error
-          : "Please do not send medical history, insurance numbers or payment details through this form."}
+      <p className="text-[0.9rem] text-taupe">
+        Please do not send medical history, insurance numbers or payment details through this form.
       </p>
     </form>
   );

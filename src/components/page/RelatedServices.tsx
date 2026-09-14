@@ -17,7 +17,7 @@ export function RelatedServices({
     <section className="section bg-linen-deep">
       <div className="shell">
         <Reveal>
-          <Eyebrow>{eyebrow}</Eyebrow>
+          <Eyebrow as="h2">{eyebrow}</Eyebrow>
         </Reveal>
 
         <RevealGroup

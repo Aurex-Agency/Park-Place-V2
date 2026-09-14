@@ -9,6 +9,9 @@ import { LocationSection } from "@/components/site/LocationSection";
 import { RouteGate } from "@/components/site/RouteGate";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 import { MobileActionBar } from "@/components/site/MobileActionBar";
+import { MotionProvider } from "@/components/site/MotionProvider";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 /**
@@ -78,12 +81,34 @@ export const metadata: Metadata = {
   */
 };
 
-/** Local business markup so the practice reads correctly in search. */
+/**
+ * Local business markup so the practice reads correctly in search.
+ *
+ * Every page carries this, which is why it has a stable `@id`: without one,
+ * thirty seven copies read as thirty seven businesses that happen to share an
+ * address. With one, they are thirty seven references to the same entity.
+ *
+ * `url` and `image` are here because Google asks for both on a local business
+ * and will not show the richer result without them. The telephone number is
+ * written in E.164 alongside the human formatting used everywhere else on the
+ * site, since that is the form a machine can dial unambiguously.
+ *
+ * Nothing is asserted here that the practice has not confirmed. There is no
+ * priceRange and no aggregateRating, because inventing either would be a
+ * fabricated business fact, and `sameAs` is left out until the Google Business
+ * Profile and social URLs are to hand.
+ */
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Dentist",
+  "@id": `${siteUrl}/#practice`,
   name: practice.name,
-  telephone: practice.phone,
+  url: siteUrl,
+  image: [
+    `${siteUrl}/images/team-group-porch.jpg`,
+    `${siteUrl}/images/reception-front-desk.jpg`,
+  ],
+  telephone: "+1-662-728-8171",
   email: practice.email,
   address: {
     "@type": "PostalAddress",
@@ -92,6 +117,11 @@ const structuredData = {
     addressRegion: practice.address.region,
     postalCode: practice.address.postalCode,
     addressCountry: "US",
+  },
+  hasMap: practice.mapsHref,
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: `${practice.county}, ${practice.state}`,
   },
   openingHoursSpecification: [
     {
@@ -114,6 +144,28 @@ export default function RootLayout({
     // value and every element silently falls back to system fonts.
     <html lang="en" className={`${zodiak.variable} ${jakarta.variable}`}>
       <body className="antialiased">
+        {/*
+          A safety net for the visit where the JavaScript never arrives.
+
+          Everything revealed on scroll is server rendered at its starting
+          value, which is opacity zero, and Motion is what brings it to one. On
+          a dropped bundle or a hostile network that never happens and the page
+          is legible only as a blank canvas: text present in the markup, none
+          of it painted. Search engines run the script and are unaffected, so
+          this is purely for the person on the bad connection, who is also the
+          person least able to try again.
+
+          Inline styles are what have to be beaten here, hence the attribute
+          selector and the !important. It costs nothing on the ordinary path,
+          because a browser running scripts never applies it.
+        */}
+        <noscript>
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `[style*="opacity:0"]{opacity:1!important;transform:none!important;}`,
+            }}
+          />
+        </noscript>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -124,21 +176,25 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <ScrollToTop />
-        <Header />
-        <main id="main">{children}</main>
+        <MotionProvider>
+          <ScrollToTop />
+          <Header />
+          <main id="main">{children}</main>
 
-        {/* Both sections live here so no page can ship without them. The two
-            routes that already own this content opt out rather than repeat it. */}
-        <RouteGate hideOn={["/patient-resources/faqs"]}>
-          <FaqSection />
-        </RouteGate>
-        <RouteGate hideOn={["/contact-us"]}>
-          <LocationSection />
-        </RouteGate>
+          {/* Both sections live here so no page can ship without them. The two
+              routes that already own this content opt out rather than repeat it. */}
+          <RouteGate hideOn={["/patient-resources/faqs"]}>
+            <FaqSection />
+          </RouteGate>
+          <RouteGate hideOn={["/contact-us"]}>
+            <LocationSection />
+          </RouteGate>
 
-        <Footer />
-        <MobileActionBar />
+          <Footer />
+          <MobileActionBar />
+        </MotionProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

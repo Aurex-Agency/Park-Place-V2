@@ -13,22 +13,34 @@ export function Eyebrow({
   children,
   align = "left",
   tone = "light",
+  as: Tag = "p",
 }: {
   children: ReactNode;
   align?: "left" | "center";
   /** "dark" for sections on espresso or walnut. */
   tone?: "light" | "dark";
+  /**
+   * Promote the label to a real heading.
+   *
+   * Some sections are labelled by an eyebrow and nothing else. Left as a
+   * paragraph the section has no name in the document outline, and the cards
+   * beneath it end up hanging off whatever heading happened to come before,
+   * which is how a page ends up jumping straight from h1 to h3. Where the
+   * eyebrow is the only name a section has, it should be the heading. The
+   * appearance does not change either way.
+   */
+  as?: "p" | "h2" | "h3";
 }) {
   // The default rose reads at 5.37:1 on linen but only 2.80:1 on espresso, so
   // dark sections take the lighter rose. Passing the wrong one is a contrast
   // failure, which is why it is a named tone rather than a colour class.
   return (
-    <p
+    <Tag
       className={`t-eyebrow ${align === "center" ? "text-center" : ""} ${
         tone === "dark" ? "!text-rose-mist" : ""
       }`}
     >
       {children}
-    </p>
+    </Tag>
   );
 }

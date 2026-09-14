@@ -18,9 +18,17 @@ import { Button } from "@/components/ui/Button";
 export function FormSuccess({
   heading,
   body,
+  confirmed = true,
 }: {
   heading: string;
   body: string;
+  /**
+   * Whether the visitor's own copy actually went out. The practice has the
+   * enquiry either way, which is why a failed receipt does not fail the
+   * submission, but promising someone an email that was never sent leaves
+   * them searching a spam folder for it. Say only what is true.
+   */
+  confirmed?: boolean;
 }) {
   const panel = useRef<HTMLDivElement>(null);
 
@@ -56,8 +64,9 @@ export function FormSuccess({
       <h3 className="t-h3 mt-6">{heading}</h3>
       <p className="mt-3 text-taupe">{body}</p>
       <p className="mt-3 text-[0.9rem] text-taupe">
-        We have emailed you a copy for your records. If it is not there in a few
-        minutes, please check your spam folder.
+        {confirmed
+          ? "We have emailed you a copy for your records. If it is not there in a few minutes, please check your spam folder."
+          : "We could not email you a copy for your records, but your message did reach us and we will be in touch."}
       </p>
 
       <div className="mt-7 flex flex-wrap gap-3">

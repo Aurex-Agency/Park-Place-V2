@@ -434,13 +434,33 @@ reader and the content, the fallback belongs in CSS.
 
 ### Reduced motion
 
-Scroll-linked transforms are not CSS animations, so the global rule does not
-reach them. The hero reads `useReducedMotion()` and drops its parallax
-entirely: the image holds still and the copy stays at full opacity.
+There are two halves to this, and for a while only one of them existed.
 
-Under `prefers-reduced-motion: reduce`, every animation and transition is cut to
-0.01ms, the marquee and the glint stop entirely, and smooth scrolling is turned
-off. This is handled once in `globals.css` and needs no per-component work.
+The CSS half: under `prefers-reduced-motion: reduce`, every animation and
+transition is cut to 0.01ms, the marquee and the glint stop entirely, smooth
+scrolling is turned off, and `[data-line-mask]` is pinned back to
+`transform: none`. That lives in `globals.css`.
+
+The JavaScript half: none of the above reaches Motion. Scroll-linked
+transforms and every `Reveal` are driven from JavaScript, and Motion's own
+default is `reducedMotion: "never"`. The rule in `globals.css` was therefore
+doing nothing at all for the ninety odd animated elements on the homepage,
+while `/accessibility` told readers that animation stops. Three components
+asked `useReducedMotion()` for themselves; the twenty seven files using
+`Reveal` did not, and nothing made that visible.
+
+`MotionProvider` wraps the tree in `<MotionConfig reducedMotion="user">`, so
+the setting is honoured for everything built on Motion, once, by default.
+`reducedMotion="user"` holds transform and layout animations at their
+destination value and still allows opacity to animate, which matters: content
+revealed on scroll starts at `opacity: 0`, so an implementation that froze
+*everything* would hide the page rather than calm it. See the rule above.
+
+The hero still reads `useReducedMotion()` directly to drop its parallax, which
+is a stronger statement than the generic behaviour and worth keeping.
+
+The rule to take from this: a global CSS media query is not a motion policy as
+long as any animation runs in JavaScript. The library needs telling too.
 
 ---
 

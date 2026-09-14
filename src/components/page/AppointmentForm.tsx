@@ -1,11 +1,13 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { practice } from "@/lib/content";
 import { fieldClass, labelClass } from "@/components/page/formStyles";
 import { useSubmit } from "@/components/page/useSubmit";
 import { Honeypot } from "@/components/page/Honeypot";
 import { HONEYPOT_FIELD } from "@/lib/forms";
 import { FormSuccess } from "@/components/page/FormSuccess";
+import { FormError } from "@/components/page/FormError";
 
 /**
  * Appointment request form.
@@ -17,7 +19,26 @@ import { FormSuccess } from "@/components/page/FormSuccess";
  * can produce.
  */
 export function AppointmentForm() {
-  const { status, error, submit } = useSubmit();
+  const { status, error, confirmed, submit } = useSubmit();
+
+  /*
+   * The earliest date the picker will offer is today, so nobody can request an
+   * appointment in the past and nobody at the front desk has to ring back to
+   * ask what was meant by it.
+   *
+   * The attribute is written straight onto the input rather than held in
+   * state. This page is prerendered, so a date computed during the render
+   * would be the day of the build, still being offered weeks later; and a
+   * date is a property of the control, not something the component renders
+   * differently because of. Local time, not UTC: for most of the United
+   * States toISOString() on its own gives tomorrow's date all evening.
+   */
+  const dateField = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const now = new Date();
+    const local = new Date(now.getTime() - now.getTimezoneOffset() * 60_000);
+    dateField.current?.setAttribute("min", local.toISOString().slice(0, 10));
+  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,6 +65,7 @@ export function AppointmentForm() {
   if (status === "sent") {
     return (
       <FormSuccess
+        confirmed={confirmed}
         heading="Thank you, we have your request"
         body="Someone from our front desk will call you shortly to confirm a time. Nothing is booked until we have spoken with you."
       />
@@ -80,7 +102,13 @@ export function AppointmentForm() {
           <label htmlFor="date" className={labelClass}>
             Preferred date
           </label>
-          <input id="date" name="date" type="date" className={`${fieldClass} mt-2`} />
+          <input
+            ref={dateField}
+            id="date"
+            name="date"
+            type="date"
+            className={`${fieldClass} mt-2`}
+          />
         </div>
       </div>
 
@@ -126,6 +154,8 @@ export function AppointmentForm() {
         <textarea id="notes" name="notes" rows={4} className={`${fieldClass} mt-2 resize-y`} />
       </div>
 
+      {status === "error" && error && <FormError message={error} />}
+
       <div className="mt-2 flex flex-wrap items-center gap-5">
         <button type="submit" className="btn btn-primary" disabled={status === "sending"}>
           {status === "sending" ? "Sending" : "Request appointment"}
@@ -138,10 +168,8 @@ export function AppointmentForm() {
         </p>
       </div>
 
-      <p aria-live="polite" className="text-[0.9rem] text-taupe">
-        {status === "error" && error
-          ? error
-          : "We will call you to confirm a time. Please do not send medical history, insurance numbers or payment details through this form."}
+      <p className="text-[0.9rem] text-taupe">
+        We will call you to confirm a time. Please do not send medical history, insurance numbers or payment details through this form.
       </p>
     </form>
   );
