@@ -77,37 +77,42 @@ export function PageHeader({
           }
         >
           <div>
-            <Reveal>
+            {/*
+              Above the fold, entrances run in CSS rather than through Motion.
+
+              Reveal starts its children at opacity zero and brings them in
+              after hydration. On fifty interior pages that made the lead
+              paragraph below the Largest Contentful Paint element, measured at
+              4.3s with all of it render delay. These are the pages the search
+              work points at, so they could least afford it.
+            */}
+            <div className="page-in">
               <Eyebrow>{eyebrow}</Eyebrow>
-            </Reveal>
+            </div>
 
             <MaskedHeading as="h1" className="t-h1 mt-6" text={headline} />
 
             {paragraphs.map((text, i) => (
-              <Reveal key={i} delay={0.1 + i * 0.04}>
-                <p className="t-lead mt-5">{text}</p>
-              </Reveal>
+              <p key={i} className="page-in page-in-1 t-lead mt-5">
+                {text}
+              </p>
             ))}
 
             {note && (
-              <Reveal delay={0.18}>
-                <p className="mt-7 inline-block rounded-[1rem] bg-white px-5 py-3.5 text-[0.95rem] text-espresso shadow-[var(--shadow-sm)] ring-1 ring-sand/70">
-                  {note}
-                </p>
-              </Reveal>
+              <p className="page-in page-in-2 mt-7 inline-block rounded-[1rem] bg-white px-5 py-3.5 text-[0.95rem] text-espresso shadow-[var(--shadow-sm)] ring-1 ring-sand/70">
+                {note}
+              </p>
             )}
 
             {cta && (
-              <Reveal delay={0.22}>
-                <div className="mt-9 flex flex-wrap items-center gap-3">
-                  <Button href="/book-an-appointment" variant="primary">
-                    Book an appointment
-                  </Button>
-                  <Button href={practice.phoneHref} variant="ghost">
-                    Call {practice.phone}
-                  </Button>
-                </div>
-              </Reveal>
+              <div className="page-in page-in-3 mt-9 flex flex-wrap items-center gap-3">
+                <Button href="/book-an-appointment" variant="primary">
+                  Book an appointment
+                </Button>
+                <Button href={practice.phoneHref} variant="ghost">
+                  Call {practice.phone}
+                </Button>
+              </div>
             )}
           </div>
 

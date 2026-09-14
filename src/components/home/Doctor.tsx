@@ -44,7 +44,7 @@ export function Doctor() {
           <MaskedHeading className="t-h1 mt-6" text="Expert Care, / Trusted Results" />
 
           <Reveal delay={0.1}>
-            <p className="mt-5 font-[family-name:var(--font-display)] text-xl italic text-rose-deep">
+            <p className="mt-5 font-[family-name:var(--font-display-italic)] text-xl italic text-rose-deep">
               {doctorSection.subhead}
             </p>
           </Reveal>

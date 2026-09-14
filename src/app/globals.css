@@ -41,6 +41,9 @@
      small tracked capitals, even though it resolves to the same family. */
   --font-display: var(--font-zodiak), Zodiak, Georgia, "Times New Roman", serif;
   --font-brand: var(--font-zodiak), Zodiak, Georgia, "Times New Roman", serif;
+  /* Loaded on demand, not preloaded. Used only in the pull quotes. */
+  --font-display-italic: var(--font-zodiak-italic), Zodiak, Georgia,
+    "Times New Roman", serif;
   --font-sans: var(--font-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* ---------- Spacing rhythm (8px base) ---------- */
@@ -465,6 +468,99 @@
 .marquee-mask-y {
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+/* ------------------------------------------------------------------
+   HERO ENTRANCE
+
+   These run in CSS rather than through Motion, and that is the whole
+   point of them.
+
+   The hero entrance used to be a JavaScript choreography: the subhead
+   was server rendered at opacity 0 and faded in on a one second delay
+   after hydration. Largest Contentful Paint ignores anything at opacity
+   zero, so the largest text on the page did not count as painted until
+   the bundle had downloaded, parsed, hydrated and started animating.
+   Measured on throttled mobile, that put LCP at 6.6s with 5.9s of it in
+   render delay, against 654ms to first byte. The bytes arrived in half a
+   second and the pixels took six.
+
+   A CSS animation needs none of that. It starts when the stylesheet
+   applies, which is before the JavaScript has finished arriving.
+
+   Two rules follow, and both matter:
+
+   1. The LCP candidate does not animate its opacity at all. The subhead
+      is the largest text in the hero, so it paints at full opacity
+      immediately and LCP lands with first paint.
+   2. Everything else keeps a delay small enough not to matter. An
+      element at opacity 0 waiting out a delay is an element that has not
+      painted, so a one second stagger is a one second LCP penalty if it
+      ever lands on the largest element.
+
+   The reduced motion rule below zeroes these durations, and `both` fill
+   means the end state still applies, so nothing is left invisible.
+   ------------------------------------------------------------------ */
+@keyframes hero-line-rise {
+  from { transform: translateY(112%); }
+  to   { transform: none; }
+}
+
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* The masked headline slides rather than fades. A transform is painted
+   wherever it lands, so this costs nothing in LCP terms even at a delay. */
+.hero-line {
+  animation: hero-line-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-line-1 { animation-delay: 0.04s; }
+.hero-line-2 { animation-delay: 0.14s; }
+.hero-line-3 { animation-delay: 0.24s; }
+
+/*
+   The same rule applied to every interior page header.
+
+   `Reveal` is a Motion component and starts its children at opacity zero, so
+   anything wrapped in it is invisible until hydration. In a page header that
+   is the first thing a reader sees and, on fifty interior pages, it was the
+   Largest Contentful Paint element: measured at 4.3s with one hundred percent
+   of it render delay. These pages are the ones the whole search effort points
+   at, so they are the ones that could least afford it.
+
+   Above the fold, entrances run in CSS. Below it, `Reveal` is still the right
+   tool: those elements are off screen when the page loads and cost nothing.
+*/
+.page-in {
+  animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.page-in-1 { animation-delay: 0.05s; }
+.page-in-2 { animation-delay: 0.1s; }
+.page-in-3 { animation-delay: 0.15s; }
+
+.hero-eyebrow {
+  animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-actions {
+  animation: hero-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.34s;
+}
+
+.hero-photo {
+  animation: hero-fade 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-cue {
+  animation: hero-fade 1s ease both;
+  animation-delay: 0.9s;
 }
 
 /* Respect the reader */

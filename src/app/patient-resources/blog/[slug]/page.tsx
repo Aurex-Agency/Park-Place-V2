@@ -121,19 +121,18 @@ export default async function PostPage({
             </nav>
 
             <div className="max-w-3xl">
-              <Reveal>
+              {/* Above the fold: CSS entrances, so nothing waits on hydration
+                  to become visible. See globals.css. */}
+              <div className="page-in">
                 <Eyebrow>{post.topic}</Eyebrow>
-              </Reveal>
-              <Reveal>
-                <h1 className="t-h1 mt-6 text-balance">{post.title}</h1>
-              </Reveal>
-              <Reveal>
-                <p className="mt-6 text-[1.05rem] leading-relaxed text-taupe">
-                  {post.summary}
-                </p>
-              </Reveal>
-              <Reveal>
-                <p className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.875rem] text-taupe">
+              </div>
+              <h1 className="page-in page-in-1 t-h1 mt-6 text-balance">
+                {post.title}
+              </h1>
+              <p className="page-in page-in-2 mt-6 text-[1.05rem] leading-relaxed text-taupe">
+                {post.summary}
+              </p>
+              <p className="page-in page-in-3 mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.875rem] text-taupe">
                   <span>
                     By{" "}
                     <Link
@@ -152,9 +151,8 @@ export default async function PostPage({
                   <span aria-hidden="true" className="text-sand-deep">
                     ·
                   </span>
-                  <span>{post.readingMinutes} min read</span>
-                </p>
-              </Reveal>
+                <span>{post.readingMinutes} min read</span>
+              </p>
             </div>
 
             {/*
@@ -164,26 +162,22 @@ export default async function PostPage({
               an assistant quoting one paragraph should quote this one. It is
               set apart deliberately rather than buried in the opening prose.
             */}
-            <Reveal>
-              <div className="mt-12 max-w-3xl rounded-[var(--radius-card)] border border-sand bg-white p-7 shadow-[var(--shadow-sm)] md:p-9">
+            <div className="page-in page-in-3 mt-12 max-w-3xl rounded-[var(--radius-card)] border border-sand bg-white p-7 shadow-[var(--shadow-sm)] md:p-9">
                 <p className="t-eyebrow text-rose-deep">The short answer</p>
-                <p className="mt-4 text-[1.05rem] leading-relaxed text-espresso">
-                  {post.answer}
-                </p>
-              </div>
-            </Reveal>
+              <p className="mt-4 text-[1.05rem] leading-relaxed text-espresso">
+                {post.answer}
+              </p>
+            </div>
 
-            <Reveal>
-              <div className="relative mt-12 aspect-[16/9] max-w-4xl overflow-hidden rounded-[var(--radius-card)]">
+            <div className="relative mt-12 aspect-[16/9] max-w-4xl overflow-hidden rounded-[var(--radius-card)]">
                 <Image
                   src={post.image}
                   alt={post.imageAlt}
                   fill
                   sizes="(max-width: 1024px) 92vw, 60vw"
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
+                className="object-cover"
+              />
+            </div>
           </div>
         </header>
 
