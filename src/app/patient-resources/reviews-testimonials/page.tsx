@@ -1,20 +1,30 @@
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
 import { testimonials } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/patient-resources/reviews-testimonials", {
   title: "Reviews & Testimonials",
   description:
     "What patients in Booneville and the surrounding communities say about Park Place Dental.",
-  alternates: { canonical: canonical("/patient-resources/reviews-testimonials") },
-};
+});
 
 export default function Page() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/patient-resources/reviews-testimonials",
+          name: seoFor("/patient-resources/reviews-testimonials", { title: "reviews-testimonials", description: "" }).title,
+          description: seoFor("/patient-resources/reviews-testimonials", { title: "", description: "" }).description,
+          crumbs: [{ label: "Home", href: "/" }, { label: "Patient Resources", href: "/patient-resources" }, { label: "Reviews & Testimonials" }],
+        })}
+      />
+
       <PageHeader
         eyebrow="Patient Resources"
         headline="Hearing from real patients / makes all the difference"

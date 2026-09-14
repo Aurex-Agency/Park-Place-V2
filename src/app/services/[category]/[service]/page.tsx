@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { serviceCategories, findService } from "@/content/services";
 import { canonical } from "@/lib/site";
+import { seoFor } from "@/content/seo";
+import { serviceFaqs } from "@/content/service-faqs";
+import { serviceDepth } from "@/content/service-depth";
+import { serviceGraph, faqNode } from "@/lib/schema";
+import { JsonLd } from "@/components/site/JsonLd";
+import { FaqSection } from "@/components/site/FaqSection";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Blocks } from "@/components/page/Blocks";
 import { CtaBand } from "@/components/page/CtaBand";
@@ -22,11 +28,25 @@ export async function generateMetadata({
   const { category, service } = await params;
   const found = findService(category, service);
   if (!found) return {};
-  return {
+  const path = `/services/${category}/${found.service.slug}`;
+  const meta = seoFor(path, {
     title: found.service.title,
     description: found.service.metaDescription,
-    alternates: {
-      canonical: canonical(`/services/${category}/${found.service.slug}`),
+  });
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: { canonical: canonical(path) },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: path,
+      images: ["/opengraph-image.png"],
+    },
+    twitter: {
+      title: meta.title,
+      description: meta.description,
+      images: ["/opengraph-image.png"],
     },
   };
 }
@@ -45,8 +65,41 @@ export default async function ServicePage({
 
   const siblings = cat.children.filter((c) => c.slug !== item.slug);
 
+  const path = `/services/${cat.slug}/${item.slug}`;
+  const meta = seoFor(path, {
+    title: item.title,
+    description: item.metaDescription,
+  });
+  const faqs = serviceFaqs[item.slug] ?? [];
+  const crumbs = [
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
+    { label: cat.title, href: `/services/${cat.slug}` },
+    { label: item.title },
+  ];
+
   return (
     <>
+      <JsonLd
+        graph={serviceGraph({
+          path,
+          name: meta.title,
+          description: meta.description,
+          crumbs,
+          primaryImage: item.image,
+          serviceName: item.title,
+          serviceType: `${cat.title}: ${item.title}`,
+        })}
+      />
+      {faqs.length > 0 && (
+        <JsonLd
+          graph={JSON.stringify({
+            "@context": "https://schema.org",
+            ...faqNode(faqs, path),
+          }).replace(/</g, "\\u003c")}
+        />
+      )}
+
       <PageHeader
         eyebrow={cat.title}
         headline={item.title}
@@ -54,17 +107,14 @@ export default async function ServicePage({
         image={item.image}
         imageAlt={item.imageAlt}
         note={item.note}
-        crumbs={[
-          { label: "Home", href: "/" },
-          { label: "Services", href: "/services" },
-          { label: cat.title, href: `/services/${cat.slug}` },
-          { label: item.title },
-        ]}
+        crumbs={crumbs}
       />
 
       <div className="section">
         <div className="shell">
-          <Blocks blocks={item.blocks} />
+          {/* The page's own copy, then the depth added for the pages that have
+              to compete on more than a description. */}
+          <Blocks blocks={[...item.blocks, ...(serviceDepth[item.slug] ?? [])]} />
 
           <div className="mt-16">
             <InlineCta
@@ -74,6 +124,14 @@ export default async function ServicePage({
           </div>
         </div>
       </div>
+
+      {faqs.length > 0 && (
+        <FaqSection
+          items={faqs}
+          eyebrow={`${item.title} Questions`}
+          heading={`Questions about / ${item.title.toLowerCase()}`}
+        />
+      )}
 
       <RelatedServices
         eyebrow={`More ${cat.title}`}

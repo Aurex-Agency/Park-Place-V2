@@ -38,9 +38,11 @@ export const doctor = {
   yearsPracticing: 43,
   portrait: "/images/dr-ken-goodwin-portrait.jpg",
   bio: [
-    "Dr. Ken Goodwin is a dedicated and experienced dentist with over 43 years of providing exceptional patient care. A proud graduate of the University of Mississippi, where he earned his Bachelor of Arts in 1978, he went on to receive his Doctor of Dental Medicine degree from the University of Mississippi School of Dentistry in 1982.",
-    "Originally from Booneville, Dr. Goodwin returned to his hometown with a passion for serving those around him. He is committed to creating beautiful, confident smiles while building lasting relationships with his patients. His practice offers a family-oriented work environment and strives to be a welcoming, comforting place for every patient.",
-    "Dr. Goodwin is also dedicated to staying at the forefront of dentistry, utilizing cutting-edge technology and maintaining the highest quality equipment. Outside the office, he enjoys spending time with his family, duck hunting, and supporting the Ole Miss Rebels.",
+    "Dr. Ken Goodwin has practised dentistry in Booneville, Mississippi for over 43 years. He earned his Bachelor of Arts from the University of Mississippi in 1978 and his Doctor of Dental Medicine from the University of Mississippi School of Dentistry in 1982, and he has been treating patients in his hometown ever since.",
+    "Originally from Booneville, Dr. Goodwin returned here to practise rather than settling somewhere larger, and it is the reason the practice looks the way it does. Over four decades he has treated three generations of some families in Prentiss County, and patients who first came to him as children now bring their own.",
+    "As a general dentist, he handles the full range of everyday care: examinations and cleanings, fillings, root canals, crowns and bridges, dentures and partials, implant restoration, and the emergencies that do not wait for a convenient appointment. Patients travel to him from Baldwyn, Corinth, New Albany, Ripley, Fulton and Tupelo, most often for work that the practice can complete in fewer visits because its dental laboratory is in the building.",
+    "He is also committed to keeping the practice current rather than comfortable. Park Place Dental uses the Solea dental laser, which allows many fillings to be completed with little or no anaesthetic, and RAYFace 3D facial scanning, which lets cosmetic and implant treatment be planned against the whole face rather than a single tooth. Both were brought in because they change what the visit is like for the patient, not because they are new.",
+    "Outside the office, Dr. Goodwin spends his time with his family, duck hunting, and supporting the Ole Miss Rebels.",
   ],
 } as const;
 
@@ -99,7 +101,7 @@ export const featuredServices = [
   {
     title: "Dental Implants",
     slug: "/services/restorative-dentistry/dental-implants",
-    body: "Regain your smile with permanent, lifelike dental implants. Our implants are designed to look and function like your natural teeth, and they are produced in our in-house lab for a faster, more precise fit.",
+    body: "Regain your smile with lifelike dental implants designed to last for decades with good care. Our implants are made to look and function like your natural teeth, and the crown is produced in our in-house lab for a faster, more precise fit.",
     image: "/images/procedure-closeup.jpg",
     imageAlt: "A restorative procedure underway at Park Place Dental",
   },
@@ -312,6 +314,8 @@ export const nav = [
       { label: "About the Practice", href: "/about-us/about-the-practice" },
       { label: "Meet the Dentist", href: "/about-us/meet-the-dentist" },
       { label: "Meet the Team", href: "/about-us/meet-the-team" },
+      { label: "Where We Serve", href: "/locations" },
+      { label: "For Veterans", href: "/veterans" },
     ],
   },
   {
@@ -341,7 +345,7 @@ export const nav = [
     children: [
       { label: "FAQs", href: "/patient-resources/faqs" },
       { label: "Reviews & Testimonials", href: "/patient-resources/reviews-testimonials" },
-      { label: "Blog", href: "/patient-resources/blog" },
+      { label: "Articles", href: "/patient-resources/blog" },
     ],
   },
   { label: "Contact Us", href: "/contact-us", children: [] },

@@ -1,5 +1,7 @@
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
@@ -7,15 +9,23 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ContactForm } from "@/components/page/ContactForm";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/contact-us", {
   title: "Contact Us",
   description: `Park Place Dental, ${practice.address.full}. Call ${practice.phone} to book an appointment.`,
-  alternates: { canonical: canonical("/contact-us") },
-};
+});
 
 export default function Page() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/contact-us",
+          name: seoFor("/contact-us", { title: "contact-us", description: "" }).title,
+          description: seoFor("/contact-us", { title: "", description: "" }).description,
+          crumbs: [{ label: "Home", href: "/" }, { label: "Contact Us" }],
+        })}
+      />
+
       <PageHeader
         eyebrow="Contact Us"
         headline="Come and see us / in Booneville"

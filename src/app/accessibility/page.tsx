@@ -1,15 +1,16 @@
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/accessibility", {
   title: "Accessibility",
   description:
     "Park Place Dental is committed to making this website usable for everyone.",
-  alternates: { canonical: canonical("/accessibility") },
-};
+});
 
 const sections = [
   {
@@ -41,6 +42,15 @@ const sections = [
 export default function Page() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/accessibility",
+          name: seoFor("/accessibility", { title: "accessibility", description: "" }).title,
+          description: seoFor("/accessibility", { title: "", description: "" }).description,
+          crumbs: [{ label: "Home", href: "/" }, { label: "Accessibility" }],
+        })}
+      />
+
       <PageHeader
         eyebrow="Accessibility"
         headline="This site should work / for everybody"

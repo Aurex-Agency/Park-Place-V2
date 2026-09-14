@@ -1,14 +1,15 @@
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/privacy-policy", {
   title: "Privacy Policy",
   description: "How Park Place Dental handles the information you share with us.",
-  alternates: { canonical: canonical("/privacy-policy") },
-};
+});
 
 /*
   This is a plain-language starting point written to match what the site
@@ -54,6 +55,15 @@ const sections = [
 export default function Page() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/privacy-policy",
+          name: seoFor("/privacy-policy", { title: "privacy-policy", description: "" }).title,
+          description: seoFor("/privacy-policy", { title: "", description: "" }).description,
+          crumbs: [{ label: "Home", href: "/" }, { label: "Privacy Policy" }],
+        })}
+      />
+
       <PageHeader
         eyebrow="Privacy Policy"
         headline="How we handle / your information"

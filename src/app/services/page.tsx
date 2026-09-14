@@ -1,5 +1,7 @@
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
 import Link from "next/link";
 import Image from "next/image";
 import { serviceCategories } from "@/content/services";
@@ -8,16 +10,24 @@ import { CtaBand } from "@/components/page/CtaBand";
 import { ArrowRight } from "@/components/ui/Button";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/services", {
   title: "Services",
   description:
     "General, restorative, cosmetic and periodontal dentistry plus facial aesthetics, all under one roof in Booneville, Mississippi.",
-  alternates: { canonical: canonical("/services") },
-};
+});
 
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/services",
+          name: seoFor("/services", { title: "services", description: "" }).title,
+          description: seoFor("/services", { title: "", description: "" }).description,
+          crumbs: [{ label: "Home", href: "/" }, { label: "Services" }],
+        })}
+      />
+
       <PageHeader
         eyebrow="Comprehensive Care Under One Roof"
         headline="Everything we do, / all in one place"

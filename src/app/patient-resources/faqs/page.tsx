@@ -1,45 +1,53 @@
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
+import { faqPageGraph } from "@/lib/schema";
+import { JsonLd } from "@/components/site/JsonLd";
 import { faqs } from "@/content/pages";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
 import { FaqList } from "@/components/page/FaqList";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/patient-resources/faqs", {
   title: "FAQs",
   description:
     "Answers to the questions we hear most often from patients in Booneville and the surrounding communities.",
-  alternates: { canonical: canonical("/patient-resources/faqs") },
-};
+});
 
-/** Marked up so the answers can appear directly in search results. */
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
-  })),
-};
+const PATH = "/patient-resources/faqs";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Patient Resources", href: "/patient-resources" },
+  { label: "FAQs" },
+];
 
 export default function Page() {
+  /*
+   * FAQPage markup no longer earns a rich result: Google retired site-wide FAQ
+   * snippets in May 2026. It stays because AI search systems still read it, and
+   * a clean question-and-answer structure is the format they quote from.
+   */
+  const meta = seoFor(PATH, { title: "FAQs", description: "" });
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      <JsonLd
+        graph={faqPageGraph(
+          {
+            path: PATH,
+            name: meta.title,
+            description: meta.description,
+            crumbs,
+          },
+          faqs,
+        )}
       />
 
       <PageHeader
         eyebrow="Patient Resources"
         headline="Questions we hear / most often"
         lead="We understand that many patients have questions before visiting the dentist, especially if it has been a while or you are considering treatment. Below are answers to some of the most common questions we hear from patients in Booneville and surrounding communities."
-        crumbs={[
-          { label: "Home", href: "/" },
-          { label: "Patient Resources", href: "/patient-resources" },
-          { label: "FAQs" },
-        ]}
+        crumbs={crumbs}
       />
 
       <div className="section">

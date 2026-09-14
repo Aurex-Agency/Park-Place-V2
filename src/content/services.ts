@@ -264,7 +264,7 @@ export const serviceCategories: ServiceCategory[] = [
         title: "Dental Implants",
         metaDescription:
           "Permanent, natural-looking dental implants with crowns from our in-house lab in Booneville, Mississippi.",
-        lead: "Dental implants are a revolutionary solution for replacing missing or severely damaged teeth. At Park Place Dental, we offer state-of-the-art dental implants that look, feel, and function just like your natural teeth. Whether you are missing a single tooth or need a full arch replacement, dental implants are a durable and permanent option that restores both the function and beauty of your smile.",
+        lead: "Dental implants replace missing or severely damaged teeth with something that looks, feels and functions much like a natural tooth. Whether you are missing a single tooth or need a full arch replaced, an implant is a durable, long-term option that restores both the function and the appearance of your smile, and the crown that goes on top is made in our own lab.",
         image: "/images/operatory-technology.jpg",
         imageAlt: "Digital scanning equipment at Park Place Dental",
         blocks: [
@@ -280,7 +280,7 @@ export const serviceCategories: ServiceCategory[] = [
             heading: "Benefits of dental implants",
             items: [
               { term: "Natural appearance", text: "Implants blend seamlessly with your natural teeth and are virtually indistinguishable from real teeth." },
-              { term: "Durability", text: "Dental implants are designed to last for decades, offering a permanent solution for tooth loss." },
+              { term: "Durability", text: "Dental implants are designed to last for decades with good care, and they are the longest-lasting option for replacing a missing tooth. Like natural teeth, they depend on healthy gums and bone around them." },
               { term: "Improved function", text: "Implants restore full chewing and speaking ability, so you can enjoy all the foods you love without worry." },
               { term: "Preserved jawbone", text: "Since implants stimulate the jawbone like natural tooth roots, they help prevent bone loss and preserve your facial structure." },
             ],

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { EASE, SNAP } from "@/lib/motion";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
@@ -77,22 +77,34 @@ export function FaqList({
                 </button>
               </Heading>
 
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    id={`faq-answer-${i}`}
-                    role="region"
-                    aria-labelledby={`faq-question-${i}`}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.5, ease: EASE }}
-                    className="overflow-hidden"
-                  >
-                    <p className="max-w-2xl pb-8 pr-12 text-taupe">{item.a}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/*
+                Every answer stays in the document, open or closed.
+
+                This used to mount only the open one, which meant that of five
+                answers on a page, four were absent from the served HTML. They
+                were present in the structured data and nowhere else, so the
+                page read as far thinner than it is to anything that does not
+                run the accordion. Animating the height of an element that is
+                always there costs nothing and puts the words back.
+              */}
+              <motion.div
+                id={`faq-answer-${i}`}
+                role="region"
+                aria-labelledby={`faq-question-${i}`}
+                initial={false}
+                animate={{
+                  height: isOpen ? "auto" : 0,
+                  opacity: isOpen ? 1 : 0,
+                }}
+                transition={{ duration: 0.5, ease: EASE }}
+                className="overflow-hidden"
+                /* Taken out of the tab order and the accessibility tree while
+                   closed, so a keyboard or screen reader user is not walked
+                   through answers to questions they have not opened. */
+                inert={!isOpen}
+              >
+                <p className="max-w-2xl pb-8 pr-12 text-taupe">{item.a}</p>
+              </motion.div>
             </div>
           </RevealItem>
         );

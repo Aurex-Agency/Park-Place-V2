@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { practice } from "@/lib/content";
 import { siteUrl, canonical } from "@/lib/site";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -10,6 +9,8 @@ import { RouteGate } from "@/components/site/RouteGate";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 import { MobileActionBar } from "@/components/site/MobileActionBar";
 import { MotionProvider } from "@/components/site/MotionProvider";
+import { JsonLd } from "@/components/site/JsonLd";
+import { siteGraph } from "@/lib/schema";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -81,58 +82,6 @@ export const metadata: Metadata = {
   */
 };
 
-/**
- * Local business markup so the practice reads correctly in search.
- *
- * Every page carries this, which is why it has a stable `@id`: without one,
- * thirty seven copies read as thirty seven businesses that happen to share an
- * address. With one, they are thirty seven references to the same entity.
- *
- * `url` and `image` are here because Google asks for both on a local business
- * and will not show the richer result without them. The telephone number is
- * written in E.164 alongside the human formatting used everywhere else on the
- * site, since that is the form a machine can dial unambiguously.
- *
- * Nothing is asserted here that the practice has not confirmed. There is no
- * priceRange and no aggregateRating, because inventing either would be a
- * fabricated business fact, and `sameAs` is left out until the Google Business
- * Profile and social URLs are to hand.
- */
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Dentist",
-  "@id": `${siteUrl}/#practice`,
-  name: practice.name,
-  url: siteUrl,
-  image: [
-    `${siteUrl}/images/team-group-porch.jpg`,
-    `${siteUrl}/images/reception-front-desk.jpg`,
-  ],
-  telephone: "+1-662-728-8171",
-  email: practice.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: practice.address.street,
-    addressLocality: practice.address.city,
-    addressRegion: practice.address.region,
-    postalCode: practice.address.postalCode,
-    addressCountry: "US",
-  },
-  hasMap: practice.mapsHref,
-  areaServed: {
-    "@type": "AdministrativeArea",
-    name: `${practice.county}, ${practice.state}`,
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "08:30",
-      closes: "17:00",
-    },
-  ],
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -166,10 +115,9 @@ export default function RootLayout({
             }}
           />
         </noscript>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
+        {/* The practice, the dentist and the site. Every page adds its own
+            nodes that reference these by @id rather than restating them. */}
+        <JsonLd graph={siteGraph()} />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-5 focus:py-3 focus:shadow-md"
@@ -183,7 +131,10 @@ export default function RootLayout({
 
           {/* Both sections live here so no page can ship without them. The two
               routes that already own this content opt out rather than repeat it. */}
-          <RouteGate hideOn={["/patient-resources/faqs"]}>
+          <RouteGate
+            hideOn={["/patient-resources/faqs"]}
+            hidePrefixes={["/services/", "/locations", "/patient-resources/blog/", "/veterans"]}
+          >
             <FaqSection />
           </RouteGate>
           <RouteGate hideOn={["/contact-us"]}>

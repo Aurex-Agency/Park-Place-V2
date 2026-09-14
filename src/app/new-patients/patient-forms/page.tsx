@@ -1,21 +1,31 @@
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata, seoFor } from "@/content/seo";
 import { patientForms } from "@/content/pages";
 import { practice } from "@/lib/content";
 import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/new-patients/patient-forms", {
   title: "Patient Forms",
   description:
     "Complete your Park Place Dental forms before your visit to save time at your appointment.",
-  alternates: { canonical: canonical("/new-patients/patient-forms") },
-};
+});
 
 export default function Page() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/new-patients/patient-forms",
+          name: seoFor("/new-patients/patient-forms", { title: "patient-forms", description: "" }).title,
+          description: seoFor("/new-patients/patient-forms", { title: "", description: "" }).description,
+          crumbs: [{ label: "Home", href: "/" }, { label: "New Patients", href: "/new-patients" }, { label: "Patient Forms" }],
+        })}
+      />
+
       <PageHeader
         eyebrow="New Patients"
         headline="Fill these in before / you come in"

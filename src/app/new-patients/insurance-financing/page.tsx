@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { canonical } from "@/lib/site";
+import { pageMetadata } from "@/content/seo";
 import { insuranceFinancing } from "@/content/pages";
 import { SimplePageView } from "@/components/page/SimplePageView";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata("/new-patients/insurance-financing", {
   title: insuranceFinancing.title,
   description: insuranceFinancing.metaDescription,
-  alternates: { canonical: canonical("/new-patients/insurance-financing") },
-};
+});
 
 export default function Page() {
   return (
     <SimplePageView
+      path={"/new-patients/insurance-financing"}
       page={insuranceFinancing}
       crumbs={[
         { label: "Home", href: "/" },

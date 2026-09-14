@@ -1,3 +1,6 @@
+import { seoFor } from "@/content/seo";
+import { JsonLd } from "@/components/site/JsonLd";
+import { pageGraph } from "@/lib/schema";
 import { Hero } from "@/components/home/Hero";
 import { Welcome } from "@/components/home/Welcome";
 import { FeaturedServices } from "@/components/home/FeaturedServices";
@@ -12,6 +15,14 @@ import { ClosingCta } from "@/components/home/ClosingCta";
 export default function HomePage() {
   return (
     <>
+      <JsonLd
+        graph={pageGraph({
+          path: "/",
+          name: seoFor("/", { title: "Home", description: "" }).title,
+          description: seoFor("/", { title: "", description: "" }).description,
+        })}
+      />
+
       <Hero />
       <Welcome />
       <FeaturedServices />
