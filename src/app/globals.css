@@ -525,6 +525,26 @@
 .hero-line-2 { animation-delay: 0.14s; }
 .hero-line-3 { animation-delay: 0.24s; }
 
+/*
+   The same rule applied to every interior page header.
+
+   `Reveal` is a Motion component and starts its children at opacity zero, so
+   anything wrapped in it is invisible until hydration. In a page header that
+   is the first thing a reader sees and, on fifty interior pages, it was the
+   Largest Contentful Paint element: measured at 4.3s with one hundred percent
+   of it render delay. These pages are the ones the whole search effort points
+   at, so they are the ones that could least afford it.
+
+   Above the fold, entrances run in CSS. Below it, `Reveal` is still the right
+   tool: those elements are off screen when the page loads and cost nothing.
+*/
+.page-in {
+  animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.page-in-1 { animation-delay: 0.05s; }
+.page-in-2 { animation-delay: 0.1s; }
+.page-in-3 { animation-delay: 0.15s; }
+
 .hero-eyebrow {
   animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
