@@ -31,27 +31,47 @@ function Line({
   index,
   delay,
   inView,
+  immediate,
 }: {
   text: string;
   index: number;
   delay: number;
   inView: boolean;
+  immediate: boolean;
 }) {
   return (
     <span
       aria-hidden="true"
       className="block overflow-hidden py-[0.06em] [&:not(:first-child)]:-mt-[0.12em]"
     >
-      <motion.span
-        data-line-mask=""
-        className="block"
-        variants={lineMask}
-        initial="hidden"
-        animate={inView ? "visible" : "hidden"}
-        transition={{ duration: 0.95, ease: EASE, delay: delay + index * 0.085 }}
-      >
-        {text}
-      </motion.span>
+      {immediate ? (
+        /*
+         * Above the fold, the rise runs in CSS.
+         *
+         * These lines sit translated a full line below an overflow-hidden mask,
+         * so until something moves them they are clipped out of the rendering
+         * entirely. Driven by Motion that meant the page heading did not exist
+         * as far as paint was concerned until the bundle had hydrated. A CSS
+         * animation starts when the stylesheet applies, which is long before.
+         */
+        <span
+          data-line-mask=""
+          className={`hero-line hero-line-${Math.min(index + 1, 3)} block`}
+        >
+          {text}
+        </span>
+      ) : (
+        <motion.span
+          data-line-mask=""
+          className="block"
+          variants={lineMask}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          transition={{ duration: 0.95, ease: EASE, delay: delay + index * 0.085 }}
+        >
+          {text}
+        </motion.span>
+      )}
     </span>
   );
 }
@@ -61,11 +81,21 @@ export function MaskedHeading({
   className = "",
   as: Tag = "h2",
   delay = 0,
+  immediate = false,
 }: {
   text: string;
   className?: string;
   as?: "h1" | "h2" | "h3";
   delay?: number;
+  /**
+   * Set on headings that are on screen when the page loads.
+   *
+   * They animate in CSS instead of through Motion, so they are painted without
+   * waiting for hydration. Below the fold the Motion path is still correct: it
+   * triggers on arrival, and those headings cost nothing at load because they
+   * are nowhere near the viewport.
+   */
+  immediate?: boolean;
 }) {
   const ref = useRef<HTMLHeadingElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
@@ -81,7 +111,13 @@ export function MaskedHeading({
     <Tag ref={ref} className={className} aria-label={plain}>
       {/* Narrow: one block, wrapping wherever it needs to. */}
       <span className="md:hidden">
-        <Line text={plain} index={0} delay={delay} inView={inView} />
+        <Line
+          text={plain}
+          index={0}
+          delay={delay}
+          inView={inView}
+          immediate={immediate}
+        />
       </span>
 
       {/* Wide enough for the authored breaks to hold. */}
@@ -93,6 +129,7 @@ export function MaskedHeading({
             index={i}
             delay={delay}
             inView={inView}
+            immediate={immediate}
           />
         ))}
       </span>
