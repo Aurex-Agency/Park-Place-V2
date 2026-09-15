@@ -26,6 +26,17 @@ import "./globals.css";
 const zodiak = localFont({
   variable: "--font-zodiak",
   display: "swap",
+  /*
+   * Deliberately not preloaded.
+   *
+   * Zodiak sets the headlines; Plus Jakarta Sans sets the paragraph beneath
+   * them, and that paragraph is the Largest Contentful Paint element on the
+   * homepage. Preloading both put 57KB of fonts at the front of the queue on a
+   * throttled connection, ahead of the stylesheet that unblocks first paint.
+   * Zodiak still loads, one priority level down, and swaps in when it arrives;
+   * the headline is animated on entry anyway, so the swap lands under cover.
+   */
+  preload: false,
   src: [
     {
       path: "../fonts/Zodiak-Variable.woff2",
@@ -51,7 +62,14 @@ const zodiak = localFont({
  */
 const zodiakItalic = localFont({
   variable: "--font-zodiak-italic",
-  display: "swap",
+  /*
+   * `optional` rather than `swap`, because this face buys very little and was
+   * costing a lot. It sets two pull quotes, both below the fold, and its 31KB
+   * sat in the critical request chain competing with everything above them. On
+   * a connection quick enough to have it in time it is used; on one that is
+   * not, the quotes render in Georgia italic and nothing reflows later.
+   */
+  display: "optional",
   preload: false,
   src: [
     {
@@ -65,7 +83,7 @@ const zodiakItalic = localFont({
 /** Plus Jakarta Sans does the functional work: body, navigation, buttons, forms. */
 const jakarta = localFont({
   variable: "--font-jakarta",
-  display: "swap",
+  display: "optional",
   src: [
     {
       path: "../fonts/PlusJakartaSans-Variable.woff2",
@@ -199,7 +217,9 @@ export default function RootLayout({
           navigations on its own, which is what the App Router performs, so
           client-side route changes are counted without anything further here.
         */}
-        {analyticsEnabled && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
+        {analyticsEnabled && (
+          <GoogleAnalytics gaId={GA_MEASUREMENT_ID} dataLayerName="dataLayer" />
+        )}
       </body>
     </html>
   );
