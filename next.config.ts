@@ -29,6 +29,21 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  experimental: {
+    /**
+     * The layout stylesheet goes into the document instead of being fetched.
+     *
+     * It is 10.5KB and it was the only render-blocking request on every page:
+     * first paint could not happen until a second round trip completed, and on
+     * a throttled connection it was competing for bandwidth with two preloaded
+     * fonts. Inlined, first paint waits on the document alone.
+     *
+     * The tradeoff is that the CSS is no longer cached separately across
+     * navigations. For a site this size, where the whole stylesheet is smaller
+     * than one of the fonts, removing the round trip is the better side of it.
+     */
+    inlineCss: true,
+  },
   images: {
     /**
      * The hero is a dark render with wide, smooth gradients, which is exactly
