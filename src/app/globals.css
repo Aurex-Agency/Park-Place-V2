@@ -592,6 +592,66 @@
   animation-delay: 0.9s;
 }
 
+/* -------------------------------------------------------------------
+   Scroll entrances.
+
+   These were Motion variants until the animation library turned out to be
+   most of the JavaScript on the site: 920ms of script evaluation on the
+   homepage, inside the window that decides Largest Contentful Paint, for
+   three fades and a lift. Same curve, same distances, no library.
+
+   Everything is gated on `[data-js]`, set by a one line script in the head.
+   Without it nothing is hidden, so a browser that cannot run the observer
+   shows the content instead of an empty page.
+   ------------------------------------------------------------------- */
+[data-reveal],
+[data-reveal-group] > * {
+  transition-property: opacity, transform;
+  transition-duration: var(--reveal-duration, 0.7s);
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+[data-reveal="riseSmall"] { --reveal-duration: 0.55s; }
+[data-reveal="fade"] { --reveal-duration: 1s; }
+
+/* The resting, hidden state. Only ever applied once JavaScript is running. */
+[data-js] [data-reveal="rise"][data-reveal-state="hidden"],
+[data-js] [data-reveal-group][data-reveal-state="hidden"] > [data-reveal="rise"] {
+  opacity: 0;
+  transform: translateY(34px) scale(0.985);
+}
+
+[data-js] [data-reveal="riseSmall"][data-reveal-state="hidden"],
+[data-js] [data-reveal-group][data-reveal-state="hidden"] > [data-reveal="riseSmall"] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+[data-js] [data-reveal="fade"][data-reveal-state="hidden"],
+[data-js] [data-reveal-group][data-reveal-state="hidden"] > [data-reveal="fade"] {
+  opacity: 0;
+}
+
+/* The stagger, as a per child delay, so a group needs one observer rather
+   than one per item. */
+[data-reveal-group] > :nth-child(1) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 0); }
+[data-reveal-group] > :nth-child(2) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 1); }
+[data-reveal-group] > :nth-child(3) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 2); }
+[data-reveal-group] > :nth-child(4) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 3); }
+[data-reveal-group] > :nth-child(5) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 4); }
+[data-reveal-group] > :nth-child(6) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 5); }
+[data-reveal-group] > :nth-child(7) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 6); }
+[data-reveal-group] > :nth-child(8) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 7); }
+[data-reveal-group] > :nth-child(9) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 8); }
+[data-reveal-group] > :nth-child(10) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 9); }
+[data-reveal-group] > :nth-child(11) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 10); }
+[data-reveal-group] > :nth-child(12) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 11); }
+[data-reveal-group] > :nth-child(13) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 12); }
+[data-reveal-group] > :nth-child(14) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 13); }
+[data-reveal-group] > :nth-child(15) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 14); }
+[data-reveal-group] > :nth-child(16) { transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-gap, 0.09s) * 15); }
+
 /* Respect the reader */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -607,6 +667,15 @@
      with content visibility. Pin the lines back to their resting position. */
   [data-line-mask] {
     transform: none !important;
+  }
+
+  /* A reveal that is still hidden when motion is switched off would stay
+     hidden, because its transition is what makes it visible. Pin them open. */
+  [data-reveal],
+  [data-reveal-group] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 
   *,
