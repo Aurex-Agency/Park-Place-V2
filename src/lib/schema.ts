@@ -33,8 +33,17 @@ export const PRACTICE_ID = `${siteUrl}/#practice`;
 export const WEBSITE_ID = `${siteUrl}/#website`;
 export const DOCTOR_ID = `${siteUrl}/#dr-ken-goodwin`;
 
-/** E.164, which is the form a machine can dial without guessing. */
-const TELEPHONE = "+1-662-728-8171";
+/**
+ * E.164, which is the form a machine can dial without guessing.
+ *
+ * Derived from the number the rest of the site renders rather than typed a
+ * second time. Two literals for one phone number agree right up until they
+ * quietly stop agreeing, and this file already documents the live site having
+ * published the wrong first name for the dentist for years.
+ */
+const TELEPHONE = practice.phoneHref
+  .replace(/^tel:/, "")
+  .replace(/^\+1(\d{3})(\d{3})(\d{4})$/, "+1-$1-$2-$3");
 
 type Node = Record<string, unknown>;
 
@@ -136,13 +145,22 @@ export function doctorNode(): Node {
         name: "University of Mississippi School of Dentistry",
       },
     ],
+    /* What this dentist is distinctive for, not a list any dentist could
+       claim. The laser, the facial scanner and the veterans work are the parts
+       a machine could not infer from the word "dentist". */
     knowsAbout: [
       "General dentistry",
       "Restorative dentistry",
       "Cosmetic dentistry",
+      "Periodontal care",
+      "Facial aesthetics",
       "Dental implants",
       "Dentures",
       "Same-day crowns",
+      "In-house dental laboratory",
+      "Solea laser dentistry",
+      "RAYFace 3D facial scanning",
+      "VA dental benefits",
     ],
   };
 }
@@ -262,7 +280,15 @@ export function pageGraph(options: PageOptions): string {
 
 /** A treatment page: the page graph, plus the service being described. */
 export function serviceGraph(
-  options: PageOptions & { serviceName: string; serviceType: string },
+  options: PageOptions & {
+    serviceName: string;
+    serviceType: string;
+    /* Folded into this page's own graph rather than emitted as a second,
+       unconnected script block, which is what the treatment pages used to do
+       and what the category pages did not do at all despite rendering the
+       questions on screen. */
+    faqs?: readonly { q: string; a: string }[];
+  },
 ): string {
   const url = canonical(options.path);
   const nodes: Node[] = [
@@ -283,6 +309,108 @@ export function serviceGraph(
     ? breadcrumbNode(options.path, options.crumbs)
     : null;
   if (crumbs) nodes.push(crumbs);
+  if (options.faqs?.length) nodes.push(faqNode(options.faqs, options.path));
+
+  return json({ "@context": "https://schema.org", "@graph": nodes });
+}
+
+/**
+ * A location page.
+ *
+ * The temptation on a page like this is to emit a second `Dentist` node with
+ * the town's name on it. That would be a lie: there is one practice, at one
+ * address, and a second business node with a different locality is exactly the
+ * pattern search engines treat as location spam. It would also put a second,
+ * conflicting NAP into the index, which is the one thing local SEO cannot
+ * survive.
+ *
+ * So what is emitted instead is true: the existing practice, referenced by
+ * `@id`, offers a service whose `areaServed` is this town. One business, many
+ * served places, described once.
+ */
+export function locationGraph(options: {
+  path: string;
+  name: string;
+  description: string;
+  crumbs: Crumb[];
+  town: string;
+  county: string;
+  zip: string;
+  /** The smaller communities this page also speaks for. */
+  nearby: readonly string[];
+  faqs: readonly { q: string; a: string }[];
+}): string {
+  const url = canonical(options.path);
+
+  /* The town, and the communities around it, as places rather than as a string
+     of keywords.
+
+     `containedInPlace` is asserted only for the town the page is about, and
+     only from that town's own `county` field. The surrounding communities get
+     a locality and nothing more: several of them sit across a county line from
+     the town they are near, and inheriting the page's county would put a false
+     claim into the markup for the sake of one extra property. */
+  const place = (name: string): Node => ({
+    "@type": "Place",
+    name: `${name}, Mississippi`,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: name,
+      addressRegion: "MS",
+      addressCountry: "US",
+    },
+  });
+
+  /* Baldwyn straddles a county line, and its `county` reads "Prentiss and Lee
+     Counties". Emitted whole that is not the name of any administrative area,
+     so it is split back into the two that exist. */
+  const counties = options.county
+    .replace(/\s+Count(y|ies)$/i, "")
+    .split(/\s+and\s+/)
+    .map((name) => ({
+      "@type": "AdministrativeArea",
+      name: `${name} County, Mississippi`,
+    }));
+
+  const townPlace: Node = {
+    ...place(options.town),
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: options.town,
+      addressRegion: "MS",
+      postalCode: options.zip,
+      addressCountry: "US",
+    },
+    containedInPlace: counties.length === 1 ? counties[0] : counties,
+  };
+
+  const nodes: Node[] = [
+    webPageNode({
+      path: options.path,
+      name: options.name,
+      description: options.description,
+      crumbs: options.crumbs,
+    }),
+    {
+      "@type": "Service",
+      "@id": `${url}#service`,
+      name: `Dental care for ${options.town}, Mississippi`,
+      serviceType: "Dentistry",
+      description: options.description,
+      url,
+      provider: { "@id": PRACTICE_ID },
+      areaServed: [townPlace, ...options.nearby.map((n) => place(n))],
+      availableChannel: {
+        "@type": "ServiceChannel",
+        servicePhone: { "@type": "ContactPoint", telephone: TELEPHONE },
+        serviceUrl: `${siteUrl}/book-an-appointment`,
+      },
+    },
+  ];
+
+  const crumbs = breadcrumbNode(options.path, options.crumbs);
+  if (crumbs) nodes.push(crumbs);
+  if (options.faqs.length) nodes.push(faqNode(options.faqs, options.path));
 
   return json({ "@context": "https://schema.org", "@graph": nodes });
 }
@@ -322,8 +450,6 @@ export type ArticleSchemaOptions = {
   image: string;
   crumbs: Crumb[];
   faqs?: readonly { q: string; a: string }[];
-  /** Ordered steps, where the article genuinely gives instructions. */
-  howTo?: { name: string; steps: { name: string; text: string }[] };
 };
 
 /**
@@ -337,13 +463,26 @@ export type ArticleSchemaOptions = {
 export function articleGraph(options: ArticleSchemaOptions): string {
   const url = canonical(options.path);
   const nodes: Node[] = [
+    /* The page, and the article printed on it, as two nodes rather than one.
+       `BlogPosting` is a CreativeWork and `MedicalWebPage` is a WebPage, so a
+       single node typed as both asserts it is simultaneously the page and the
+       thing on the page. Splitting them also gives articles the breadcrumb
+       back-reference every other page type already had. */
+    webPageNode({
+      path: options.path,
+      name: options.headline,
+      description: options.description,
+      medical: true,
+      primaryImage: options.image,
+      crumbs: options.crumbs,
+    }),
     {
-      "@type": ["BlogPosting", "MedicalWebPage"],
+      "@type": "BlogPosting",
       "@id": `${url}#article`,
       headline: options.headline,
       description: options.description,
       url,
-      mainEntityOfPage: url,
+      mainEntityOfPage: { "@id": `${url}#webpage` },
       image: `${siteUrl}${options.image}`,
       datePublished: options.published,
       dateModified: options.modified,
@@ -359,20 +498,6 @@ export function articleGraph(options: ArticleSchemaOptions): string {
   const crumbs = breadcrumbNode(options.path, options.crumbs);
   if (crumbs) nodes.push(crumbs);
   if (options.faqs?.length) nodes.push(faqNode(options.faqs, options.path));
-
-  if (options.howTo) {
-    nodes.push({
-      "@type": "HowTo",
-      "@id": `${url}#howto`,
-      name: options.howTo.name,
-      step: options.howTo.steps.map((step, i) => ({
-        "@type": "HowToStep",
-        position: i + 1,
-        name: step.name,
-        text: step.text,
-      })),
-    });
-  }
 
   return json({ "@context": "https://schema.org", "@graph": nodes });
 }

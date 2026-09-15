@@ -36,6 +36,21 @@ export type PostBlock =
   | { kind: "terms"; heading?: string; intro?: string; items: { term: string; text: string }[] }
   | { kind: "steps"; heading?: string; intro?: string; items: { term: string; text: string }[] }
   | { kind: "callout"; heading: string; body: string }
+  /**
+   * Named sources, or the pages a reader should go to next.
+   *
+   * Added because every article on this site made clinical and regulatory
+   * claims and cited nothing: the VA piece named va.gov twice as "the
+   * authoritative source" without ever linking it. On health content that is
+   * the one checkable signal a small practice can offer in place of the
+   * institutional weight it does not have.
+   */
+  | {
+      kind: "links";
+      heading?: string;
+      intro?: string;
+      items: { label: string; href: string; note?: string }[];
+    }
   | {
       kind: "table";
       heading?: string;
@@ -66,7 +81,6 @@ export type Post = {
   blocks: PostBlock[];
   faqs: { q: string; a: string }[];
   /** Set where the article gives genuinely ordered instructions. */
-  howTo?: { name: string; steps: { name: string; text: string }[] };
   related: { label: string; href: string }[];
 };
 
@@ -176,35 +190,40 @@ export const posts: Post[] = [
         kind: "prose",
         heading: "If you are driving in from out of town",
         body: [
-          "We see emergency patients from across North Mississippi, including Baldwyn, Corinth, New Albany, Ripley, Fulton and Tupelo. Tell the front desk how far you are coming when you call, because it changes what we try to get done in a single visit.",
+          "We see emergency patients from across North Mississippi. Tell the front desk how far you are coming when you call, because it changes what we try to get done in a single visit.",
+        ],
+      },
+      {
+        kind: "links",
+        intro: "The drive from the towns we are asked about most:",
+        items: [
+          { label: "Baldwyn", href: "/locations/baldwyn-ms", note: "about fifteen minutes on US-45" },
+          { label: "Corinth", href: "/locations/corinth-ms", note: "about half an hour south on US-45" },
+          { label: "New Albany", href: "/locations/new-albany-ms", note: "about forty minutes" },
+          { label: "Ripley", href: "/locations/ripley-ms", note: "about forty minutes" },
+          { label: "Fulton", href: "/locations/fulton-ms", note: "about thirty-five minutes" },
+          { label: "Tupelo", href: "/locations/tupelo-ms", note: "about forty minutes north on US-45" },
+        ],
+      },
+      {
+        kind: "links",
+        heading: "Where this guidance comes from",
+        intro:
+          "The handling advice above follows the published guidance of the bodies that set it. Where anything here differs from what your own dentist tells you about your own mouth, follow your dentist.",
+        items: [
+          {
+            label: "American Dental Association: dental emergencies",
+            href: "https://www.mouthhealthy.org/all-topics-a-z/dental-emergencies",
+            note: "on what counts as an emergency and what to do first",
+          },
+          {
+            label: "ADA oral health topics",
+            href: "https://www.ada.org/resources/ada-library/oral-health-topics",
+            note: "the association's clinical reference, including avulsed teeth",
+          },
         ],
       },
     ],
-    howTo: {
-      name: "What to do with a knocked-out permanent tooth",
-      steps: [
-        {
-          name: "Pick the tooth up by the crown",
-          text: "Handle the white chewing surface, never the root. The cells on the root are what allow the tooth to reattach.",
-        },
-        {
-          name: "Rinse briefly only if dirty",
-          text: "Use milk, saline or saliva. Do not scrub the root, use soap, or hold it under running water.",
-        },
-        {
-          name: "Reinsert the tooth if possible",
-          text: "For a conscious adult, gently place the tooth back into its socket and bite softly on a clean cloth to hold it in position.",
-        },
-        {
-          name: "Otherwise store it in milk",
-          text: "Milk is the best widely available storage medium. Saliva also works. Avoid water, which damages the root cells.",
-        },
-        {
-          name: "See a dentist within an hour",
-          text: "Telephone the practice on the way so they can prepare for your arrival.",
-        },
-      ],
-    },
     faqs: [
       {
         q: "How long do I have to save a knocked-out tooth?",
@@ -339,6 +358,34 @@ export const posts: Post[] = [
           "If you are not sure where you stand, call the office and say so plainly. We would far rather spend a few minutes on the phone working out what applies to you than have you drive over on an assumption that turns out to be wrong.",
         ],
       },
+      {
+        kind: "links",
+        heading: "Check this against the VA itself",
+        intro:
+          "Eligibility rules change, and the VA is the only body that can tell you which class you are in. This page explains what the classes mean in plain English; these are the places that decide them.",
+        items: [
+          {
+            label: "VA dental care eligibility",
+            href: "https://www.va.gov/health-care/about-va-health-benefits/dental-care/",
+            note: "the official statement of the classes described above",
+          },
+          {
+            label: "VA Dental Insurance Program (VADIP)",
+            href: "https://www.va.gov/health-care/about-va-health-benefits/dental-care/dental-insurance/",
+            note: "for veterans who are enrolled but not eligible for VA dental treatment",
+          },
+          {
+            label: "CHAMPVA",
+            href: "https://www.va.gov/family-and-caregiver-benefits/health-and-disability/champva/",
+            note: "for eligible spouses, dependants and survivors",
+          },
+          {
+            label: "Care for veterans at Park Place Dental",
+            href: "/veterans",
+            note: "what we can arrange once you know where you stand",
+          },
+        ],
+      },
     ],
     faqs: [
       {
@@ -363,9 +410,9 @@ export const posts: Post[] = [
       },
     ],
     related: [
+      { label: "Care for veterans", href: "/veterans" },
       { label: "Insurance and financing", href: "/new-patients/insurance-financing" },
       { label: "Dentures and repairs", href: "/services/restorative-dentistry/dentures" },
-      { label: "Dental implants", href: "/services/restorative-dentistry/dental-implants" },
     ],
   },
 

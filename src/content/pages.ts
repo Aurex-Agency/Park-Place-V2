@@ -604,7 +604,23 @@ export const veteransPage: SimplePage = {
       kind: "prose",
       heading: "A note on accuracy",
       body: [
-        "Everything above describes how the VA structures dental eligibility. It is not a determination of your entitlement, which only the VA can make, and benefit rules change. Check your own position at va.gov or with your VA facility before making decisions based on this page.",
+        "Everything above describes how the VA structures dental eligibility. It is not a determination of your entitlement, which only the VA can make, and benefit rules change. Check your own position with the VA or your VA facility before making decisions based on this page.",
+      ],
+    },
+    {
+      kind: "links",
+      heading: "Where to check, and where to read more",
+      items: [
+        {
+          label: "VA dental care eligibility",
+          href: "https://www.va.gov/health-care/about-va-health-benefits/dental-care/",
+          note: "the VA's own statement of the classes",
+        },
+        {
+          label: "VA dental benefits in Mississippi, explained at length",
+          href: "/patient-resources/blog/va-dental-benefits-mississippi",
+          note: "the class-by-class breakdown, in plain English",
+        },
       ],
     },
   ],

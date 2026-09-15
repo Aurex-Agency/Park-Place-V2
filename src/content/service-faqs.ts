@@ -331,7 +331,7 @@ export const serviceFaqs: Record<string, Faq[]> = {
     },
     {
       q: "Is gum disease connected to the rest of my health?",
-      a: "Research has repeatedly found associations between gum disease and conditions including diabetes and heart disease, and the relationship with diabetes in particular runs in both directions. We would not tell you treating your gums treats those conditions, but it is a reason not to leave it.",
+      a: "Research has repeatedly found associations between gum disease and conditions including diabetes and heart disease, and the relationship with diabetes in particular runs in both directions. The National Institute of Dental and Craniofacial Research sets out the current evidence at nidcr.nih.gov. We would not tell you treating your gums treats those conditions, but it is a reason not to leave it.",
     },
     {
       q: "Will I lose teeth?",

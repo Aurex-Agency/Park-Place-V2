@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
-import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { practice } from "@/lib/content";
 
@@ -23,6 +22,7 @@ export function PageHeader({
   crumbs = [],
   note,
   cta = true,
+  callFirst = false,
 }: {
   eyebrow: string;
   headline: string;
@@ -33,6 +33,8 @@ export function PageHeader({
   note?: string;
   /** Set false on pages that are themselves the booking step. */
   cta?: boolean;
+  /** Lead with the telephone number, for pages about something urgent. */
+  callFirst?: boolean;
 }) {
   const paragraphs = Array.isArray(lead) ? lead : lead ? [lead] : [];
 
@@ -40,7 +42,7 @@ export function PageHeader({
     <header className="relative overflow-hidden bg-linen-deep pb-16 pt-14 md:pb-24 md:pt-20">
       <div className="shell">
         {crumbs.length > 0 && (
-          <Reveal preset="fade">
+          <div className="paint-fade">
             <nav aria-label="Breadcrumb" className="mb-8">
               <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.82rem] text-taupe">
                 {crumbs.map((crumb, i) => (
@@ -66,7 +68,7 @@ export function PageHeader({
                 ))}
               </ol>
             </nav>
-          </Reveal>
+          </div>
         )}
 
         <div
@@ -105,30 +107,49 @@ export function PageHeader({
             )}
 
             {cta && (
-              <div className="page-in page-in-3 mt-9 flex flex-wrap items-center gap-3">
-                <Button href="/book-an-appointment" variant="primary">
-                  Book an appointment
-                </Button>
-                <Button href={practice.phoneHref} variant="ghost">
-                  Call {practice.phone}
-                </Button>
+              /* Below lg the fixed MobileActionBar already carries Call and
+                 Book. Rendering this row as well put a second, half-clipped
+                 Call button behind that bar on first paint. */
+              <div className="page-in page-in-3 mt-9 hidden flex-wrap items-center gap-3 lg:flex">
+                {callFirst ? (
+                  <>
+                    <Button href={practice.phoneHref} variant="primary">
+                      Call {practice.phone}
+                    </Button>
+                    <Button href="/book-an-appointment" variant="ghost">
+                      Book an appointment
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button href="/book-an-appointment" variant="primary">
+                      Book an appointment
+                    </Button>
+                    <Button href={practice.phoneHref} variant="ghost">
+                      Call {practice.phone}
+                    </Button>
+                  </>
+                )}
               </div>
             )}
           </div>
 
           {image && (
-            <Reveal preset="fade">
+            <div className="paint-fade">
               <div className="arch relative aspect-[4/5] w-full overflow-hidden bg-linen lg:aspect-[5/6]">
                 <Image
                   src={image}
                   alt={imageAlt ?? ""}
                   fill
                   priority
+                  /* Next 16 stopped deriving this from `priority`, so it has to
+                     be stated or the LCP image queues at normal priority. */
+                  fetchPriority="high"
                   sizes="(max-width: 1024px) 90vw, 45vw"
                   className="object-cover"
                 />
               </div>
-            </Reveal>
+            </div>
           )}
         </div>
       </div>

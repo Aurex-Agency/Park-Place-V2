@@ -5,7 +5,7 @@ import { canonical } from "@/lib/site";
 import { seoFor } from "@/content/seo";
 import { serviceFaqs } from "@/content/service-faqs";
 import { serviceDepth } from "@/content/service-depth";
-import { serviceGraph, faqNode } from "@/lib/schema";
+import { serviceGraph } from "@/lib/schema";
 import { JsonLd } from "@/components/site/JsonLd";
 import { FaqSection } from "@/components/site/FaqSection";
 import { PageHeader } from "@/components/page/PageHeader";
@@ -41,12 +41,12 @@ export async function generateMetadata({
       title: meta.title,
       description: meta.description,
       url: path,
-      images: ["/opengraph-image.png"],
+      images: ["/opengraph-image.jpg"],
     },
     twitter: {
       title: meta.title,
       description: meta.description,
-      images: ["/opengraph-image.png"],
+      images: ["/opengraph-image.jpg"],
     },
   };
 }
@@ -89,16 +89,9 @@ export default async function ServicePage({
           primaryImage: item.image,
           serviceName: item.title,
           serviceType: `${cat.title}: ${item.title}`,
+          faqs,
         })}
       />
-      {faqs.length > 0 && (
-        <JsonLd
-          graph={JSON.stringify({
-            "@context": "https://schema.org",
-            ...faqNode(faqs, path),
-          }).replace(/</g, "\\u003c")}
-        />
-      )}
 
       <PageHeader
         eyebrow={cat.title}
@@ -108,6 +101,7 @@ export default async function ServicePage({
         imageAlt={item.imageAlt}
         note={item.note}
         crumbs={crumbs}
+        callFirst={item.urgent}
       />
 
       <div className="section">
@@ -117,9 +111,20 @@ export default async function ServicePage({
           <Blocks blocks={[...item.blocks, ...(serviceDepth[item.slug] ?? [])]} />
 
           <div className="mt-16">
+            {/* On an urgent page the heading should not imply the
+                conversation can wait for a callback. */}
             <InlineCta
-              heading={`Ready to talk about ${item.title.toLowerCase()}?`}
-              body="Book online in under a minute, or call the office and we will find you a time."
+              callFirst={item.urgent}
+              heading={
+                item.urgent
+                  ? "In pain now? Call the office."
+                  : `Ready to talk about ${item.title.toLowerCase()}?`
+              }
+              body={
+                item.urgent
+                  ? "The phone reaches us straight away, and we hold room in every day's schedule for urgent problems. The form is here too, but it waits for a callback."
+                  : "Book online in under a minute, or call the office and we will find you a time."
+              }
             />
           </div>
         </div>
@@ -142,7 +147,11 @@ export default async function ServicePage({
         }))}
       />
 
-      <CtaBand heading={item.closing.heading} body={item.closing.body} />
+      <CtaBand
+        heading={item.closing.heading}
+        body={item.closing.body}
+        callFirst={item.urgent}
+      />
     </>
   );
 }

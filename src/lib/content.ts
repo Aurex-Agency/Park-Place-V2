@@ -53,7 +53,7 @@ export const hero = {
     "From routine check-ups to advanced cosmetic and restorative treatments, we are here to keep your smile healthy, beautiful, and confident.",
   primaryCta: { label: "Book an appointment", href: "/book-an-appointment" },
   secondaryCta: { label: "Explore our services", href: "/services" },
-  image: "/images/hero-entryway.png",
+  image: "/images/hero-entryway.jpg",
   imageAlt:
     "The entry hall at Park Place Dental looking through to a treatment room filled with afternoon light",
 } as const;

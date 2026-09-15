@@ -9,9 +9,12 @@ import { Reveal } from "@/components/ui/Reveal";
 export function InlineCta({
   heading,
   body,
+  callFirst = false,
 }: {
   heading: string;
   body?: string;
+  /** Lead with the telephone number, for pages about something urgent. */
+  callFirst?: boolean;
 }) {
   return (
     <Reveal>
@@ -23,12 +26,25 @@ export function InlineCta({
           </div>
 
           <div className="flex shrink-0 flex-wrap gap-3">
-            <Button href="/book-an-appointment" variant="primary">
-              Book an appointment
-            </Button>
-            <Button href={practice.phoneHref} variant="outline">
-              Call {practice.phone}
-            </Button>
+            {callFirst ? (
+              <>
+                <Button href={practice.phoneHref} variant="primary">
+                  Call {practice.phone}
+                </Button>
+                <Button href="/book-an-appointment" variant="outline">
+                  Book an appointment
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button href="/book-an-appointment" variant="primary">
+                  Book an appointment
+                </Button>
+                <Button href={practice.phoneHref} variant="outline">
+                  Call {practice.phone}
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </aside>

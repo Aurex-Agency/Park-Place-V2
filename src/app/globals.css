@@ -545,6 +545,25 @@
 .page-in-2 { animation-delay: 0.1s; }
 .page-in-3 { animation-delay: 0.15s; }
 
+/*
+   The same reasoning, applied to content that is above the fold but is not
+   text: a header photograph, or a form that is the whole point of its page.
+
+   `Reveal` cannot be used for either. It starts its children at opacity zero
+   and waits for Motion to hydrate and for an intersection observer to fire, so
+   on a throttled connection the element is simply absent. Measured on the
+   booking page that was 2428ms of a 2516ms Largest Contentful Paint, spent
+   waiting rather than downloading. A CSS animation needs no JavaScript, so the
+   worst case is that it runs late, not that it never runs at all.
+*/
+.paint-in {
+  animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.paint-fade {
+  animation: hero-fade 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .hero-eyebrow {
   animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

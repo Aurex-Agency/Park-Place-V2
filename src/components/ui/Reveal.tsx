@@ -60,7 +60,7 @@ export function RevealGroup({
   className?: string;
   gap?: number;
   delay?: number;
-  as?: "div" | "ul" | "section";
+  as?: "div" | "ul" | "ol" | "section";
 }) {
   const Tag = motion[as];
 

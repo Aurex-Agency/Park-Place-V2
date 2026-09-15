@@ -63,6 +63,14 @@ export function Hero() {
           alt={hero.imageAlt}
           fill
           priority
+          /*
+            Next 16 no longer derives `fetchpriority` from `priority`, so the
+            preload for the Largest Contentful Paint image was going out at
+            normal priority and queueing behind everything else the parser
+            found. Measured 597ms of resource load delay before the request
+            even started.
+          */
+          fetchPriority="high"
           quality={90}
           /*
             The render is 1672px wide, so anything larger is an upscale.

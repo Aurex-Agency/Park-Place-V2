@@ -8,9 +8,12 @@ import { MetalMark } from "@/components/ui/MetalMark";
 export function CtaBand({
   heading,
   body,
+  callFirst = false,
 }: {
   heading: string;
   body: string;
+  /** Lead with the telephone number, for pages about something urgent. */
+  callFirst?: boolean;
 }) {
   return (
     <section className="bg-espresso py-24 text-linen md:py-28">
@@ -34,12 +37,25 @@ export function CtaBand({
 
         <Reveal delay={0.16}>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Button href="/book-an-appointment" variant="primary">
-              Book an appointment
-            </Button>
-            <Button href={practice.phoneHref} variant="ghost">
-              Call {practice.phone}
-            </Button>
+            {callFirst ? (
+              <>
+                <Button href={practice.phoneHref} variant="primary">
+                  Call {practice.phone}
+                </Button>
+                <Button href="/book-an-appointment" variant="ghost">
+                  Book an appointment
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button href="/book-an-appointment" variant="primary">
+                  Book an appointment
+                </Button>
+                <Button href={practice.phoneHref} variant="ghost">
+                  Call {practice.phone}
+                </Button>
+              </>
+            )}
           </div>
         </Reveal>
       </div>

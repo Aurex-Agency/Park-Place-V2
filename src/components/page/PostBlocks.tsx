@@ -1,4 +1,5 @@
 import type { PostBlock } from "@/content/posts";
+import Link from "next/link";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
 /**
@@ -101,6 +102,42 @@ export function PostBlocks({ blocks }: { blocks: PostBlock[] }) {
                 </p>
               </aside>
             </Reveal>
+          )}
+
+          {block.kind === "links" && (
+            <RevealGroup
+              as="ul"
+              gap={0.05}
+              className="mt-6 flex max-w-2xl flex-col gap-3"
+            >
+              {block.items.map((item) => {
+                const external = item.href.startsWith("http");
+                return (
+                  <RevealItem as="li" key={item.href}>
+                    {external ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-rose-deep underline underline-offset-4"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="font-medium text-rose-deep underline underline-offset-4"
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                    {item.note && (
+                      <span className="text-taupe"> {item.note}</span>
+                    )}
+                  </RevealItem>
+                );
+              })}
+            </RevealGroup>
           )}
 
           {block.kind === "table" && (

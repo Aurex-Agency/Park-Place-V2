@@ -34,9 +34,18 @@ export default function Page() {
 
       <div className="section">
         <div className="shell grid gap-14 lg:grid-cols-[1.3fr_0.7fr] lg:gap-20">
-          <Reveal>
+          {/*
+            The form paints immediately rather than through Reveal.
+
+            It is the reason this page exists, and Reveal held it at opacity
+            zero until Motion hydrated: measured at 2428ms of a 2516ms Largest
+            Contentful Paint, all of it render delay. The people most likely to
+            be hurt by that are the ones on a phone in the far end of the
+            county, which is most of the service area.
+          */}
+          <div className="paint-in">
             <AppointmentForm />
-          </Reveal>
+          </div>
 
           <Reveal delay={0.08}>
             <aside className="rounded-[1.25rem] bg-linen-deep p-8 ring-1 ring-sand/60">

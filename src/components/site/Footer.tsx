@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { nav, practice } from "@/lib/content";
+import { locations } from "@/content/locations";
 import { MetalLockup } from "@/components/ui/MetalMark";
 
 export function Footer() {
@@ -73,7 +74,44 @@ export function Footer() {
           </div>
         </div>
 
+        {/*
+          The towns, linked from every page.
+
+          Location pages reached only from the /locations hub sit three clicks
+          from the homepage and share no internal links with anything else on
+          the site. A footer strip fixes both: it puts every town one click from
+          everywhere, and it is the same signal a search engine reads as "this
+          business genuinely covers this area".
+        */}
         <hr className="metal-rule mt-16 opacity-70" />
+
+        <div className="mt-10">
+          <h2 className="font-[family-name:var(--font-brand)] text-[0.8rem] font-medium uppercase tracking-[0.2em] text-rose-soft">
+            Where We Serve
+          </h2>
+          <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
+            {locations.map((place) => (
+              <li key={place.slug}>
+                <Link
+                  href={`/locations/${place.slug}`}
+                  className="block py-1 text-[0.925rem] text-linen/70 transition-colors hover:text-linen"
+                >
+                  {place.town}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                href="/locations"
+                className="block py-1 text-[0.925rem] font-medium text-rose-soft transition-colors hover:text-linen"
+              >
+                All areas
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <hr className="metal-rule mt-10 opacity-70" />
 
         <div className="mt-8 flex flex-col gap-4 text-[0.875rem] text-linen/65 sm:flex-row sm:items-center sm:justify-between">
           <p>
