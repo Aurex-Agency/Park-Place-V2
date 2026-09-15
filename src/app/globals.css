@@ -573,8 +573,18 @@
   animation-delay: 0.34s;
 }
 
+/*
+   The hero photograph paints immediately.
+
+   It used to fade in from opacity zero over 1.2s. The Largest Contentful Paint
+   algorithm ignores an element while it is fully transparent, so the largest
+   thing on the page was disqualified for the first second and a bit, handing
+   the metric to the paragraph in front of it and delaying it besides. The
+   photograph is 15KB after Vercel re-encodes it and it is already preloaded,
+   so there is nothing to hide while it arrives.
+*/
 .hero-photo {
-  animation: hero-fade 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: none;
 }
 
 .hero-cue {
