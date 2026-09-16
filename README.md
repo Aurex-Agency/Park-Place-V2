@@ -133,11 +133,35 @@ measured.
 
 ## Photographs
 
-The twenty images in `public/images` came from the practice's shared drive and
-are named for what they show. Two things worth flagging before launch:
+Most of the site now uses a professional shoot taken in the office in
+September 2026: portraits of both dentists and eleven team members, group photos, clinical work, the lab and
+imaging equipment, the waiting areas and the building. Captions, alt text and
+intrinsic sizes for all of it live in `src/content/photography.ts`.
+
+The files in `public/images` are web masters, not camera originals: long edge
+2000 to 2400px (portraits 1000px), quality 80, metadata stripped. Next resizes
+and re-encodes them to AVIF or WebP at the width each slot draws, so the size on
+disk is not what a visitor downloads.
+
+**Patient details were removed from four screens before export.** The X-Guide
+screen in `goodwin-guided-implant-station.jpg` showed a patient's full name and
+date of birth, `implant-planning-screen.jpg` and `restoration-design-screen.jpg`
+had name labels, and `cbct-3d-imaging.jpg` had a name and chart number in its
+toolbar (that one is cropped). The pixels were painted over in the files
+themselves, so nothing is recoverable from the published images. Any future
+photo of a screen needs the same check before it goes in.
+
+Dr. Rebecca McDougald is identified in her portrait and the three surgical cap
+photographs, confirmed by the practice. Only her name and the credentials on
+the sign are published; add education or specialty to `associateDoctor` in
+`src/lib/content.ts` once the practice supplies them.
+
+The other team portraits have no names attached, because nothing in the shoot
+says which face is which. Add `name` and `role` to `teamPortraits` and both the
+homepage and the team page show them.
+
+From the earlier set, still worth flagging:
 
 - `smile-before-after-2.jpg` carries a visible "PicCollage" watermark.
 - `goodwin-treating-patient.jpg` has a social media sticker burned into it. It
   is unused for that reason.
-
-Both would be worth replacing with clean originals.

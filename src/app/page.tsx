@@ -6,7 +6,9 @@ import { Welcome } from "@/components/home/Welcome";
 import { FeaturedServices } from "@/components/home/FeaturedServices";
 import { Technology } from "@/components/home/Technology";
 import { Doctor } from "@/components/home/Doctor";
+import { Team } from "@/components/home/Team";
 import { ServiceIndex } from "@/components/home/ServiceIndex";
+import { InsidePractice } from "@/components/home/InsidePractice";
 import { Testimonials } from "@/components/home/Testimonials";
 import { SmileGallery } from "@/components/home/SmileGallery";
 import { Insurance } from "@/components/home/Insurance";
@@ -28,7 +30,9 @@ export default function HomePage() {
       <FeaturedServices />
       <Technology />
       <Doctor />
+      <Team />
       <ServiceIndex />
+      <InsidePractice />
       <Testimonials />
       <SmileGallery />
       <Insurance />

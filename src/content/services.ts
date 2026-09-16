@@ -63,8 +63,8 @@ export const serviceCategories: ServiceCategory[] = [
       "At Park Place Dental, we offer comprehensive general dentistry services designed to help you maintain a healthy, beautiful smile for life. Our team provides gentle, effective care for patients of all ages, from routine check-ups and cleanings to advanced restorative treatments.",
       "Whether you need a cleaning, a filling, or immediate emergency care, we are here to make sure you receive the best care in a comfortable and welcoming environment.",
     ],
-    image: "/images/hygienist-with-child.jpg",
-    imageAlt: "A hygienist with a young patient at Park Place Dental",
+    image: "/images/operatory-window.jpg",
+    imageAlt: "A sunlit treatment room at Park Place Dental",
     closing: {
       heading: "Maintain a healthy smile with our general dentistry services",
       body: "Whether you need a routine cleaning or immediate dental care, our experienced team is here to provide the best general dentistry services in Booneville, MS. Contact us today to schedule your appointment and take the first step toward a healthier, happier smile.",
@@ -76,8 +76,8 @@ export const serviceCategories: ServiceCategory[] = [
         metaDescription:
           "Gentle, thorough cleanings and comprehensive exams at Park Place Dental in Booneville, Mississippi.",
         lead: "At Park Place Dental, we believe in the power of preventive care. Regular cleanings and exams are the foundation of maintaining a healthy, beautiful smile. Our team is dedicated to helping you achieve optimal oral health with gentle and thorough cleanings, along with comprehensive exams to catch potential issues early.",
-        image: "/images/hygienist-with-child.jpg",
-        imageAlt: "A hygienist working with a patient at Park Place Dental",
+        image: "/images/hygienist-cleaning.jpg",
+        imageAlt: "A hygienist cleaning a patient's teeth at Park Place Dental",
         blocks: [
           {
             kind: "prose",
@@ -126,8 +126,8 @@ export const serviceCategories: ServiceCategory[] = [
         metaDescription:
           "Tooth-colored composite fillings that blend with your natural teeth, in Booneville, Mississippi.",
         lead: "Cavities are a common dental issue, but they do not have to affect the function or beauty of your smile. At Park Place Dental, we offer tooth-colored fillings that restore the natural look and feel of your teeth while providing durable, long-lasting protection.",
-        image: "/images/operatory-room.jpg",
-        imageAlt: "A treatment room prepared at Park Place Dental",
+        image: "/images/mcdougald-procedure-loupes.jpg",
+        imageAlt: "Dr. Rebecca McDougald working under magnifying loupes at Park Place Dental",
         blocks: [
           {
             kind: "prose",
@@ -176,8 +176,8 @@ export const serviceCategories: ServiceCategory[] = [
         metaDescription:
           "Comfortable root canal treatment with an in-house endodontic specialist in Booneville, Mississippi.",
         lead: "If you are experiencing severe tooth pain or sensitivity, you may need a root canal. This common procedure is designed to save a severely infected or damaged tooth, allowing you to keep your natural tooth and avoid extraction. Our in-house endodontic specialist ensures that your root canal treatment is as comfortable and effective as possible.",
-        image: "/images/goodwin-and-assistant.jpg",
-        imageAlt: "Dr. Goodwin and a team member prepared for treatment",
+        image: "/images/mcdougald-treating-with-assistant.jpg",
+        imageAlt: "Dr. Rebecca McDougald and an assistant treating a patient at Park Place Dental",
         blocks: [
           {
             kind: "prose",
@@ -218,8 +218,8 @@ export const serviceCategories: ServiceCategory[] = [
         metaDescription:
           "Same-day emergency dental care in Booneville, Mississippi. Call (662) 728-8171.",
         lead: "Dental emergencies can happen at any time, and when they do, it is important to get immediate care. At Park Place Dental, we offer emergency dentistry services to help you when it is needed most. Whether it is a toothache, a broken tooth, or an injury to the mouth, our team is ready to provide fast, effective treatment.",
-        image: "/images/procedure-closeup.jpg",
-        imageAlt: "A procedure underway at Park Place Dental",
+        image: "/images/operatory-chair.jpg",
+        imageAlt: "A treatment room at Park Place Dental, with framed certificates on the wall",
         blocks: [
           {
             kind: "list",
@@ -269,8 +269,8 @@ export const serviceCategories: ServiceCategory[] = [
       "At Park Place Dental, we specialize in restorative dentistry services that are designed to bring your smile back to its full function and beauty. Whether you need a dental implant, a crown and bridge, or dentures, we are here to provide effective and lasting solutions.",
       "Our expert team uses advanced techniques and materials to restore your teeth, helping you regain the confidence to smile, eat, and speak without worry.",
     ],
-    image: "/images/procedure-closeup.jpg",
-    imageAlt: "A restorative procedure underway at Park Place Dental",
+    image: "/images/milling-units-row.jpg",
+    imageAlt: "The milling units in the Park Place Dental in-house lab",
     closing: {
       heading: "Restore your smile today with restorative dentistry",
       body: "If you are struggling with damaged or missing teeth, do not wait to restore your smile. Contact Park Place Dental today to schedule your consultation and discover which restorative treatment is best for you.",
@@ -282,8 +282,8 @@ export const serviceCategories: ServiceCategory[] = [
         metaDescription:
           "Permanent, natural-looking dental implants with crowns from our in-house lab in Booneville, Mississippi.",
         lead: "Dental implants replace missing or severely damaged teeth with something that looks, feels and functions much like a natural tooth. Whether you are missing a single tooth or need a full arch replaced, an implant is a durable, long-term option that restores both the function and the appearance of your smile, and the crown that goes on top is made in our own lab.",
-        image: "/images/operatory-technology.jpg",
-        imageAlt: "Digital scanning equipment at Park Place Dental",
+        image: "/images/implant-planning-screen.jpg",
+        imageAlt: "An implant position planned on 3D imaging at Park Place Dental",
         blocks: [
           {
             kind: "prose",
@@ -324,8 +324,8 @@ export const serviceCategories: ServiceCategory[] = [
         metaDescription:
           "Same-day crowns and custom bridges made in our in-house lab in Booneville, Mississippi.",
         lead: "If you have damaged or missing teeth, crowns and bridges are an excellent way to restore both the function and appearance of your smile. At Park Place Dental, we focus not only on strength and durability, but also on creating natural-looking, cosmetic results that help you feel confident every time you smile.",
-        image: "/images/operatory-technology.jpg",
-        imageAlt: "Scanning and design equipment at Park Place Dental",
+        image: "/images/milling-chamber-closeup.jpg",
+        imageAlt: "Inside the milling chamber where crowns are made in the office",
         blocks: [
           {
             kind: "prose",
@@ -375,8 +375,8 @@ export const serviceCategories: ServiceCategory[] = [
         metaDescription:
           "Full, partial and implant-supported dentures made in our in-house lab in Booneville, Mississippi.",
         lead: "Dentures are a reliable and affordable solution for individuals who have lost multiple teeth. Whether you are missing a few teeth or an entire set, dentures can restore both the appearance and function of your smile, allowing you to eat, speak, and smile with confidence once again.",
-        image: "/images/goodwin-and-assistant.jpg",
-        imageAlt: "Dr. Goodwin and a team member at Park Place Dental",
+        image: "/images/inlab-milling-unit.jpg",
+        imageAlt: "A milling unit in the Park Place Dental in-house lab",
         note: "Our in-house lab allows us to design and produce same-day dentures, reducing wait times and streamlining your care.",
         blocks: [
           {
@@ -433,8 +433,8 @@ export const serviceCategories: ServiceCategory[] = [
       "A beautiful smile can make a lasting impression. At Park Place Dental, we offer a range of cosmetic dentistry services to help you achieve the smile you have always dreamed of.",
       "From teeth whitening to smile makeovers, our expert team uses advanced techniques to enhance the beauty and function of your teeth, leaving you with a smile you will be proud to show off.",
     ],
-    image: "/images/smile-closeup.jpg",
-    imageAlt: "A finished cosmetic case at Park Place Dental",
+    image: "/images/smile-portrait-framed.jpg",
+    imageAlt: "A framed smile photograph on the wall at Park Place Dental",
     closing: {
       heading: "Achieve the smile of your dreams",
       body: "Cosmetic dentistry is about more than just aesthetics. It is about feeling confident and comfortable in your own smile. Contact us today to schedule a consultation and start your journey to a more beautiful smile.",
@@ -607,8 +607,8 @@ export const serviceCategories: ServiceCategory[] = [
       "Periodontal care focuses on the health of your gums, which are essential to supporting your teeth. At Park Place Dental, we provide comprehensive treatment to prevent and manage gum disease.",
       "Healthy gums are the foundation of a strong smile, yet many adults in Booneville experience gum issues without realizing it. Periodontal care helps prevent, detect, and treat gum disease early, protecting your teeth, improving comfort, and supporting long-term oral health with personalized, modern treatment options.",
     ],
-    image: "/images/goodwin-treating-patient.jpg",
-    imageAlt: "Dr. Goodwin treating a patient at Park Place Dental",
+    image: "/images/mcdougald-and-assistant.jpg",
+    imageAlt: "Dr. Rebecca McDougald and an assistant preparing for treatment at Park Place Dental",
     closing: {
       heading: "Ready to take control of your gum health?",
       body: "Protect your smile with expert periodontal care designed to prevent problems and keep your teeth healthy for the long term.",
@@ -620,8 +620,8 @@ export const serviceCategories: ServiceCategory[] = [
         metaDescription:
           "Scaling, root planing and ongoing gum disease care in Booneville, Mississippi.",
         lead: "Gum disease is a common condition that can lead to serious oral health problems if left untreated. At Park Place Dental, we provide effective treatment to restore gum health and protect your smile.",
-        image: "/images/goodwin-and-assistant.jpg",
-        imageAlt: "Dr. Goodwin and a team member prepared for treatment",
+        image: "/images/ai-xray-findings.jpg",
+        imageAlt: "X-ray findings for bone level and calculus reviewed on screen",
         blocks: [
           {
             kind: "prose",

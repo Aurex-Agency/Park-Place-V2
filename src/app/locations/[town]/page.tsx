@@ -112,11 +112,11 @@ export default async function LocationPage({
         headline={headline}
         lead={place.lead}
         crumbs={crumbs}
-        image="/images/team-group-porch.jpg"
+        image="/images/exterior-sign.jpg"
         imageAlt={
           place.home
-            ? `The Park Place Dental team outside the practice at ${practice.address.street} in Booneville, Mississippi`
-            : `The Park Place Dental team outside the Booneville practice, about ${place.miles} miles from ${place.town}, Mississippi`
+            ? `The Park Place Dental sign outside the practice at ${practice.address.street} in Booneville, Mississippi`
+            : `The Park Place Dental sign outside the Booneville practice, about ${place.miles} miles from ${place.town}, Mississippi`
         }
       />
 

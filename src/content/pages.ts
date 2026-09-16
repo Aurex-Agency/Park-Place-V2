@@ -29,8 +29,8 @@ export const aboutPractice: SimplePage = {
     "At Park Place Dental, we are dedicated to offering high-quality, comprehensive dental care with a personal touch. Our practice, located in the heart of Booneville, Mississippi, is committed to providing exceptional services to individuals and families in Prentiss County and surrounding rural areas.",
     "Whether you need routine care, restorative treatments, or cosmetic dentistry, we are here to ensure your smile is as healthy and beautiful as possible.",
   ],
-  image: "/images/team-group-porch.jpg",
-  imageAlt: "The Park Place Dental team outside the practice in Booneville",
+  image: "/images/waiting-corner.jpg",
+  imageAlt: "A corner of the waiting area at Park Place Dental, with a wall of framed family photographs",
   blocks: [
     {
       kind: "prose",
@@ -79,8 +79,8 @@ export const meetTheDentist: SimplePage = {
     "Dr. Ken Goodwin, DMD, has practised dentistry in Booneville, Mississippi for over 43 years, in the town he grew up in. He graduated from the University of Mississippi School of Dentistry in 1982 and has been treating patients here ever since.",
     "Patients travel to him from across North Mississippi, and a good number of them have been coming for decades.",
   ],
-  image: "/images/dr-ken-goodwin-portrait.jpg",
-  imageAlt: "Dr. Ken Goodwin, dentist at Park Place Dental in Booneville",
+  image: "/images/dr-goodwin-hallway.jpg",
+  imageAlt: "Dr. Ken Goodwin in the hallway at Park Place Dental in Booneville",
   blocks: [
     /*
      * This page used to be 183 words, which is thin for the page carrying the
@@ -151,8 +151,8 @@ export const meetTheTeam: SimplePage = {
     "At Park Place Dental, we pride ourselves on having a compassionate, highly skilled team that is dedicated to providing exceptional care for you and your family.",
     "Our team works together to ensure that each visit is comfortable, efficient, and personalized to meet your unique needs. Get to know the professionals who make your dental care experience outstanding.",
   ],
-  image: "/images/team-group-indoor.jpg",
-  imageAlt: "The Park Place Dental team inside the practice",
+  image: "/images/team-hallway-fun.jpg",
+  imageAlt: "Three members of the Park Place Dental team sharing a laugh in the hallway",
   blocks: [
     {
       kind: "prose",
@@ -190,8 +190,8 @@ export const advancedTechnology: SimplePage = {
     "At Park Place Dental, we believe modern dentistry should be comfortable, precise, efficient, and personalized to you. That is why our office invests in advanced dental technology designed to improve the way we diagnose, plan, and deliver care.",
     "From facial scanning and laser dentistry to our in-house dental lab, our technology helps us create a smoother patient experience while supporting beautiful, natural-looking results.",
   ],
-  image: "/images/operatory-technology.jpg",
-  imageAlt: "Scanning equipment in a treatment room at Park Place Dental",
+  image: "/images/milling-units-row.jpg",
+  imageAlt: "The row of milling units in the Park Place Dental in-house lab",
   blocks: [
     {
       kind: "prose",
@@ -279,8 +279,8 @@ export const newPatients: SimplePage = {
     "Finding the right dental office is about more than just services. It is about trust, comfort, and knowing you are in good hands. At Park Place Dental, we are proud to welcome new patients from Booneville and surrounding communities with care that is personalized, modern, and focused on long-term results.",
     "From your first phone call to your appointment and beyond, you can expect clear communication, a friendly environment, and a team that truly listens.",
   ],
-  image: "/images/reception-front-desk.jpg",
-  imageAlt: "The front desk at Park Place Dental",
+  image: "/images/front-desk-phone.jpg",
+  imageAlt: "A member of the front desk team on the phone at Park Place Dental",
   blocks: [
     {
       kind: "prose",
@@ -328,8 +328,8 @@ export const newPatientInformation: SimplePage = {
     "Choosing a new dentist should not feel overwhelming. At Park Place Dental, we make it easy to get started with care that is comfortable, straightforward, and tailored to your needs.",
     "From the moment you arrive, our goal is to help you feel at ease. We take the time to listen, answer your questions, and understand your goals so you can feel confident about your care from day one.",
   ],
-  image: "/images/staff-with-child.jpg",
-  imageAlt: "A team member with a young patient at Park Place Dental",
+  image: "/images/waiting-room.jpg",
+  imageAlt: "The waiting room at Park Place Dental",
   blocks: [
     {
       kind: "prose",
@@ -376,8 +376,8 @@ export const insuranceFinancing: SimplePage = {
     "At Park Place Dental, we believe getting the care you need should not feel complicated or overwhelming. That is why we make insurance and payment options as straightforward as possible so you can focus on your health, not the paperwork.",
     "Our team works with patients across Booneville and surrounding communities every day to help them understand their coverage, maximize their benefits, and find solutions that fit their budget.",
   ],
-  image: "/images/team-member-desk.jpg",
-  imageAlt: "A Park Place Dental team member at the front desk",
+  image: "/images/team-hallway-trio.jpg",
+  imageAlt: "Three members of the Park Place Dental team in the hallway",
   blocks: [
     {
       kind: "list",
@@ -553,8 +553,8 @@ export const veteransPage: SimplePage = {
     "Park Place Dental serves veterans across North Mississippi. What VA dental eligibility actually covers, and how to arrange care with us.",
   eyebrow: "For Our Veterans",
   headline: "Dental care for / North Mississippi veterans",
-  image: "/images/goodwin-and-assistant.jpg",
-  imageAlt: "Dr. Ken Goodwin with a patient at Park Place Dental in Booneville",
+  image: "/images/goodwin-with-assistant.jpg",
+  imageAlt: "Dr. Ken Goodwin at the chair with a member of his team at Park Place Dental",
   lead: [
     "Park Place Dental has served veterans and their families in Booneville and across North Mississippi for over forty years. Prentiss County alone is home to more than a thousand veterans, and a great many of them have been told something about VA dental benefits that turns out not to apply to them.",
     "This page explains how VA dental eligibility is actually structured, so that you know which questions to ask before you make any appointments.",
