@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { practice } from "@/lib/content";
+import { photos } from "@/content/photography";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 import { Button } from "@/components/ui/Button";
@@ -10,6 +12,11 @@ import { Reveal } from "@/components/ui/Reveal";
  * The map is an iframe with a real title, so it is announced rather than
  * skipped, and it is lazy loaded because it sits below the fold everywhere it
  * appears.
+ *
+ * The photograph of the building sits above it because a pin on a map tells a
+ * first-time patient where to drive but not what to look for when they get
+ * there. It is below the fold on every page, so it loads lazily and costs
+ * nothing at first paint.
  */
 export function LocationSection() {
   return (
@@ -94,13 +101,26 @@ export function LocationSection() {
         </div>
 
         <Reveal preset="fade">
-          <div className="overflow-hidden rounded-[1.25rem] shadow-[var(--shadow-md)] ring-1 ring-sand/60">
+          <div className="overflow-hidden rounded-[1.25rem] bg-white shadow-[var(--shadow-md)] ring-1 ring-sand/60">
+            <figure className="relative aspect-[16/9] w-full overflow-hidden bg-linen">
+              <Image
+                src={photos.exteriorBuilding.src}
+                alt={photos.exteriorBuilding.alt}
+                fill
+                sizes="(max-width: 1024px) 92vw, 45vw"
+                fetchPriority="low"
+                className="object-cover object-[40%_62%]"
+              />
+              <figcaption className="absolute bottom-3 left-3 rounded-full bg-white/95 px-4 py-2 text-[0.85rem] font-medium text-espresso shadow-[var(--shadow-sm)]">
+                Look for the brick porch and white columns
+              </figcaption>
+            </figure>
             <iframe
               title={`Map showing Park Place Dental at ${practice.address.full}`}
               src="https://www.google.com/maps?q=403+N+3rd+St+Booneville+MS+38829&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="h-[24rem] w-full border-0 lg:h-[34rem]"
+              className="block h-[18rem] w-full border-0 lg:h-[22rem]"
             />
           </div>
         </Reveal>

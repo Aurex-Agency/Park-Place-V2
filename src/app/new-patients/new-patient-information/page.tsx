@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/content/seo";
 import { newPatientInformation } from "@/content/pages";
 import { SimplePageView } from "@/components/page/SimplePageView";
+import { PhotoStory } from "@/components/page/PhotoStory";
+import { photos } from "@/content/photography";
 
 export const metadata: Metadata = pageMetadata("/new-patients/new-patient-information", {
   title: newPatientInformation.title,
@@ -18,6 +20,13 @@ export default function Page() {
         { label: "New Patients", href: "/new-patients" },
         { label: newPatientInformation.title },
       ]}
-    />
+    >
+      <PhotoStory
+        tone="linen"
+        eyebrow="Before You Arrive"
+        heading="What your visit / looks like"
+        photos={[photos.operatoryWindow, photos.teamGroupTrio]}
+      />
+    </SimplePageView>
   );
 }

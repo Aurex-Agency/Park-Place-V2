@@ -145,7 +145,12 @@ export function PageHeader({
                   /* Next 16 stopped deriving this from `priority`, so it has to
                      be stated or the LCP image queues at normal priority. */
                   fetchPriority="high"
-                  sizes="(max-width: 1024px) 90vw, 45vw"
+                  /* The column stops growing when the shell does, at about
+                     525px. "45vw" kept asking for more past that point, so a
+                     1440px laptop fetched a 750px file and a retina display a
+                     1920px one, for the image that decides LCP on every
+                     interior page. */
+                  sizes="(max-width: 1024px) 90vw, (max-width: 1248px) 44vw, 530px"
                   className="object-cover"
                 />
               </div>

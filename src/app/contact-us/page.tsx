@@ -7,7 +7,9 @@ import { PageHeader } from "@/components/page/PageHeader";
 import { CtaBand } from "@/components/page/CtaBand";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import Image from "next/image";
 import { ContactForm } from "@/components/page/ContactForm";
+import { photos } from "@/content/photography";
 
 export const metadata: Metadata = pageMetadata("/contact-us", {
   title: "Contact Us",
@@ -107,14 +109,33 @@ export default function Page() {
             </Reveal>
           </div>
 
+          {/*
+            The building photograph lives here rather than in the page header.
+            In the header it became the largest thing on a phone screen and
+            took Largest Contentful Paint from 1.1s to 2.4s on a throttled
+            connection. Down here it is below the fold and loads lazily.
+          */}
           <Reveal preset="fade">
-            <div className="overflow-hidden rounded-[1.25rem] shadow-[var(--shadow-md)] ring-1 ring-sand/60">
+            <div className="overflow-hidden rounded-[1.25rem] bg-white shadow-[var(--shadow-md)] ring-1 ring-sand/60">
+              <figure className="relative aspect-[16/9] w-full overflow-hidden bg-linen">
+                <Image
+                  src={photos.exteriorBuilding.src}
+                  alt={photos.exteriorBuilding.alt}
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 45vw"
+                  fetchPriority="low"
+                  className="object-cover object-[40%_62%]"
+                />
+                <figcaption className="absolute bottom-3 left-3 rounded-full bg-white/95 px-4 py-2 text-[0.85rem] font-medium text-espresso shadow-[var(--shadow-sm)]">
+                  Look for the brick porch and white columns
+                </figcaption>
+              </figure>
               <iframe
                 title="Map showing Park Place Dental at 403 N 3rd St, Booneville, Mississippi"
                 src="https://www.google.com/maps?q=403+N+3rd+St+Booneville+MS+38829&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="h-[26rem] w-full border-0 lg:h-full lg:min-h-[30rem]"
+                className="block h-[20rem] w-full border-0 lg:h-[24rem]"
               />
             </div>
           </Reveal>

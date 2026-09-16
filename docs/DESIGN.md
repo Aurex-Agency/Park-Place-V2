@@ -537,3 +537,50 @@ circular portrait halos became architectural arches drawn from the practice's
 column mark; the SaaS product screenshots became real photographs of the team
 and the office; and the accent gained a polished metal treatment, which the
 reference does not have at all.
+
+---
+
+## Photography
+
+The September 2026 shoot is described once, in `src/content/photography.ts`:
+source, alt text, caption and intrinsic size. Components read from there
+rather than repeating file names, so a caption is corrected in one place.
+
+**Captions say what is in the frame.** The shoot shows equipment the copy does
+not yet discuss, such as the milling units, 3D imaging and X-Guide navigation.
+A caption names what is visible on the machine or the screen and stops there.
+The same rule applies in reverse: a photograph is never labelled as a device it
+does not show. There is no photograph of the RAYFace scanner, so the
+technology panel shows restoration design under that name rather than a CBCT
+screen that a reader would take to be the scanner.
+
+**Screens are checked before they ship.** Four photographs of monitors carried
+patient names, and one a date of birth. They were painted out of the pixels
+before export, never hidden with a CSS crop that the original file would undo.
+
+**Real photographs sit in four places the old site had none:** the team
+portraits (`TeamPortraits`), the walk-through on the homepage
+(`InsidePractice`), a photo section after the copy on the about, team,
+dentist, technology and new patient pages (`PhotoStory`), and the building
+above every map.
+
+`PhotoStory` is a section, not a fifth block shape. It picks an arrangement from
+the count: two is a portrait beside a landscape, three is one tall beside two
+stacked, more is CSS columns at natural proportions, three wide up to six and
+four beyond. Six photographs in four columns left a hole in the middle.
+
+### Measured, not assumed
+
+Throttled to slow 4G with a 4x CPU slowdown, every page was measured against
+the build before the photographs went in.
+
+Two regressions turned up and both are fixed. The contact page header photo
+became the largest element on a phone and took LCP from 1.1s to 2.4s, so the
+building moved down beside the map. And the interior page header asked for
+`45vw`, which kept growing past the 525px the column actually stops at: a
+1440px laptop fetched a 750px file and a retina display a 1920px one. The
+`sizes` now matches the column, which made most interior pages faster on
+desktop than they were with the old, lighter phone photographs.
+
+Everything below the fold is lazy and `fetchPriority="low"`, so the header
+photograph is never competing with a gallery for the connection.

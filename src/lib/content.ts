@@ -36,7 +36,7 @@ export const doctor = {
   shortName: "Dr. Goodwin",
   credential: "DMD",
   yearsPracticing: 43,
-  portrait: "/images/dr-ken-goodwin-portrait.jpg",
+  portrait: "/images/dr-goodwin-hallway.jpg",
   bio: [
     "Dr. Ken Goodwin has practised dentistry in Booneville, Mississippi for over 43 years. He earned his Bachelor of Arts from the University of Mississippi in 1978 and his Doctor of Dental Medicine from the University of Mississippi School of Dentistry in 1982, and he has been treating patients in his hometown ever since.",
     "Originally from Booneville, Dr. Goodwin returned here to practise rather than settling somewhere larger, and it is the reason the practice looks the way it does. Over four decades he has treated three generations of some families in Prentiss County, and patients who first came to him as children now bring their own.",
@@ -44,6 +44,24 @@ export const doctor = {
     "He is also committed to keeping the practice current rather than comfortable. Park Place Dental uses the Solea dental laser, which allows many fillings to be completed with little or no anaesthetic, and RAYFace 3D facial scanning, which lets cosmetic and implant treatment be planned against the whole face rather than a single tooth. Both were brought in because they change what the visit is like for the patient, not because they are new.",
     "Outside the office, Dr. Goodwin spends his time with his family, duck hunting, and supporting the Ole Miss Rebels.",
   ],
+} as const;
+
+/**
+ * Dr. Rebecca McDougald.
+ *
+ * Her name and credentials are exactly as they appear on the sign outside the
+ * practice, and the practice has confirmed which photographs are her. Nothing
+ * else about her is on the site yet, because nothing else has been confirmed:
+ * no education, no specialty, no years in practice. Add those here when the
+ * practice supplies them, not before.
+ */
+export const associateDoctor = {
+  name: "Dr. Rebecca McDougald",
+  shortName: "Dr. McDougald",
+  givenName: "Rebecca",
+  familyName: "McDougald",
+  credential: "DMD, MS",
+  portrait: "/images/dr-rebecca-mcdougald.jpg",
 } as const;
 
 export const hero = {
@@ -64,8 +82,8 @@ export const welcome = {
   subhead: "Comprehensive Dental Services, Personalized for You",
   body: "Our in-house dental lab allows us to design and craft restorations on-site, so patients spend less time waiting and more time enjoying their results. We focus on your comfort and ensure a stress-free, family-friendly experience.",
   cta: { label: "More about us", href: "/about-us/about-the-practice" },
-  image: "/images/team-group-porch.jpg",
-  imageAlt: "The Park Place Dental team outside the practice in Booneville",
+  image: "/images/team-hallway-trio.jpg",
+  imageAlt: "Three members of the Park Place Dental team in the hallway of the Booneville practice",
 } as const;
 
 /** Marks of trust. Every figure is drawn from the practice's own material. */
@@ -81,37 +99,37 @@ export const featuredServices = [
     title: "Veneers",
     slug: "/services/cosmetic-dentistry/veneers",
     body: "Transform your smile with porcelain veneers. We correct imperfections like chips, stains, and misalignment for a flawless appearance.",
-    image: "/images/smile-closeup.jpg",
-    imageAlt: "Close view of a finished veneer case",
+    image: "/images/smile-portrait-framed.jpg",
+    imageAlt: "A framed smile photograph on the wall at Park Place Dental",
   },
   {
     title: "Root Canal Treatment",
     slug: "/services/general-dentistry/root-canals",
     body: "Get expert care with our in-house endodontic specialist. We offer comfortable, effective root canal treatment to save your natural teeth.",
-    image: "/images/goodwin-and-assistant.jpg",
-    imageAlt: "Dr. Goodwin and a team member prepared for treatment",
+    image: "/images/mcdougald-treating-with-assistant.jpg",
+    imageAlt: "Dr. Rebecca McDougald and an assistant treating a patient at Park Place Dental",
   },
   {
     title: "Same-Day Crowns",
     slug: "/services/restorative-dentistry/crowns-bridges",
     body: "Our in-house lab allows us to design and produce same-day crowns, reducing wait times and streamlining your care. For more complex needs, we offer full mouth reconstruction with custom crowns and bridges created right in our office for greater precision and efficiency.",
-    image: "/images/operatory-technology.jpg",
-    imageAlt: "Digital scanning equipment in a Park Place Dental treatment room",
+    image: "/images/milling-chamber-closeup.jpg",
+    imageAlt: "Inside the milling chamber where crowns are made in the office",
   },
   {
     title: "Dental Implants",
     slug: "/services/restorative-dentistry/dental-implants",
     body: "Regain your smile with lifelike dental implants designed to last for decades with good care. Our implants are made to look and function like your natural teeth, and the crown is produced in our in-house lab for a faster, more precise fit.",
-    image: "/images/procedure-closeup.jpg",
-    imageAlt: "A restorative procedure underway at Park Place Dental",
+    image: "/images/implant-planning-screen.jpg",
+    imageAlt: "An implant position planned on 3D imaging at Park Place Dental",
   },
 ] as const;
 
 export const serviceCategories = [
   {
     title: "General Dentistry",
-    image: "/images/hygienist-with-child.jpg",
-    imageAlt: "A hygienist with a young patient at Park Place Dental",
+    image: "/images/hygienist-cleaning.jpg",
+    imageAlt: "A hygienist cleaning a patient's teeth at Park Place Dental",
     slug: "/services/general-dentistry",
     blurb:
       "Gentle, effective care for patients of all ages, from routine check-ups and cleanings to same-day emergency visits.",
@@ -119,8 +137,8 @@ export const serviceCategories = [
   },
   {
     title: "Restorative Dentistry",
-    image: "/images/procedure-closeup.jpg",
-    imageAlt: "A restorative procedure underway",
+    image: "/images/milling-units-row.jpg",
+    imageAlt: "The milling units in the Park Place Dental in-house lab",
     slug: "/services/restorative-dentistry",
     blurb:
       "Lasting solutions that bring your smile back to full function and beauty, crafted in our own lab.",
@@ -128,8 +146,8 @@ export const serviceCategories = [
   },
   {
     title: "Cosmetic Dentistry",
-    image: "/images/smile-closeup.jpg",
-    imageAlt: "A finished cosmetic case",
+    image: "/images/smile-portrait-framed.jpg",
+    imageAlt: "A framed smile photograph on the wall at Park Place Dental",
     slug: "/services/cosmetic-dentistry",
     blurb:
       "Advanced techniques that enhance the beauty and function of your teeth, from whitening to a full smile makeover.",
@@ -137,8 +155,8 @@ export const serviceCategories = [
   },
   {
     title: "Periodontal Care",
-    image: "/images/goodwin-and-assistant.jpg",
-    imageAlt: "Dr. Goodwin and a team member prepared for treatment",
+    image: "/images/mcdougald-and-assistant.jpg",
+    imageAlt: "Dr. Rebecca McDougald and an assistant preparing for treatment at Park Place Dental",
     slug: "/services/periodontal-care",
     blurb:
       "Healthy gums are the foundation of a strong smile. We prevent, detect, and treat gum disease early.",
@@ -155,8 +173,8 @@ export const serviceCategories = [
   },
   {
     title: "Advanced Technology",
-    image: "/images/operatory-technology.jpg",
-    imageAlt: "Scanning equipment in a treatment room",
+    image: "/images/guided-surgery-operatory.jpg",
+    imageAlt: "A treatment room set up with X-Guide navigation at Park Place Dental",
     slug: "/advanced-dental-technology",
     blurb:
       "Facial scanning, laser dentistry, and an in-house lab that together make care more comfortable and precise.",
@@ -174,20 +192,20 @@ export const technology = {
     {
       name: "RAYFace Facial Scanner",
       body: "Our RAYFace Facial Scanner helps us create personalized treatment plans by capturing a detailed 3D view of your smile and facial features, allowing us to design results that look natural and balanced.",
-      image: "/images/operatory-technology.jpg",
-      imageAlt: "The RAYFace scanning setup in a Park Place Dental treatment room",
+      image: "/images/restoration-design-screen.jpg",
+      imageAlt: "A team member designing a restoration on screen at Park Place Dental",
     },
     {
       name: "Solea Dental Laser",
       body: "We also use the Solea Dental Laser for many hard and soft tissue procedures, helping patients enjoy a quieter, more comfortable experience with less anxiety and, in many cases, little to no need for anesthesia.",
-      image: "/images/operatory-room.jpg",
-      imageAlt: "A Park Place Dental treatment room prepared for a procedure",
+      image: "/images/mcdougald-procedure-loupes.jpg",
+      imageAlt: "Dr. Rebecca McDougald working under magnifying loupes at Park Place Dental",
     },
     {
       name: "In-House Dental Lab",
       body: "With our in-house dental lab, we can create beautiful, custom restorations faster. That means same-day options for crowns, veneers, dentures, and more, all designed with quality, convenience, and your smile in mind.",
-      image: "/images/procedure-closeup.jpg",
-      imageAlt: "A custom restoration being fitted at Park Place Dental",
+      image: "/images/milling-unit.jpg",
+      imageAlt: "A CEREC milling unit in the Park Place Dental in-house lab",
     },
   ],
 } as const;
@@ -302,8 +320,8 @@ export const closingCta = {
   body: "Everyone deserves a smile they are proud of. Whether you are in need of a routine check-up, cosmetic enhancements like veneers, or a complex dental implant, we are committed to providing care that fits your unique needs.",
   primaryCta: { label: "Book an appointment today", href: "/book-an-appointment" },
   secondaryCta: { label: practice.phone, href: practice.phoneHref },
-  image: "/images/reception-front-desk.jpg",
-  imageAlt: "The front desk at Park Place Dental",
+  image: "/images/exterior-building.jpg",
+  imageAlt: "The Park Place Dental building on North 3rd Street in Booneville",
 } as const;
 
 export const nav = [

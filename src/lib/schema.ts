@@ -24,7 +24,7 @@
  * this markup no longer earns a SERP feature. It is kept because it is still
  * read by AI search systems, which is now its whole job.
  */
-import { practice, doctor } from "@/lib/content";
+import { practice, doctor, associateDoctor } from "@/lib/content";
 import { siteUrl, canonical } from "@/lib/site";
 
 /* Stable identifiers. These must not change once indexed: they are what ties
@@ -32,6 +32,7 @@ import { siteUrl, canonical } from "@/lib/site";
 export const PRACTICE_ID = `${siteUrl}/#practice`;
 export const WEBSITE_ID = `${siteUrl}/#website`;
 export const DOCTOR_ID = `${siteUrl}/#dr-ken-goodwin`;
+export const ASSOCIATE_ID = `${siteUrl}/#dr-rebecca-mcdougald`;
 
 /**
  * E.164, which is the form a machine can dial without guessing.
@@ -64,8 +65,9 @@ export function practiceNode(): Node {
     telephone: TELEPHONE,
     email: practice.email,
     image: [
-      `${siteUrl}/images/team-group-porch.jpg`,
-      `${siteUrl}/images/reception-front-desk.jpg`,
+      `${siteUrl}/images/exterior-building.jpg`,
+      `${siteUrl}/images/team-group-four.jpg`,
+      `${siteUrl}/images/waiting-room.jpg`,
     ],
     logo: `${siteUrl}/images/logo-lockup.png`,
     address: {
@@ -120,7 +122,7 @@ export function practiceNode(): Node {
         description: practice.hoursNote,
       },
     ],
-    employee: { "@id": DOCTOR_ID },
+    employee: [{ "@id": DOCTOR_ID }, { "@id": ASSOCIATE_ID }],
     founder: { "@id": DOCTOR_ID },
   };
 }
@@ -162,6 +164,27 @@ export function doctorNode(): Node {
       "RAYFace 3D facial scanning",
       "VA dental benefits",
     ],
+  };
+}
+
+/**
+ * Dr. McDougald, with only what is confirmed: her name and the credentials on
+ * the practice sign. No `alumniOf` or `knowsAbout` until the practice supplies
+ * them, since structured data that guesses is worse than structured data that
+ * is short.
+ */
+export function associateNode(): Node {
+  return {
+    "@type": "Person",
+    "@id": ASSOCIATE_ID,
+    name: associateDoctor.name,
+    givenName: associateDoctor.givenName,
+    familyName: associateDoctor.familyName,
+    honorificSuffix: associateDoctor.credential,
+    jobTitle: "Dentist",
+    url: `${siteUrl}/about-us/meet-the-team`,
+    image: `${siteUrl}${associateDoctor.portrait}`,
+    worksFor: { "@id": PRACTICE_ID },
   };
 }
 
@@ -262,7 +285,7 @@ export const REVIEW_DATE = "2026-09-13";
 export function siteGraph(): string {
   return json({
     "@context": "https://schema.org",
-    "@graph": [practiceNode(), doctorNode(), websiteNode()],
+    "@graph": [practiceNode(), doctorNode(), associateNode(), websiteNode()],
   });
 }
 
