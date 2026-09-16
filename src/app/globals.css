@@ -326,6 +326,7 @@
 
   /* ---------- Buttons ---------- */
   .btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -346,7 +347,29 @@
       border-color 0.3s ease;
   }
 
-  .btn:hover { transform: translateY(-2px); }
+  /*
+    The hit area reaches a few pixels below the button.
+
+    A button that lifts on hover moves out from under a pointer resting near its
+    bottom edge. It un-hovers, drops back under the pointer, hovers again, and
+    flickers for as long as the hand is still. The extension travels with the
+    button, so once lifted it still covers the spot the pointer is on.
+  */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -4px;
+  }
+
+  /*
+    Every hover in this file is behind (hover: hover), as Tailwind's own hover
+    utilities already are. A touch screen applies :hover on tap and keeps it
+    until something else is tapped, so a button pressed on a phone used to stay
+    lifted and tinted after the finger had gone.
+  */
+  @media (hover: hover) {
+    .btn:hover { transform: translateY(-2px); }
+  }
   .btn:active { transform: translateY(0); }
 
   .btn-primary {
@@ -355,9 +378,11 @@
     box-shadow: var(--shadow-sm);
   }
 
-  .btn-primary:hover {
-    background-color: #82462f;
-    box-shadow: var(--shadow-md);
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background-color: #82462f;
+      box-shadow: var(--shadow-md);
+    }
   }
 
   .btn-outline {
@@ -366,10 +391,12 @@
     border: 1px solid var(--color-sand-deep);
   }
 
-  .btn-outline:hover {
-    border-color: var(--color-rose);
-    color: var(--color-rose-deep);
-    background-color: var(--color-rose-wash);
+  @media (hover: hover) {
+    .btn-outline:hover {
+      border-color: var(--color-rose);
+      color: var(--color-rose-deep);
+      background-color: var(--color-rose-wash);
+    }
   }
 
   .btn-ghost {
@@ -378,7 +405,9 @@
     box-shadow: var(--shadow-sm);
   }
 
-  .btn-ghost:hover { box-shadow: var(--shadow-md); }
+  @media (hover: hover) {
+    .btn-ghost:hover { box-shadow: var(--shadow-md); }
+  }
 
   /* A phone number or address sitting inside a sentence is still something
      people tap. Vertical padding on an inline element enlarges the hit area
@@ -411,9 +440,11 @@
     transition: transform 0.5s var(--ease-out-soft);
   }
 
-  .link-underline:hover::after {
-    transform-origin: left;
-    transform: scaleX(1);
+  @media (hover: hover) {
+    .link-underline:hover::after {
+      transform-origin: left;
+      transform: scaleX(1);
+    }
   }
 
   /* ---------- Surfaces ---------- */
@@ -427,9 +458,11 @@
       box-shadow 0.5s var(--ease-out-soft);
   }
 
-  .card-lift:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg);
+  @media (hover: hover) {
+    .card-lift:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
   }
 
   /* The arch echoes the column in the mark */

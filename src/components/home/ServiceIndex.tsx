@@ -49,7 +49,7 @@ export function ServiceIndex() {
 
         {/* Clearing on leave lives on a plain wrapper so RevealGroup keeps its
             narrow prop surface. */}
-        <div onPointerLeave={() => setActive(null)}>
+        <div onPointerLeave={(event) => event.pointerType === "mouse" && setActive(null)}>
         <RevealGroup as="ul" gap={0.07} className="relative mt-16 border-t border-sand">
           {serviceCategories.map((cat, i) => {
             const isActive = active === i;
@@ -57,7 +57,13 @@ export function ServiceIndex() {
               <RevealItem as="li" preset="riseSmall" key={cat.slug}>
                 <Link
                   href={cat.slug}
-                  onPointerEnter={() => setActive(i)}
+                  /*
+                    A mouse only. On a touch screen pointerenter fires as part
+                    of the tap and nothing ever sends the matching leave, so the
+                    row stayed lit with its sheen after the finger had gone.
+                    Keyboard focus still lights the row, below.
+                  */
+                  onPointerEnter={(event) => event.pointerType === "mouse" && setActive(i)}
                   onFocus={() => setActive(i)}
                   onBlur={() => setActive((cur) => (cur === i ? null : cur))}
                   className="group relative isolate grid items-start gap-4 overflow-hidden border-b border-sand py-8 md:grid-cols-[minmax(0,21rem)_1fr_auto] md:gap-10 md:px-6"
@@ -86,8 +92,13 @@ export function ServiceIndex() {
                       x: isActive ? "260%" : "-60%",
                       opacity: isActive ? 0.5 : 0,
                     }}
+                    /* On the way out the glint fades where it is and then jumps
+                       home unseen. Animating it back across the row at the
+                       same time read as the light sweeping backwards. */
                     transition={{
-                      x: { duration: 1.15, ease: EASE },
+                      x: isActive
+                        ? { duration: 1.15, ease: EASE }
+                        : { duration: 0, delay: 0.45 },
                       opacity: { duration: 0.45, ease: SNAP },
                     }}
                     style={{

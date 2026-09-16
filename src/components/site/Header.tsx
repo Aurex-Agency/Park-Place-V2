@@ -220,7 +220,18 @@ export function Header() {
                         aria-expanded={isOpen}
                         aria-controls={panelId}
                         aria-label={`${isOpen ? "Hide" : "Show"} ${item.label.toLowerCase()} pages`}
-                        onClick={() => setOpenMenu(isOpen ? null : item.label)}
+                        /*
+                          Hovering the item has already opened the panel by the
+                          time a mouse clicks the chevron, so a plain toggle
+                          closed the menu under the pointer. A pointer click
+                          opens. Enter and Space arrive with a detail of 0 and
+                          still toggle, which is what the keyboard needs.
+                        */
+                        onClick={(event) =>
+                          setOpenMenu(
+                            event.detail > 0 ? item.label : isOpen ? null : item.label,
+                          )
+                        }
                         className="flex items-center rounded-full py-2.5 pl-1.5 pr-4 text-espresso/85 transition-colors hover:text-rose-deep"
                       >
                         <motion.svg
