@@ -31,10 +31,14 @@ export function FeaturedServices() {
           className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
           {featuredServices.map((service) => (
-            <RevealItem as="li" key={service.title} className="h-full">
+            /* The item holds the hover and only the card lifts. A card that
+               lifts itself rises out from under a pointer resting near its
+               bottom edge, drops back, and flickers for as long as the hand is
+               still. The same pattern is used for every lifting card. */
+            <RevealItem as="li" key={service.title} className="group h-full">
               <Link
                 href={service.slug}
-                className="card group flex h-full flex-col translate-y-0 overflow-hidden !p-0 transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:-translate-y-2 hover:shadow-[var(--shadow-lg)]"
+                className="card flex h-full flex-col translate-y-0 overflow-hidden !p-0 transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:-translate-y-2 group-hover:shadow-[var(--shadow-lg)]"
               >
                 <div className="relative aspect-[5/4] w-full overflow-hidden bg-linen-deep">
                   <Image

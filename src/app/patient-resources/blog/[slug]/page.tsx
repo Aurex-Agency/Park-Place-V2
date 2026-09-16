@@ -246,10 +246,10 @@ export default async function PostPage({
             className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {others.map((other) => (
-              <RevealItem as="li" key={other.slug} className="h-full">
+              <RevealItem as="li" key={other.slug} className="group h-full">
                 <Link
                   href={`/patient-resources/blog/${other.slug}`}
-                  className="card group flex h-full translate-y-0 flex-col transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:-translate-y-2 hover:shadow-[var(--shadow-lg)]"
+                  className="card flex h-full translate-y-0 flex-col transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:-translate-y-2 group-hover:shadow-[var(--shadow-lg)]"
                 >
                   <p className="t-eyebrow text-rose-deep">{other.topic}</p>
                   <h3 className="t-h3 mt-3 text-[1.1rem] transition-colors duration-[450ms] group-hover:text-rose-deep">

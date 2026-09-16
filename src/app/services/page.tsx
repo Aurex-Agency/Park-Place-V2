@@ -42,10 +42,10 @@ export default function ServicesPage() {
         <div className="shell">
           <RevealGroup as="ul" gap={0.08} className="grid gap-8 md:grid-cols-2">
             {serviceCategories.map((cat) => (
-              <RevealItem as="li" key={cat.slug} className="h-full">
+              <RevealItem as="li" key={cat.slug} className="group h-full">
                 <Link
                   href={`/services/${cat.slug}`}
-                  className="card group flex h-full translate-y-0 flex-col overflow-hidden !p-0 transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:-translate-y-2 hover:shadow-[var(--shadow-lg)]"
+                  className="card flex h-full translate-y-0 flex-col overflow-hidden !p-0 transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:-translate-y-2 group-hover:shadow-[var(--shadow-lg)]"
                 >
                   <div className="relative aspect-[16/9] w-full overflow-hidden bg-linen-deep">
                     <Image

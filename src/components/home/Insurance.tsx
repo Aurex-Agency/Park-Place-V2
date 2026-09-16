@@ -41,8 +41,11 @@ export function Insurance() {
           className="mx-auto mt-12 flex max-w-4xl flex-wrap items-center justify-center gap-3"
         >
           {insurance.carriers.map((carrier) => (
-            <RevealItem as="li" preset="riseSmall" key={carrier}>
-              <span className="block translate-y-0 cursor-default whitespace-nowrap rounded-full bg-white px-6 py-3.5 text-[0.95rem] text-taupe shadow-[var(--shadow-sm)] ring-1 ring-transparent transition-[translate,scale,box-shadow,color] duration-[420ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:-translate-y-1 hover:text-espresso hover:shadow-[var(--shadow-md)] hover:ring-sand">
+            /* The item holds the hover and only the pill inside moves. A pill
+               that lifts itself leaves a pointer resting on its bottom edge,
+               drops back under it, and flickers. */
+            <RevealItem as="li" preset="riseSmall" key={carrier} className="group">
+              <span className="block translate-y-0 cursor-default whitespace-nowrap rounded-full bg-white px-6 py-3.5 text-[0.95rem] text-taupe shadow-[var(--shadow-sm)] ring-1 ring-transparent transition-[translate,scale,box-shadow,color] duration-[420ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:-translate-y-1 group-hover:text-espresso group-hover:shadow-[var(--shadow-md)] group-hover:ring-sand">
                 {carrier}
               </span>
             </RevealItem>
