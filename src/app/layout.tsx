@@ -122,6 +122,10 @@ export const metadata: Metadata = {
     opengraph-image.jpg, twitter-image.jpg, icon.png, apple-icon.png and
     favicon.ico. Next fingerprints them and writes the tags, so there is no
     hardcoded path here to fall out of date.
+
+    Exactly one of each. Next writes a tag for every opengraph-image.* file it
+    finds, so a .png left beside the .jpg put two share images on the homepage,
+    and iMessage and Slack drew the link card twice.
   */
 };
 
