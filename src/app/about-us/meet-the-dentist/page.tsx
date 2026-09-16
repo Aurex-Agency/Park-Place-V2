@@ -30,7 +30,10 @@ export default function Page() {
         photos={[photos.goodwinWithAssistant, photos.goodwinImplantStation]}
       />
 
-      <AssociateDoctor eyebrow="Also Caring for You" />
+      <AssociateDoctor
+        eyebrow="Also Caring for You"
+        cta={{ label: "Meet the whole team", href: "/about-us/meet-the-team" }}
+      />
     </SimplePageView>
   );
 }

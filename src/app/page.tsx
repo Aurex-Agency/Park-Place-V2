@@ -6,6 +6,7 @@ import { Welcome } from "@/components/home/Welcome";
 import { FeaturedServices } from "@/components/home/FeaturedServices";
 import { Technology } from "@/components/home/Technology";
 import { Doctor } from "@/components/home/Doctor";
+import { AssociateDoctor, ASSOCIATE_ANCHOR } from "@/components/page/AssociateDoctor";
 import { Team } from "@/components/home/Team";
 import { ServiceIndex } from "@/components/home/ServiceIndex";
 import { InsidePractice } from "@/components/home/InsidePractice";
@@ -30,6 +31,12 @@ export default function HomePage() {
       <FeaturedServices />
       <Technology />
       <Doctor />
+      <AssociateDoctor
+        eyebrow="Our Doctors"
+        flip
+        continues
+        cta={{ label: "Meet Dr. McDougald", href: `/about-us/meet-the-team#${ASSOCIATE_ANCHOR}` }}
+      />
       <Team />
       <ServiceIndex />
       <InsidePractice />
