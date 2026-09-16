@@ -26,10 +26,10 @@ export function RelatedServices({
           className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {items.map((item) => (
-            <RevealItem as="li" key={item.href} className="h-full">
+            <RevealItem as="li" key={item.href} className="group h-full">
               <Link
                 href={item.href}
-                className="card group flex h-full translate-y-0 flex-col transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:-translate-y-2 hover:shadow-[var(--shadow-lg)]"
+                className="card flex h-full translate-y-0 flex-col transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:-translate-y-2 group-hover:shadow-[var(--shadow-lg)]"
               >
                 <h3 className="t-h3 transition-colors duration-[450ms] group-hover:text-rose-deep">
                   {item.title}

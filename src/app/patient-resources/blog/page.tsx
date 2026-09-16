@@ -110,10 +110,10 @@ export default function Page() {
             className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {rest.map((post) => (
-              <RevealItem as="li" key={post.slug} className="h-full">
+              <RevealItem as="li" key={post.slug} className="group h-full">
                 <Link
                   href={`/patient-resources/blog/${post.slug}`}
-                  className="card group flex h-full translate-y-0 flex-col transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:-translate-y-2 hover:shadow-[var(--shadow-lg)]"
+                  className="card flex h-full translate-y-0 flex-col transition-[translate,scale,box-shadow] duration-[550ms] ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:-translate-y-2 group-hover:shadow-[var(--shadow-lg)]"
                 >
                   <p className="t-eyebrow text-rose-deep">{post.topic}</p>
                   <h2 className="t-h3 mt-3 text-[1.1rem] transition-colors duration-[450ms] group-hover:text-rose-deep">

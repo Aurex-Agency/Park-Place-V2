@@ -26,7 +26,7 @@ export default function Page() {
         { label: meetTheTeam.title },
       ]}
     >
-      <AssociateDoctor eyebrow="Our Doctors" tone="linen" />
+      <AssociateDoctor eyebrow="Our Doctors" tone="linen" anchor />
 
       <section className="section overflow-hidden">
         <div className="shell">

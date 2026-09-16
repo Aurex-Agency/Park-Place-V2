@@ -584,3 +584,27 @@ desktop than they were with the old, lighter phone photographs.
 
 Everything below the fold is lazy and `fetchPriority="low"`, so the header
 photograph is never competing with a gallery for the connection.
+
+---
+
+## Hover rules that were learned the hard way
+
+**Whatever lifts must not be what is hovered.** A card or pill that moves up
+on its own `:hover` rises out from under a pointer resting near its bottom
+edge, un-hovers, drops back under the pointer and hovers again. Measured by
+parking the pointer 1.5px inside the bottom edge and moving it by a pixel, the
+buttons and service cards toggled 16 to 24 times in under a second. Lifting
+cards and pills now take their hover from the list item around them
+(`group` on the item, `group-hover:` on the card), which does not move.
+Buttons keep their own hover and carry a `::before` that reaches 4px below
+them, so the lifted button still covers the spot the pointer is on.
+
+**Every hover is behind `(hover: hover)`.** Tailwind's utilities already are.
+The hand-written rules in `globals.css` were not, so a tapped button on a phone
+stayed lifted and tinted. A hover driven from JavaScript needs the same
+guard: the service list now lights only for `pointerType === "mouse"`, as the
+technology rows already did.
+
+**A reverse animation is still an animation.** The service list glint used to
+slide back across the row while it faded, which read as light sweeping
+backwards. On leave it now fades in place and resets once invisible.

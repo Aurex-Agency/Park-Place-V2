@@ -2,8 +2,12 @@ import Image from "next/image";
 import { associateDoctor } from "@/lib/content";
 import { photos } from "@/content/photography";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { Button } from "@/components/ui/Button";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
+
+/** Where the full introduction lives, so other pages can link straight to it. */
+export const ASSOCIATE_ANCHOR = "dr-mcdougald";
 
 /**
  * Dr. Rebecca McDougald: her portrait, and two photographs of her at work.
@@ -12,21 +16,47 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
  * which is the kind of gap a patient notices when they arrive. The copy says
  * only what is confirmed. The photographs do most of the work: a portrait to
  * put a face to the name, and two frames of her treating patients.
+ *
+ * On the homepage it follows Dr. Goodwin's section with the sides swapped, so
+ * the two read as a pair: portrait left then portrait right. That section and
+ * this one share a ground, so `continues` drops the top padding that would
+ * otherwise double the space between them.
  */
 export function AssociateDoctor({
   eyebrow,
   tone = "light",
+  flip = false,
+  continues = false,
+  cta,
+  anchor = false,
 }: {
   eyebrow: string;
   tone?: "light" | "linen";
+  /** Portrait on the right. */
+  flip?: boolean;
+  /** Follows a section on the same ground, so it needs no top padding. */
+  continues?: boolean;
+  cta?: { label: string; href: string };
+  /** Carries the id other pages link to. Set on one page only. */
+  anchor?: boolean;
 }) {
   const doc = associateDoctor;
   const atWork = [photos.mcdougaldWithAssistant, photos.mcdougaldLoupes];
 
   return (
-    <section className={`section overflow-hidden ${tone === "linen" ? "bg-linen-deep" : ""}`}>
-      <div className="shell grid items-center gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <Reveal preset="fade" className="relative mx-auto w-full max-w-sm lg:mx-0">
+    <section
+      id={anchor ? ASSOCIATE_ANCHOR : undefined}
+      className={`section scroll-mt-24 overflow-hidden ${tone === "linen" ? "bg-linen-deep" : ""} ${continues ? "!pt-0" : ""}`}
+    >
+      <div
+        className={`shell grid items-center gap-14 lg:gap-20 ${
+          flip ? "lg:grid-cols-[1.2fr_0.8fr]" : "lg:grid-cols-[0.8fr_1.2fr]"
+        }`}
+      >
+        <Reveal
+          preset="fade"
+          className={`relative mx-auto w-full max-w-sm lg:mx-0 ${flip ? "lg:order-2 lg:justify-self-end" : ""}`}
+        >
           <div className="arch group relative aspect-[4/5] w-full overflow-hidden bg-linen-deep shadow-[var(--shadow-md)]">
             <Image
               src={photos.mcdougaldPortrait.src}
@@ -39,7 +69,7 @@ export function AssociateDoctor({
           </div>
         </Reveal>
 
-        <div>
+        <div className={flip ? "lg:order-1" : ""}>
           <Reveal>
             <Eyebrow>{eyebrow}</Eyebrow>
           </Reveal>
@@ -82,6 +112,16 @@ export function AssociateDoctor({
               </RevealItem>
             ))}
           </RevealGroup>
+
+          {cta && (
+            <Reveal delay={0.16}>
+              <div className="mt-9">
+                <Button href={cta.href} variant="outline">
+                  {cta.label}
+                </Button>
+              </div>
+            </Reveal>
+          )}
         </div>
       </div>
     </section>
