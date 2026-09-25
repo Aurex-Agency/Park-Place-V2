@@ -43,13 +43,13 @@ export function CtaBand({
                   Call {practice.phone}
                 </Button>
                 <Button href="/book-an-appointment" variant="ghost">
-                  Book an appointment
+                  Request an appointment
                 </Button>
               </>
             ) : (
               <>
                 <Button href="/book-an-appointment" variant="primary">
-                  Book an appointment
+                  Request an appointment
                 </Button>
                 <Button href={practice.phoneHref} variant="ghost">
                   Call {practice.phone}

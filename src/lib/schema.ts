@@ -229,6 +229,7 @@ type PageOptions = {
   crumbs?: Crumb[];
   /** Set for pages that are about a treatment or a health topic. */
   medical?: boolean;
+  reviewed?: boolean;
   primaryImage?: string;
 };
 
@@ -248,7 +249,7 @@ function webPageNode(options: PageOptions): Node {
       : {}),
   };
 
-  if (options.medical) {
+  if (options.medical && options.reviewed !== false) {
     /* A page describing a treatment should say who stands behind it. On health
        content this is the difference between a page that reads as authored and
        one that reads as unattributed. */
@@ -470,6 +471,7 @@ export type ArticleSchemaOptions = {
   description: string;
   published: string;
   modified: string;
+  author?: "doctor" | "practice";
   image: string;
   crumbs: Crumb[];
   faqs?: readonly { q: string; a: string }[];
@@ -478,10 +480,9 @@ export type ArticleSchemaOptions = {
 /**
  * A blog post.
  *
- * `author` and `reviewedBy` both point at Dr. Goodwin, which is accurate here:
- * these articles carry his name because the clinical substance is his. If a
- * post is ever written by someone else, the author changes and the reviewer
- * stays, which is exactly the distinction the two properties exist to draw.
+ * Preserve the established author of existing articles. Practice editorial
+ * work has no clinician review claim. A content modification is not a new
+ * clinical review, so review dates remain independent of dateModified.
  */
 export function articleGraph(options: ArticleSchemaOptions): string {
   const url = canonical(options.path);
@@ -497,6 +498,7 @@ export function articleGraph(options: ArticleSchemaOptions): string {
       description: options.description,
       medical: true,
       primaryImage: options.image,
+      reviewed: options.author !== "practice",
       crumbs: options.crumbs,
     }),
     {
@@ -509,9 +511,10 @@ export function articleGraph(options: ArticleSchemaOptions): string {
       image: `${siteUrl}${options.image}`,
       datePublished: options.published,
       dateModified: options.modified,
-      author: { "@id": DOCTOR_ID },
-      reviewedBy: { "@id": DOCTOR_ID },
-      lastReviewed: options.modified,
+      author: { "@id": options.author === "practice" ? PRACTICE_ID : DOCTOR_ID },
+      ...(options.author !== "practice"
+        ? { reviewedBy: { "@id": DOCTOR_ID }, lastReviewed: REVIEW_DATE }
+        : {}),
       publisher: { "@id": PRACTICE_ID },
       isPartOf: { "@id": WEBSITE_ID },
       inLanguage: "en-US",

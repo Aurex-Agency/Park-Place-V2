@@ -66,9 +66,9 @@ export const associateDoctor = {
 
 export const hero = {
   eyebrow: "Close to Home",
-  headline: "Transform Your Smile with Expert Care",
+  headline: "Your Dentist in Booneville, Mississippi",
   subhead:
-    "From routine check-ups to advanced cosmetic and restorative treatments, we are here to keep your smile healthy, beautiful, and confident.",
+    "Family dental care, same-day crowns and restorative treatment in Booneville, with an in-house dental lab. Call Park Place Dental or request an appointment with our team.",
   primaryCta: { label: "Book an appointment", href: "/book-an-appointment" },
   secondaryCta: { label: "Explore our services", href: "/services" },
   image: "/images/hero-entryway.jpg",

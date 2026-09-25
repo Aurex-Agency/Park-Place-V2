@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { posts, findPost } from "@/content/posts";
+import { posts, findPost, relatedPosts } from "@/content/posts";
 import { practice, doctor } from "@/lib/content";
 import { canonical } from "@/lib/site";
 import { articleGraph } from "@/lib/schema";
@@ -37,7 +37,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.published,
       modifiedTime: post.updated,
-      authors: [doctor.name],
+      authors: [post.author === "practice" ? practice.name : doctor.name],
       images: [post.image],
     },
     twitter: {
@@ -73,7 +73,7 @@ export default async function PostPage({
     { label: "Articles", href: "/patient-resources/blog" },
     { label: post.title },
   ];
-  const others = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  const others = relatedPosts(post);
 
   return (
     <>
@@ -82,6 +82,7 @@ export default async function PostPage({
           path,
           headline: post.title,
           description: post.metaDescription,
+          author: post.author,
           published: post.published,
           modified: post.updated,
           image: post.image,
@@ -135,10 +136,10 @@ export default async function PostPage({
                   <span>
                     By{" "}
                     <Link
-                      href="/about-us/meet-the-dentist"
+                      href={post.author === "practice" ? "/about-us/about-the-practice" : "/about-us/meet-the-dentist"}
                       className="tap-inline font-medium text-rose-deep underline underline-offset-4"
                     >
-                      {doctor.name}, {doctor.credential}
+                      {post.author === "practice" ? practice.name : `${doctor.name}, ${doctor.credential}`}
                     </Link>
                   </span>
                   <span aria-hidden="true" className="text-sand-deep">
@@ -151,6 +152,9 @@ export default async function PostPage({
                     ·
                   </span>
                 <span>{post.readingMinutes} min read</span>
+                {post.updated !== post.published && (
+                  <span>Updated <time dateTime={post.updated}>{formatDate(post.updated)}</time></span>
+                )}
               </p>
             </div>
 
@@ -187,8 +191,9 @@ export default async function PostPage({
             <Reveal>
               <div className="mt-16 max-w-2xl border-t border-sand pt-8">
                 <p className="text-[0.9rem] leading-relaxed text-taupe">
-                  Written and reviewed by {doctor.name}, {doctor.credential}, who
-                  has practised dentistry in Booneville since 1982. This article
+                  {post.author === "practice"
+                    ? "Prepared by Park Place Dental using the patient-education sources linked in this article. This article"
+                    : `Written and reviewed by ${doctor.name}, ${doctor.credential}, who has practised dentistry in Booneville since 1982. This article`}
                   is general information, not a diagnosis or a treatment plan for
                   your particular situation. For advice about your own teeth,
                   call the practice on{" "}
@@ -266,8 +271,8 @@ export default async function PostPage({
       </section>
 
       <CtaBand
-        heading="Still have a question we have not answered?"
-        body={`Call the practice on ${practice.phone}. We would rather talk it through than have you guess.`}
+        heading={post.cta?.heading ?? "Still have a question we have not answered?"}
+        body={post.cta?.body ?? `Call the practice on ${practice.phone}. We would rather talk it through than have you guess.`}
       />
     </>
   );
