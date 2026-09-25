@@ -1,3 +1,4 @@
+import { PatientGuides } from "@/components/page/PatientGuides";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -238,8 +239,8 @@ export default async function LocationPage({
             <Reveal>
               <Eyebrow as="h2">
                 {place.home
-                  ? "Most asked for in Booneville"
-                  : `Most asked for from ${place.town}`}
+                  ? "Explore care in Booneville"
+                  : `Care to discuss when visiting from ${place.town}`}
               </Eyebrow>
             </Reveal>
             <RevealGroup
@@ -289,12 +290,14 @@ export default async function LocationPage({
               body={
                 place.home
                   ? "We keep room in the schedule every day for urgent problems, so call the office if something has broken rather than waiting on a form."
-                  : "We will group what can sensibly be grouped so you are making one trip rather than three."
+                  : "Tell the team where you are travelling from and ask which appointments can be combined. We will confirm a plan before you set out."
               }
             />
           </div>
         </div>
       </section>
+
+      <PatientGuides servicePaths={place.services.map((service) => service.href)} />
 
       <FaqSection
         items={place.faqs}

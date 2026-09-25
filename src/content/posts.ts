@@ -30,6 +30,8 @@
  *      claim needs confirmation it carries a TODO rather than a guess.
  */
 
+import { treatmentGuides } from "./treatment-guides";
+
 export type PostBlock =
   | { kind: "prose"; heading?: string; body: string[] }
   | { kind: "list"; heading?: string; intro?: string; items: string[] }
@@ -60,6 +62,10 @@ export type PostBlock =
     };
 
 export type Post = {
+  /** Practice editorial articles must not claim a clinician reviewed them. */
+  author?: "doctor" | "practice";
+  relatedSlugs?: string[];
+  cta?: { heading: string; body: string };
   slug: string;
   title: string;
   /** What the browser tab and search result say. Kept under ~60 with the suffix. */
@@ -87,6 +93,7 @@ export type Post = {
 const PUBLISHED = "2026-09-13";
 
 export const posts: Post[] = [
+  ...treatmentGuides,
   /* ====================================================================== 1 */
   {
     slug: "dental-emergency-first-hour",
@@ -523,7 +530,7 @@ export const posts: Post[] = [
   /* ====================================================================== 4 */
   {
     slug: "dental-implant-cost-north-mississippi",
-    title: "What does a dental implant actually cost in North Mississippi?",
+    title: "Dental implant costs in North Mississippi: what affects your estimate?",
     seoTitle: "Dental Implant Cost in North Mississippi",
     metaDescription:
       "An implant has three separately priced parts, and the total depends on your case. What actually drives the number, what changes it, and how to read a treatment estimate.",
@@ -532,7 +539,7 @@ export const posts: Post[] = [
     answer:
       "A single dental implant is priced as three separate parts rather than one item: the implant post placed in the jawbone, the abutment that connects to it, and the crown on top. What you pay depends on how many teeth are involved, whether bone grafting is needed first, which materials are used, what imaging the plan requires, and the kind of anaesthesia or sedation chosen. Because those variables differ so widely between patients, any single advertised figure is close to meaningless until someone has examined your mouth. Ask for a written treatment estimate that itemises each part, and check specifically whether imaging, grafting and the final crown are included.",
     published: PUBLISHED,
-    updated: PUBLISHED,
+    updated: "2026-09-25",
     image: "/images/implant-planning-closeup.jpg",
     imageAlt: "An implant's angle and depth planned on a 3D scan",
     readingMinutes: 8,
@@ -559,7 +566,7 @@ export const posts: Post[] = [
           },
           {
             term: "The crown",
-            text: "The part you see and chew with. It is made to match your other teeth. At this practice the crown is made in our own laboratory rather than sent to an outside one, which removes an outside laboratory fee from the total.",
+            text: "The part you see and chew with. It is made to match your other teeth. At this practice the crown is made in our own laboratory rather than sent to an outside one, so you can discuss the restoration and its fit with the team providing your care. Ask what laboratory work is included in your estimate.",
           },
         ],
       },
@@ -1022,3 +1029,13 @@ export function findPost(slug: string): Post | undefined {
 export const postsByDate = [...posts].sort((a, b) =>
   b.published.localeCompare(a.published),
 );
+
+export function relatedPosts(post: Post, limit = 3): Post[] {
+  const score = (candidate: Post) =>
+    (post.relatedSlugs?.includes(candidate.slug) ? 100 : 0) +
+    (candidate.topic === post.topic ? 10 : 0) +
+    candidate.related.filter((link) => post.related.some((own) => own.href === link.href)).length;
+  return posts.filter((candidate) => candidate.slug !== post.slug)
+    .sort((a, b) => score(b) - score(a) || b.published.localeCompare(a.published) || a.slug.localeCompare(b.slug))
+    .slice(0, limit);
+}

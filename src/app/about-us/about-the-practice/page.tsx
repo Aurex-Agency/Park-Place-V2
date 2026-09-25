@@ -17,7 +17,6 @@ export default function Page() {
       page={aboutPractice}
       crumbs={[
         { label: "Home", href: "/" },
-        { label: "About Us" },
         { label: aboutPractice.title },
       ]}
     >

@@ -1,3 +1,4 @@
+import { PatientGuides } from "@/components/page/PatientGuides";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { serviceCategories, findService } from "@/content/services";
@@ -95,7 +96,7 @@ export default async function ServicePage({
 
       <PageHeader
         eyebrow={cat.title}
-        headline={item.title}
+        headline={item.headline ?? item.title}
         lead={item.lead}
         image={item.image}
         imageAlt={item.imageAlt}
@@ -122,8 +123,8 @@ export default async function ServicePage({
               }
               body={
                 item.urgent
-                  ? "The phone reaches us straight away, and we hold room in every day's schedule for urgent problems. The form is here too, but it waits for a callback."
-                  : "Book online in under a minute, or call the office and we will find you a time."
+                  ? "Call during office hours to ask about the earliest available appointment. Same-day care depends on the schedule and your needs. Online requests wait for a callback."
+                  : "Request an appointment online or call our Booneville office. Our team will confirm the time with you."
               }
             />
           </div>
@@ -137,6 +138,8 @@ export default async function ServicePage({
           heading={`Questions about / ${item.title.toLowerCase()}`}
         />
       )}
+
+      <PatientGuides servicePaths={[path]} />
 
       <RelatedServices
         eyebrow={`More ${cat.title}`}

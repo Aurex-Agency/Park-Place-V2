@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
+import { trackLeadOutcome } from "@/lib/analytics-events";
 
 export type SubmitStatus = "idle" | "sending" | "sent" | "error";
 
@@ -34,7 +35,8 @@ function report(
   payload: Record<string, unknown>,
   extra: Record<string, string | number | boolean>,
 ) {
-  const kind = typeof payload.kind === "string" ? payload.kind : "unknown";
+  const kind = payload.kind === "appointment" || payload.kind === "contact" ? payload.kind : "unknown";
+  trackLeadOutcome(event, kind, extra.status);
   try {
     track(event, { kind, ...extra });
   } catch {
@@ -65,6 +67,7 @@ export function useSubmit() {
   const [confirmed, setConfirmed] = useState(true);
   const token = useRef<string | null>(null);
   const mintedAt = useRef<number>(0);
+  const submitting = useRef(false);
 
   const loadToken = useCallback(async () => {
     try {
@@ -116,6 +119,8 @@ export function useSubmit() {
   }
 
   async function submit(payload: Record<string, unknown>): Promise<boolean> {
+    if (submitting.current) return false;
+    submitting.current = true;
     setStatus("sending");
     setError(null);
     setConfirmed(true);
@@ -167,6 +172,8 @@ export function useSubmit() {
       setError(FALLBACK);
       setStatus("error");
       return false;
+    } finally {
+      submitting.current = false;
     }
   }
 

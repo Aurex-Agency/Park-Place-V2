@@ -76,7 +76,7 @@ export const serviceDepth: Record<string, Block[]> = {
         },
         {
           term: "Healing and integration",
-          text: "Usually somewhere between three and six months, during which bone grows onto the surface of the implant. This is the part that cannot be rushed, and a practice offering to skip it is one to ask hard questions of.",
+          text: "Bone needs time to integrate with the implant. Timing varies by case; some treatment plans allow an earlier restoration while others require several months of healing. Your dentist will explain the sequence and follow-up for your situation.",
         },
         {
           term: "Abutment and crown",

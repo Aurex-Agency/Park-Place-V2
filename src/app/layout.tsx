@@ -247,8 +247,8 @@ export default function RootLayout({
 
           `lazyOnload` waits for the load event and the browser going quiet.
           GA4 still records the pageview, and enhanced measurement still
-          follows History API navigations afterwards, so nothing is lost except
-          the contention.
+          follows History API navigations afterwards, while the small initializer runs before hydration to queue
+          early interactions without waiting for the external script.
         */}
         {analyticsEnabled && (
           <Script
@@ -258,7 +258,7 @@ export default function RootLayout({
           />
         )}
         {analyticsEnabled && (
-          <Script id="ga-init" strategy="lazyOnload">
+          <Script id="ga-init" strategy="beforeInteractive">
             {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}
           </Script>
         )}

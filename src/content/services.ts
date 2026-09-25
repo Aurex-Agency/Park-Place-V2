@@ -22,6 +22,7 @@ export type Block =
 export type ServiceDetail = {
   slug: string;
   title: string;
+  headline?: string;
   metaDescription: string;
   lead: string;
   image: string;
@@ -122,6 +123,7 @@ export const serviceCategories: ServiceCategory[] = [
       },
       {
         slug: "fillings",
+        headline: "Tooth-Colored Fillings in Booneville, MS",
         title: "Fillings",
         metaDescription:
           "Tooth-colored composite fillings that blend with your natural teeth, in Booneville, Mississippi.",
@@ -213,6 +215,7 @@ export const serviceCategories: ServiceCategory[] = [
       },
       {
         slug: "emergency-dentistry",
+        headline: "Emergency Dentist in Booneville, MS",
         urgent: true,
         title: "Emergency Dentistry",
         metaDescription:
@@ -278,6 +281,7 @@ export const serviceCategories: ServiceCategory[] = [
     children: [
       {
         slug: "dental-implants",
+        headline: "Dental Implants in Booneville, MS",
         title: "Dental Implants",
         metaDescription:
           "Permanent, natural-looking dental implants with crowns from our in-house lab in Booneville, Mississippi.",
@@ -320,6 +324,7 @@ export const serviceCategories: ServiceCategory[] = [
       },
       {
         slug: "crowns-bridges",
+        headline: "Same-Day Crowns & Bridges in Booneville",
         title: "Crowns & Bridges",
         metaDescription:
           "Same-day crowns and custom bridges made in our in-house lab in Booneville, Mississippi.",
@@ -371,6 +376,7 @@ export const serviceCategories: ServiceCategory[] = [
       },
       {
         slug: "dentures",
+        headline: "Dentures & Denture Repairs in Booneville",
         title: "Dentures",
         metaDescription:
           "Full, partial and implant-supported dentures made in our in-house lab in Booneville, Mississippi.",

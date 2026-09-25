@@ -27,7 +27,7 @@ export default function Page() {
       <PageHeader
         eyebrow="Book an Appointment"
         headline="Let us find you / a time"
-        lead="Patients from Booneville and surrounding communities trust Park Place Dental for high-quality care, clear communication, and a comfortable experience from start to finish. Complete the form below and our team will contact you shortly."
+        lead="Request a visit at our Booneville office. Our team will call to confirm an available time; submitting this form does not reserve an appointment. For an urgent tooth concern during office hours, please call instead of waiting for a callback."
         crumbs={[{ label: "Home", href: "/" }, { label: "Book an Appointment" }]}
         cta={false}
       />

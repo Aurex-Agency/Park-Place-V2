@@ -7,7 +7,7 @@ import { hero, practice } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 
 /** Splits a headline so each line can be masked and revealed separately. */
-const HEADLINE_LINES = ["Transform", "Your Smile", "with Expert Care"];
+const HEADLINE_LINES = ["Your Dentist", "in Booneville,", "Mississippi"];
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
