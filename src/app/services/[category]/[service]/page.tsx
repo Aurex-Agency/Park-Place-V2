@@ -83,6 +83,7 @@ export default async function ServicePage({
     <>
       <JsonLd
         graph={serviceGraph({
+          reviewed: false,
           path,
           name: meta.title,
           description: meta.description,

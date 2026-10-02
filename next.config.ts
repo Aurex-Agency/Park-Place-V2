@@ -53,6 +53,14 @@ const nextConfig: NextConfig = {
     qualities: [75, 90],
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return ["parkplace-dental.com", "www.parkplace-dental.com"].map((host) => ({
+      source: "/:path*",
+      has: [{ type: "host" as const, value: host.replaceAll(".", "\\.") }],
+      destination: "https://parkplacedentist.com/:path*",
+      permanent: true,
+    }));
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

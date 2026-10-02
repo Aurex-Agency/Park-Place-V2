@@ -137,12 +137,12 @@ export const seo: Record<string, SeoEntry> = {
   "/services/general-dentistry": {
     title: "General Dentistry in Booneville, MS",
     description:
-      "Cleanings, exams, tooth-colored fillings, root canals and same-day emergency care for families in Booneville and across North Mississippi.",
+      "Cleanings, exams, tooth-colored fillings, root canals and urgent dental appointments for families in Booneville and across North Mississippi.",
   },
   "/services/restorative-dentistry": {
     title: "Restorative Dentistry, North MS",
     description:
-      "Crowns, bridges, dentures and dental implants made in our own in-house lab in Booneville, MS, so there is no waiting on an outside laboratory.",
+      "Explore crowns, bridges, dentures and dental implant care at our Booneville office. Ask about treatment stages, our in-house lab and follow-up visits.",
   },
   "/services/cosmetic-dentistry": {
     title: "Cosmetic Dentistry in Booneville, MS",
@@ -150,7 +150,7 @@ export const seo: Record<string, SeoEntry> = {
       "Veneers, teeth whitening and smile makeovers planned with RAYFace 3D scanning at Park Place Dental in Booneville, Mississippi.",
   },
   "/services/periodontal-care": {
-    title: "Gum Disease Treatment in Booneville, MS",
+    title: "Gum Health & Periodontal Care, Booneville",
     description:
       "Bleeding gums are common but not normal. Periodontal assessment and deep cleaning at Park Place Dental in Booneville, Mississippi.",
   },
@@ -179,12 +179,12 @@ export const seo: Record<string, SeoEntry> = {
   "/services/general-dentistry/emergency-dentistry": {
     title: "Emergency Dentist, Booneville MS",
     description:
-      "Knocked-out tooth, broken crown, severe toothache or swelling? Call (662) 728-8171. Same-day emergency dental care in Booneville, Mississippi.",
+      "Knocked-out tooth, broken crown, severe toothache or swelling? Call (662) 728-8171. Call our Booneville office to discuss urgent dental appointment availability.",
   },
   "/services/restorative-dentistry/crowns-bridges": {
     title: "Same-Day Crowns & Bridges, Booneville",
     description:
-      "Crowns and bridges made in our own in-house dental lab in Booneville, MS. No outside laboratory, no posting work away, far less waiting.",
+      "Discuss crowns and bridges at our Booneville office. Our in-house lab supports restorative care; ask whether a same-day crown is suitable for your tooth.",
   },
   "/services/restorative-dentistry/dental-implants": {
     title: "Dental Implants | Booneville & North MS",
@@ -194,7 +194,7 @@ export const seo: Record<string, SeoEntry> = {
   "/services/restorative-dentistry/dentures": {
     title: "Dentures & Repairs in Booneville, MS",
     description:
-      "Full and partial dentures, relines and same-day repairs from our in-house lab in Booneville, Mississippi. Bring the pieces, we will look at it today.",
+      "Full and partial dentures, relines and repair assessments in Booneville, MS. Call before travelling to discuss the problem, appointment availability and timing.",
   },
   "/services/cosmetic-dentistry/veneers": {
     title: "Porcelain Veneers in Booneville, MS",

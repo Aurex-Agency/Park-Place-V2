@@ -64,7 +64,7 @@ export const serviceDepth: Record<string, Block[]> = {
       items: [
         {
           term: "Assessment and planning",
-          text: "An examination, three-dimensional imaging, and a conversation about what you want. We use RAYFace 3D facial scanning so the plan can be judged against your whole face rather than the gap alone. Nothing is scheduled until you have seen the plan and a written estimate.",
+          text: "An examination, appropriate dental imaging and a conversation about your goals. RAYFace captures the surface of the face to help discuss appearance; it does not replace imaging used to assess teeth and jawbone. Ask who provides each stage and what the written estimate includes.",
         },
         {
           term: "Preparation, if it is needed",
@@ -189,7 +189,7 @@ export const serviceDepth: Record<string, Block[]> = {
       heading: "Why our lab matters more for dentures than for anything else",
       body: [
         "Dentures need adjusting. That is not a defect, it is how they work: a piece of acrylic fitted to living tissue that changes shape. The practical question is how long each adjustment takes.",
-        "Sent to an outside laboratory, a repair or a reline commonly means days without the denture. Made and mended in this building, it frequently does not. For anyone driving in from Corinth, Ripley or Fulton, that is usually the whole reason they are here.",
+        "Our in-house lab supports denture work, but turnaround depends on the assessment, procedure and schedule. Ask how long you may be without the denture and whether a separate fitting visit is needed before travelling.",
       ],
     },
   ],
@@ -356,7 +356,7 @@ export const serviceDepth: Record<string, Block[]> = {
         },
         {
           term: "Restoring the tooth properly",
-          text: "A back tooth that has had root canal treatment usually needs a crown, because it has been hollowed out and is liable to fracture. Leaving it with only a filling is the most common reason a successful root canal is lost afterwards.",
+          text: "A back tooth that has had root canal treatment usually needs a crown, because it has been hollowed out and is liable to fracture. Ask the dentist which restoration is appropriate to protect your particular tooth.",
         },
       ],
     },

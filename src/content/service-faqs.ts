@@ -42,7 +42,7 @@ export const serviceFaqs: Record<string, Faq[]> = {
     },
     {
       q: "Can you see me quickly if I am in pain?",
-      a: "We keep room in the schedule for people in pain and will do our best to see you the same day. Call the office rather than using the website form if it is urgent, because the phone reaches us immediately and a form does not.",
+      a: "Call the office to discuss availability if you are in pain. Do not wait for an online form response when the problem is urgent. If we cannot see you promptly, seek another urgent dental provider.",
     },
   ],
 
@@ -130,11 +130,11 @@ export const serviceFaqs: Record<string, Faq[]> = {
     },
     {
       q: "Can you see me today?",
-      a: "We hold room in the schedule for urgent problems and will do our best to fit you in the same day. Telephone the office rather than sending a message through the site, because the phone reaches us straight away.",
+      a: "Telephone the office to describe the problem and ask about urgent appointment availability. An online form is not a confirmed appointment. Seek emergency medical care for trouble breathing or swallowing, uncontrolled bleeding or another medical emergency.",
     },
     {
       q: "What if my denture or crown breaks?",
-      a: "Bring it with you, including any pieces. Our in-house lab means many repairs can be handled here rather than posted to an outside laboratory, which is often the difference between waiting hours and waiting a week.",
+      a: "Call before travelling and bring the denture and any broken pieces to the assessment. The dentist must examine the damage and fit before confirming repair options and timing.",
     },
   ],
 
@@ -150,7 +150,7 @@ export const serviceFaqs: Record<string, Faq[]> = {
     },
     {
       q: "What difference does an in-house lab make?",
-      a: "Most practices send crowns, dentures and partials to an outside laboratory and wait for them to come back. Ours are made and repaired in the building, which shortens waiting, makes adjustments quicker, and removes one set of outside fees from the cost.",
+      a: "Our in-house laboratory supports restorative care. Ask which stages can be completed at the office, whether outside work is needed and what the complete estimate includes. An on-site lab does not establish a lower price or a one-visit treatment.",
     },
     {
       q: "Will people be able to tell?",
@@ -215,7 +215,7 @@ export const serviceFaqs: Record<string, Faq[]> = {
     },
     {
       q: "Can you repair a broken denture the same day?",
-      a: "Often, because our lab is in the building rather than at the other end of a courier route. Bring every piece with you and call first so we know it is coming. A repair that is posted away commonly takes days; one done here frequently does not.",
+      a: "Some repairs may be suitable for same-day work, but the damage, fit and schedule need assessment first. Call before travelling and bring the denture and all pieces. Ask when the team can confirm turnaround.",
     },
     {
       q: "What is the difference between full and partial dentures?",

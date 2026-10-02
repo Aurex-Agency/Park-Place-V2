@@ -19,7 +19,7 @@ export function PostBlocks({ blocks }: { blocks: PostBlock[] }) {
     <div className="flex flex-col gap-14 md:gap-16">
       {blocks.map((block, i) => (
         <section key={i}>
-          {"heading" in block && block.heading && (
+          {"heading" in block && block.heading && block.kind !== "callout" && (
             <Reveal>
               <h2 className="t-h2 max-w-2xl">{block.heading}</h2>
             </Reveal>
@@ -172,12 +172,9 @@ export function PostBlocks({ blocks }: { blocks: PostBlock[] }) {
                         >
                           {row[0]}
                         </th>
-                        <td className="border-b border-sand py-3.5 pr-6 align-top text-[0.975rem] text-taupe">
-                          {row[1]}
-                        </td>
-                        <td className="border-b border-sand py-3.5 align-top text-[0.975rem] text-taupe">
-                          {row[2]}
-                        </td>
+                        {row.slice(1).map((cell, index) => (
+                          <td key={index} className="border-b border-sand py-3.5 pr-6 align-top text-[0.975rem] text-taupe">{cell}</td>
+                        ))}
                       </tr>
                     ))}
                   </tbody>
