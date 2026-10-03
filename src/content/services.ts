@@ -59,7 +59,7 @@ export const serviceCategories: ServiceCategory[] = [
     title: "General Dentistry",
     eyebrow: "General Dentistry",
     metaDescription:
-      "Cleanings, exams, fillings, root canals and same-day emergency care in Booneville, Mississippi.",
+      "Cleanings, exams, fillings, root canals and urgent dental appointments in Booneville, Mississippi.",
     lead: [
       "At Park Place Dental, we offer comprehensive general dentistry services designed to help you maintain a healthy, beautiful smile for life. Our team provides gentle, effective care for patients of all ages, from routine check-ups and cleanings to advanced restorative treatments.",
       "Whether you need a cleaning, a filling, or immediate emergency care, we are here to make sure you receive the best care in a comfortable and welcoming environment.",
@@ -176,8 +176,8 @@ export const serviceCategories: ServiceCategory[] = [
         slug: "root-canals",
         title: "Root Canals",
         metaDescription:
-          "Comfortable root canal treatment with an in-house endodontic specialist in Booneville, Mississippi.",
-        lead: "If you are experiencing severe tooth pain or sensitivity, you may need a root canal. This common procedure is designed to save a severely infected or damaged tooth, allowing you to keep your natural tooth and avoid extraction. Our in-house endodontic specialist ensures that your root canal treatment is as comfortable and effective as possible.",
+          "Root canal assessment and care in Booneville, Mississippi. Ask about your treatment plan, restoration and whether a specialist referral is needed.",
+        lead: "If you are experiencing severe tooth pain or sensitivity, you may need a root canal. This common procedure is designed to save a severely infected or damaged tooth, allowing you to keep your natural tooth and avoid extraction. Your dentist can assess the tooth, explain treatment options and discuss whether referral to an endodontist is appropriate.",
         image: "/images/mcdougald-treating-with-assistant.jpg",
         imageAlt: "Dr. Rebecca McDougald and an assistant treating a patient at Park Place Dental",
         blocks: [
@@ -202,9 +202,9 @@ export const serviceCategories: ServiceCategory[] = [
             kind: "terms",
             heading: "Why choose Park Place Dental for your root canal?",
             items: [
-              { term: "Expert care", text: "Our in-house endodontic specialist has the experience and expertise to ensure that your root canal is performed with precision and care." },
+              { term: "Expert care", text: "Ask who will provide your root canal treatment and whether your case needs referral to an endodontist." },
               { term: "Comfort", text: "We use the latest technology and techniques to ensure that your procedure is as pain-free and comfortable as possible." },
-              { term: "Long-term results", text: "After your root canal, we provide a crown to protect and restore your tooth, ensuring it lasts for years to come." },
+              { term: "Long-term results", text: "Ask which restoration your tooth needs after root canal treatment and how it should be maintained. Results depend on the condition of the tooth and ongoing care." },
             ],
           },
         ],
@@ -219,7 +219,7 @@ export const serviceCategories: ServiceCategory[] = [
         urgent: true,
         title: "Emergency Dentistry",
         metaDescription:
-          "Same-day emergency dental care in Booneville, Mississippi. Call (662) 728-8171.",
+          "Urgent dental concerns in Booneville, Mississippi? Call (662) 728-8171 to discuss appointment availability before travelling.",
         lead: "Dental emergencies can happen at any time, and when they do, it is important to get immediate care. At Park Place Dental, we offer emergency dentistry services to help you when it is needed most. Whether it is a toothache, a broken tooth, or an injury to the mouth, our team is ready to provide fast, effective treatment.",
         image: "/images/operatory-chair.jpg",
         imageAlt: "A treatment room at Park Place Dental, with framed certificates on the wall",
@@ -240,7 +240,7 @@ export const serviceCategories: ServiceCategory[] = [
             kind: "steps",
             heading: "What to do in a dental emergency",
             items: [
-              { term: "Stay calm", text: "Contact our office immediately, and we will fit you in for a same-day appointment." },
+              { term: "Stay calm", text: "Call our office and describe the problem. We will discuss appointment availability and the next step before you travel." },
               { term: "Preserve your tooth", text: "If a tooth is knocked out, try to place it back in the socket or keep it moist with milk or saline." },
               { term: "Avoid pain", text: "Use over-the-counter pain relievers to alleviate discomfort until our team can see you." },
             ],
@@ -364,7 +364,7 @@ export const serviceCategories: ServiceCategory[] = [
             kind: "prose",
             heading: "Same-day crowns and our in-house lab",
             body: [
-              "Our in-house lab allows us to design and produce same-day crowns, reducing wait times and streamlining your care. For more complex needs, we offer full mouth reconstruction with custom crowns and bridges created right in our office for greater precision and efficiency.",
+              "Our in-house lab supports crowns and bridges, including same-day crowns when suitable. The dentist will assess the tooth and discuss materials, timing, any outside work and follow-up before confirming your plan.",
               "Modern dental bridgework is about more than replacing missing teeth. It is about restoring your smile's appearance. Our custom bridges are designed with aesthetics in mind, ensuring they blend beautifully with your surrounding teeth for a natural, balanced look.",
             ],
           },
@@ -383,7 +383,7 @@ export const serviceCategories: ServiceCategory[] = [
         lead: "Dentures are a reliable and affordable solution for individuals who have lost multiple teeth. Whether you are missing a few teeth or an entire set, dentures can restore both the appearance and function of your smile, allowing you to eat, speak, and smile with confidence once again.",
         image: "/images/inlab-milling-unit.jpg",
         imageAlt: "A milling unit in the Park Place Dental in-house lab",
-        note: "Our in-house lab allows us to design and produce same-day dentures, reducing wait times and streamlining your care.",
+        note: "Our in-house lab supports denture care. The dentist must assess your mouth and appliance before confirming whether repair, reline or replacement is suitable and how long it will take.",
         blocks: [
           {
             kind: "prose",
@@ -611,7 +611,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Gum disease prevention and treatment in Booneville, Mississippi. Healthy gums support a strong smile.",
     lead: [
       "Periodontal care focuses on the health of your gums, which are essential to supporting your teeth. At Park Place Dental, we provide comprehensive treatment to prevent and manage gum disease.",
-      "Healthy gums are the foundation of a strong smile, yet many adults in Booneville experience gum issues without realizing it. Periodontal care helps prevent, detect, and treat gum disease early, protecting your teeth, improving comfort, and supporting long-term oral health with personalized, modern treatment options.",
+      "Start with an assessment of your gums and the support around your teeth. This overview explains when to ask for care; our gum disease treatment page describes scaling, root planing and follow-up. Your dentist can discuss whether specialist referral is appropriate.",
     ],
     image: "/images/mcdougald-and-assistant.jpg",
     imageAlt: "Dr. Rebecca McDougald and an assistant preparing for treatment at Park Place Dental",

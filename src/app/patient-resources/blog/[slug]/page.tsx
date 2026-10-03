@@ -83,6 +83,7 @@ export default async function PostPage({
           headline: post.title,
           description: post.metaDescription,
           author: post.author,
+          reviewed: post.reviewed,
           published: post.published,
           modified: post.updated,
           image: post.image,
@@ -193,8 +194,10 @@ export default async function PostPage({
                 <p className="text-[0.9rem] leading-relaxed text-taupe">
                   {post.author === "practice"
                     ? "Prepared by Park Place Dental using the patient-education sources linked in this article. This article"
+                    : post.reviewed === false
+                      ? `Originally attributed to ${doctor.name}, ${doctor.credential}. Updated by the practice editorial team. This article`
                     : `Written and reviewed by ${doctor.name}, ${doctor.credential}, who has practised dentistry in Booneville since 1982. This article`}
-                  is general information, not a diagnosis or a treatment plan for
+                  {" "}is general information, not a diagnosis or a treatment plan for
                   your particular situation. For advice about your own teeth,
                   call the practice on{" "}
                   <a
@@ -233,12 +236,12 @@ export default async function PostPage({
         </div>
       </article>
 
-      <FaqSection
+      {post.faqs.length > 0 && <FaqSection
         items={post.faqs}
         eyebrow="Questions"
         heading={`More on / ${post.topic.toLowerCase()}`}
         showAllLink={false}
-      />
+      />}
 
       <section className="section bg-linen-deep">
         <div className="shell">

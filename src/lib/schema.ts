@@ -21,8 +21,8 @@
  *      clinical claims the site should not be making.
  *
  * Note on `FAQPage`: Google retired site-wide FAQ rich results in May 2026, so
- * this markup no longer earns a SERP feature. It is kept because it is still
- * read by AI search systems, which is now its whole job.
+ * this markup no longer earns that SERP feature. It describes visible questions
+ * and answers; it does not guarantee AI citations or rankings.
  */
 import { practice, doctor, associateDoctor } from "@/lib/content";
 import { siteUrl, canonical } from "@/lib/site";
@@ -51,10 +51,8 @@ type Node = Record<string, unknown>;
 /**
  * The practice itself. One node, one address, for the whole site.
  *
- * `areaServed` carries every county the practice genuinely draws from, and the
- * `GeoCircle` states the same thing in a form a machine can compute against.
- * Neither invents a second location: a practice that draws regionally from one
- * building is exactly what this says.
+ * `areaServed` describes the region served from one office. Exact coordinates
+ * and a service radius are omitted until the practice verifies them.
  */
 export function practiceNode(): Node {
   return {
@@ -78,11 +76,6 @@ export function practiceNode(): Node {
       postalCode: practice.address.postalCode,
       addressCountry: "US",
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 34.6595,
-      longitude: -88.5675,
-    },
     hasMap: practice.mapsHref,
     areaServed: [
       "Prentiss County, Mississippi",
@@ -93,17 +86,6 @@ export function practiceNode(): Node {
       "Union County, Mississippi",
       "Tippah County, Mississippi",
     ].map((name) => ({ "@type": "AdministrativeArea", name })),
-    serviceArea: {
-      "@type": "GeoCircle",
-      geoMidpoint: {
-        "@type": "GeoCoordinates",
-        latitude: 34.6595,
-        longitude: -88.5675,
-      },
-      // Roughly the distance to Tupelo and Iuka, the far edges of the area
-      // patients actually travel from.
-      geoRadius: "64000",
-    },
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
@@ -217,7 +199,7 @@ export function breadcrumbNode(path: string, crumbs: Crumb[]): Node | null {
       "@type": "ListItem",
       position: i + 1,
       name: crumb.label,
-      ...(crumb.href ? { item: `${siteUrl}${crumb.href}` } : {}),
+      item: canonical(crumb.href ?? path),
     })),
   };
 }
@@ -472,6 +454,7 @@ export type ArticleSchemaOptions = {
   published: string;
   modified: string;
   author?: "doctor" | "practice";
+  reviewed?: boolean;
   image: string;
   crumbs: Crumb[];
   faqs?: readonly { q: string; a: string }[];
@@ -498,7 +481,7 @@ export function articleGraph(options: ArticleSchemaOptions): string {
       description: options.description,
       medical: true,
       primaryImage: options.image,
-      reviewed: options.author !== "practice",
+      reviewed: options.author !== "practice" && options.reviewed !== false,
       crumbs: options.crumbs,
     }),
     {
@@ -512,7 +495,7 @@ export function articleGraph(options: ArticleSchemaOptions): string {
       datePublished: options.published,
       dateModified: options.modified,
       author: { "@id": options.author === "practice" ? PRACTICE_ID : DOCTOR_ID },
-      ...(options.author !== "practice"
+      ...(options.author !== "practice" && options.reviewed !== false
         ? { reviewedBy: { "@id": DOCTOR_ID }, lastReviewed: REVIEW_DATE }
         : {}),
       publisher: { "@id": PRACTICE_ID },

@@ -16,12 +16,13 @@ export const treatmentGuides: Post[] = [
     metaDescription: "Broken or loose denture? Compare repair, reline and replacement, what to bring to an appointment, and how to ask Park Place Dental in Booneville for help.",
     summary: "A break and a poor fit are different problems. Understand the options before arranging a denture assessment in Booneville.",
     answer: "A repair addresses a damaged part of a denture; a reline changes the fitting surface when the denture no longer sits well against the gums. Replacement may be needed when wear, damage or fit cannot be corrected adequately. A dentist needs to examine both the denture and your mouth to recommend the right route.",
-    published, updated: published,
+    published, updated: "2026-10-02",
     image: "/images/restoration-design-screen.jpg",
     imageAlt: "A Park Place Dental team member designing a restoration on a computer",
     readingMinutes: 4,
     topic: "Dentures",
     blocks: [
+      { kind: "callout", heading: "Before agreeing to the plan", body: "Ask whether the fitting visit is included in the estimate and what to do if the denture remains uncomfortable." },
       { kind: "prose", heading: "Start with what changed", body: [
         "Did the denture fall and break, or had it been moving when you spoke for several weeks? Tell the office which happened. A visible crack is easy to describe, but the history of the fit matters too. You do not need to decide which treatment to request before calling.",
         "If you are travelling to Booneville from Corinth, Baldwyn or Rienzi, call before setting out. Explain that the appointment is for an existing denture, whether it is a full or partial denture, and whether it is broken or uncomfortable. That helps the team discuss the appropriate appointment rather than treating the call as a routine checkup."
@@ -71,12 +72,13 @@ export const treatmentGuides: Post[] = [
     metaDescription: "Compare same-day and traditional dental crowns: appointments, temporary crowns and questions to ask about your tooth at Park Place Dental in Booneville, MS.",
     summary: "One longer visit or separate appointments? Here is how to discuss crown options, timing and the right fit for your tooth.",
     answer: "A same-day crown can be designed and made in the office during one visit when the tooth and treatment plan are suitable. A traditional workflow uses separate preparation and fitting appointments, usually with a temporary crown between them. The schedule matters, but the condition of the tooth and the chosen restoration determine which approach is appropriate.",
-    published, updated: published,
+    published, updated: "2026-10-02",
     image: "/images/inlab-milling-unit.jpg",
     imageAlt: "The milling unit in Park Place Dental's in-house laboratory in Booneville",
     readingMinutes: 4,
     topic: "Crowns",
     blocks: [
+      { kind: "callout", heading: "Before agreeing to the plan", body: "Confirm who will provide the crown, whether another provider is involved and whom to call if the bite feels wrong after fitting." },
       { kind: "prose", heading: "First ask what the crown is meant to do", body: [
         "A crown covers a tooth to restore its shape and function. It may be recommended for a weak or damaged tooth, or to support another restoration. Ask your dentist to show you the reason for the recommendation before comparing appointment schedules. The ADA explains that crowns can also cover implants and help support bridges.",
         "A useful starting question is: 'What are we trying to protect or restore, and are there alternatives for this tooth?' It keeps the decision about your mouth rather than the equipment in the office."
@@ -127,12 +129,13 @@ export const treatmentGuides: Post[] = [
     metaDescription: "Missing one or several teeth? Compare implants, bridges and partial dentures, and prepare for a treatment conversation at Park Place Dental in Booneville.",
     summary: "The right question is which replacement fits your mouth and your priorities. Start with the differences, then bring these questions to your consultation.",
     answer: "An implant supports a replacement tooth from the jawbone. A tooth-supported bridge fills a gap using neighboring teeth for support. A removable partial denture replaces missing teeth in an appliance you take out. The condition of the remaining teeth, your health, daily care needs and treatment preferences all help determine which options are suitable.",
-    published, updated: published,
+    published, updated: "2026-10-02",
     image: "/images/implant-planning-screen.jpg",
     imageAlt: "Dental implant planning displayed on a screen at Park Place Dental",
     readingMinutes: 4,
     topic: "Missing teeth",
     blocks: [
+      { kind: "callout", heading: "Before agreeing to the plan", body: "Ask who provides each stage and whether the estimate includes temporary teeth and follow-up visits." },
       { kind: "prose", heading: "Start with the teeth you still have", body: [
         "Two people with a similar-looking gap may need different treatment plans. Before deciding on a replacement, ask what the dentist finds about the teeth beside the gap and the wider condition of your mouth. The examination should explain the choices available to you, rather than simply produce a recommendation without context.",
         "Bring your priorities too. Do you want to discuss a removable option? Is the time away from work important? Are you mainly concerned about eating, appearance or the cost of a proposed plan? Naming those concerns helps make the consultation useful."

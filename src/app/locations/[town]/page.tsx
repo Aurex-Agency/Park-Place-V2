@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { locations, findLocation } from "@/content/locations";
-import { practice, doctor, testimonials } from "@/lib/content";
+import { practice } from "@/lib/content";
 import { canonical } from "@/lib/site";
 import { locationGraph } from "@/lib/schema";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -46,18 +46,6 @@ export async function generateMetadata({
   };
 }
 
-/**
- * The patient who travels furthest, quoted on the pages about travelling.
- *
- * A real review from a real patient, already published on the site. It earns
- * its place here because it is the most direct evidence that people do drive
- * to this practice, which is the entire proposition of a location page. It is
- * held back from the Booneville page, where "people drive a long way to get
- * here" is not the argument being made.
- */
-const travellingPatient = testimonials.find((t) =>
-  t.quote.includes("90 miles"),
-);
 
 export default async function LocationPage({
   params,
@@ -78,8 +66,8 @@ export default async function LocationPage({
   /* Booneville is where the practice is, so every phrase built around travel
      has to be rewritten rather than reused. */
   const headline =
-    place.headline ?? `Your dentist, / ${place.miles} miles from ${place.town}`;
-  const driveLabel = place.home ? "Finding us" : "The drive";
+    place.headline ?? `Dental care for / ${place.town} patients`;
+  const driveLabel = "Plan your visit";
   const directionsHeading = place.home
     ? "Getting to the office"
     : `Directions from ${place.town}`;
@@ -100,25 +88,13 @@ export default async function LocationPage({
         })}
       />
 
-      {/*
-        These pages carried no photograph at all, which for a set of fourteen
-        town pages is the visual signature of exactly the templated lead-gen
-        content they were written to be the opposite of. The building itself is
-        the right picture: it is the thing a reader is deciding whether to
-        drive to, and the alt text names their town rather than repeating one
-        generic caption fourteen times.
-      */}
       <PageHeader
         eyebrow={place.home ? "Our Booneville Office" : `Serving ${place.county}`}
         headline={headline}
         lead={place.lead}
         crumbs={crumbs}
         image="/images/exterior-sign.jpg"
-        imageAlt={
-          place.home
-            ? `The Park Place Dental sign outside the practice at ${practice.address.street} in Booneville, Mississippi`
-            : `The Park Place Dental sign outside the Booneville practice, about ${place.miles} miles from ${place.town}, Mississippi`
-        }
+        imageAlt={`The Park Place Dental sign at ${practice.address.street} in Booneville, Mississippi`}
       />
 
       <section className="section">
@@ -127,11 +103,9 @@ export default async function LocationPage({
             <Reveal>
               <div className="card">
                 <Eyebrow>{driveLabel}</Eyebrow>
-                <p className="t-h3 mt-4">{place.drive}</p>
+                <p className="t-h3 mt-4">Our Booneville office</p>
                 <p className="mt-2 text-taupe">
-                  {place.home
-                    ? place.route
-                    : `Roughly ${place.miles} miles, ${place.route}.`}
+                  Check the route from your starting address before travelling.
                 </p>
                 <hr className="my-6 border-sand" />
                 <p className="text-[0.9rem] uppercase tracking-[0.09em] text-taupe">
@@ -150,12 +124,12 @@ export default async function LocationPage({
                 <p className="text-[0.9rem] text-taupe">{practice.hoursNote}</p>
                 <p className="mt-5">
                   <a
-                    href={practice.mapsHref}
+                    href={place.directionsHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="tap-inline text-[0.925rem] font-medium text-rose-deep underline underline-offset-4"
                   >
-                    Open in Google Maps
+                    Get directions in Google Maps
                   </a>
                 </p>
               </div>
@@ -166,7 +140,7 @@ export default async function LocationPage({
                 <Eyebrow as="h2">
                   {place.home
                     ? "What being the local practice means"
-                    : `What ${place.town} patients come to us for`}
+                    : `Planning care from ${place.town}`}
                 </Eyebrow>
               </Reveal>
               <RevealGroup as="ul" gap={0.07} className="mt-8 flex flex-col gap-6">
@@ -184,12 +158,7 @@ export default async function LocationPage({
             </div>
           </div>
 
-          {/*
-            Directions are the section that most earns this page its place: the
-            one part a patient may genuinely re-open in the car, and the one
-            part that cannot be produced by swapping a town name.
-          */}
-          <div className="mt-16 max-w-2xl">
+              <div className="mt-16 max-w-2xl">
             <Reveal>
               <Eyebrow as="h2">{directionsHeading}</Eyebrow>
             </Reveal>
@@ -214,26 +183,6 @@ export default async function LocationPage({
             </RevealGroup>
           </div>
 
-          <div className="mt-16 max-w-2xl">
-            {place.context.map((paragraph, i) => (
-              <Reveal key={i}>
-                <p className="mt-4 text-taupe first:mt-0">{paragraph}</p>
-              </Reveal>
-            ))}
-          </div>
-
-          {!place.home && travellingPatient && (
-            <Reveal>
-              <figure className="mt-12 max-w-2xl border-l-2 border-rose-deep pl-6">
-                <blockquote className="font-[family-name:var(--font-display)] text-[1.15rem] leading-relaxed text-espresso">
-                  {travellingPatient.quote}
-                </blockquote>
-                <figcaption className="mt-3 text-[0.9rem] text-taupe">
-                  {travellingPatient.name}, {travellingPatient.role}
-                </figcaption>
-              </figure>
-            </Reveal>
-          )}
 
           <div className="mt-16">
             <Reveal>
@@ -261,24 +210,6 @@ export default async function LocationPage({
             </RevealGroup>
           </div>
 
-          {place.nearby.length > 0 && (
-            <Reveal>
-              <p className="mt-12 max-w-2xl text-[0.975rem] leading-relaxed text-taupe">
-                Patients also come to us from{" "}
-                {place.nearby.slice(0, -1).join(", ")} and{" "}
-                {place.nearby.slice(-1)}, all within a few minutes of{" "}
-                {place.town}. If your community is not named here, the drive is
-                almost certainly still shorter than you think:{" "}
-                <Link
-                  href="/locations"
-                  className="font-medium text-rose-deep underline underline-offset-4"
-                >
-                  see the whole region we serve
-                </Link>
-                .
-              </p>
-            </Reveal>
-          )}
 
           <div className="mt-16">
             <InlineCta
@@ -289,7 +220,7 @@ export default async function LocationPage({
               }
               body={
                 place.home
-                  ? "We keep room in the schedule every day for urgent problems, so call the office if something has broken rather than waiting on a form."
+                  ? "For a dental emergency, call the office to discuss availability. An online request does not confirm an appointment time."
                   : "Tell the team where you are travelling from and ask which appointments can be combined. We will confirm a plan before you set out."
               }
             />
@@ -307,8 +238,8 @@ export default async function LocationPage({
       />
 
       <CtaBand
-        heading={`${doctor.shortName} has been caring for this region since 1982`}
-        body={`Park Place Dental is at ${practice.address.full}. Call ${practice.phone} and we will find you a time.`}
+        heading="Meet our team at the Booneville office"
+        body={`Park Place Dental is at ${practice.address.full}. Call ${practice.phone} to discuss appointment availability.`}
       />
     </>
   );

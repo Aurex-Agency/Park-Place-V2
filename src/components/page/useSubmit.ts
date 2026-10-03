@@ -66,6 +66,7 @@ export function useSubmit() {
    */
   const [confirmed, setConfirmed] = useState(true);
   const token = useRef<string | null>(null);
+  const accepted = useRef(false);
   const mintedAt = useRef<number>(0);
   const submitting = useRef(false);
 
@@ -119,7 +120,7 @@ export function useSubmit() {
   }
 
   async function submit(payload: Record<string, unknown>): Promise<boolean> {
-    if (submitting.current) return false;
+    if (submitting.current || accepted.current) return false;
     submitting.current = true;
     setStatus("sending");
     setError(null);
@@ -163,6 +164,7 @@ export function useSubmit() {
         return false;
       }
 
+      accepted.current = true;
       report("lead_submitted", payload, { confirmed: result.confirmed !== false });
       setConfirmed(result.confirmed !== false);
       setStatus("sent");

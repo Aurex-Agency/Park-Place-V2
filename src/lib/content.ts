@@ -105,14 +105,14 @@ export const featuredServices = [
   {
     title: "Root Canal Treatment",
     slug: "/services/general-dentistry/root-canals",
-    body: "Get expert care with our in-house endodontic specialist. We offer comfortable, effective root canal treatment to save your natural teeth.",
+    body: "Discuss whether root canal treatment can preserve your tooth, what restoration it needs afterward and whether specialist referral is appropriate.",
     image: "/images/mcdougald-treating-with-assistant.jpg",
     imageAlt: "Dr. Rebecca McDougald and an assistant treating a patient at Park Place Dental",
   },
   {
     title: "Same-Day Crowns",
     slug: "/services/restorative-dentistry/crowns-bridges",
-    body: "Our in-house lab allows us to design and produce same-day crowns, reducing wait times and streamlining your care. For more complex needs, we offer full mouth reconstruction with custom crowns and bridges created right in our office for greater precision and efficiency.",
+    body: "Our in-house lab supports crowns and bridges, including same-day crowns when suitable. The dentist will assess the tooth and discuss materials, timing, any outside work and follow-up before confirming your plan.",
     image: "/images/milling-chamber-closeup.jpg",
     imageAlt: "Inside the milling chamber where crowns are made in the office",
   },
@@ -132,7 +132,7 @@ export const serviceCategories = [
     imageAlt: "A hygienist cleaning a patient's teeth at Park Place Dental",
     slug: "/services/general-dentistry",
     blurb:
-      "Gentle, effective care for patients of all ages, from routine check-ups and cleanings to same-day emergency visits.",
+      "Care for patients of all ages, from routine check-ups and cleanings to urgent dental concerns. Call to confirm appointment availability.",
     items: ["Cleanings & Exams", "Fillings", "Root Canals", "Emergency Dentistry"],
   },
   {
@@ -203,7 +203,7 @@ export const technology = {
     },
     {
       name: "In-House Dental Lab",
-      body: "With our in-house dental lab, we can create beautiful, custom restorations faster. That means same-day options for crowns, veneers, dentures, and more, all designed with quality, convenience, and your smile in mind.",
+      body: "Our in-house dental lab supports custom restorative care. Ask whether a same-day option is suitable for your case and which stages may need separate appointments.",
       image: "/images/milling-unit.jpg",
       imageAlt: "A CEREC milling unit in the Park Place Dental in-house lab",
     },
