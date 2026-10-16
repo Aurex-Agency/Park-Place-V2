@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { campaigns } from "@/content/campaigns";
 import { photos } from "@/content/photography";
-import { testimonials } from "@/lib/content";
 import { CampaignShell } from "@/components/campaign/CampaignShell";
 import { CampaignHero } from "@/components/campaign/CampaignHero";
 import { TrustBar } from "@/components/campaign/TrustBar";
 import { FormSection } from "@/components/campaign/FormSection";
+import { GoogleReviewsSection } from "@/components/campaign/GoogleReviewsSection";
 
 const campaign = campaigns["smile-makeover"];
 
@@ -55,9 +55,6 @@ const MENU = [
   },
 ] as const;
 
-/* A real smile makeover patient, in his own words. */
-const PROOF = testimonials[3];
-
 export default function Page() {
   return (
     <CampaignShell slug={campaign.slug}>
@@ -92,16 +89,6 @@ export default function Page() {
               </figure>
             ))}
           </div>
-
-          <figure className="mx-auto mt-14 max-w-2xl text-center">
-            <blockquote className="text-[1.1rem] leading-relaxed text-espresso">
-              {PROOF.quote}
-            </blockquote>
-            <figcaption className="mt-4 text-[0.9rem] text-taupe">
-              <span className="font-medium text-espresso">{PROOF.name}</span>,{" "}
-              {PROOF.role}
-            </figcaption>
-          </figure>
         </div>
       </section>
 
@@ -149,6 +136,7 @@ export default function Page() {
         </div>
       </section>
 
+      <GoogleReviewsSection page="smile-makeover" tone="deep" />
       <TrustBar />
       <FormSection campaign={campaign} />
     </CampaignShell>

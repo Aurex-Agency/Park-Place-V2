@@ -47,6 +47,14 @@ export type CampaignField = {
 
 export type CampaignForm = {
   headline: string;
+  /**
+   * Whether an email address may be left blank.
+   *
+   * On the emergency page it may. Someone in pain is asking to be telephoned,
+   * and demanding an email address to arrange a phone call is friction for no
+   * purpose. They simply do not get the confirmation email; they get a call.
+   */
+  emailOptional?: boolean;
   /** The words on the submit button. They should echo the advertisement. */
   submitLabel: string;
   /** The line under the submit button, above the phone number. */
@@ -111,8 +119,45 @@ export const campaigns: Record<string, Campaign> = {
     title: "Same-Day Emergency Dentist in Booneville, MS",
     description:
       "Severe toothache, broken tooth or swelling? Park Place Dental keeps time open for urgent visits every day. Call (662) 728-8171.",
-    // Deliberately no form. Someone in pain decides in seconds, and every
-    // field is one more thing between them and the telephone.
+    /*
+     * A call back request, not an enquiry form.
+     *
+     * The telephone is still the point of this page and the form sits well
+     * below the call button, never beside it. This exists for the visitor the
+     * call button cannot help: the one reading at nine at night, or who rang
+     * and got no answer. Three questions, no email required.
+     */
+    form: {
+      headline: "Cannot get through right now? Ask us to call you.",
+      submitLabel: "Request a call back",
+      emailOptional: true,
+      fields: [
+        {
+          name: "problem",
+          label: "What is happening?",
+          options: [
+            "Severe toothache",
+            "Broken or chipped tooth",
+            "Knocked-out tooth",
+            "Lost crown or filling",
+            "Swelling or abscess",
+            "Something else",
+          ],
+          required: true,
+        },
+        {
+          name: "reachTime",
+          label: "When can we reach you?",
+          options: [
+            "As soon as you can",
+            "This morning",
+            "This afternoon",
+            "First thing tomorrow",
+          ],
+          required: true,
+        },
+      ],
+    },
   },
 
   "same-day-crowns": {

@@ -37,7 +37,18 @@ export function trackPhoneClick(placement: string) {
   /* The landing pages put the same number in several places, and which one
      gets pressed is the point of measuring. Still a closed list: a placement
      that is not on it becomes "page". */
-  const allowed = ["header", "footer", "mobile", "page", "hero", "form", "confirmation"];
+  const allowed = [
+    "header",
+    "footer",
+    "mobile",
+    "page",
+    "hero",
+    // The closing call to action on a landing page, which is a different
+    // question from the number in the site footer beneath it.
+    "closing",
+    "form",
+    "confirmation",
+  ];
   // Preserve the existing event name for historical continuity. A telephone
   // link click does not establish that a call connected or a patient booked.
   send("call_started", { placement: allowed.includes(placement) ? placement : "page" });
