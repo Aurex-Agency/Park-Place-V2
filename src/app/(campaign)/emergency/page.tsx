@@ -66,6 +66,24 @@ export default function Page() {
             <CallButton slug={campaign.slug} placement="hero" size="huge" />
           </div>
 
+          {/*
+            The way through for someone who cannot ring.
+
+            Kept quieter than the call button and placed under it on purpose.
+            Someone who can call should call, and a second button of equal
+            weight beside the first would only make that choice harder. This
+            is for the visitor reading at midnight, or sitting somewhere they
+            cannot speak.
+          */}
+          <div className="mt-4 flex justify-center">
+            <a
+              href="#request"
+              className="btn btn-outline w-full justify-center px-7 py-4 text-[1.05rem] sm:w-auto"
+            >
+              Ask us to call you instead
+            </a>
+          </div>
+
           <p className="mx-auto mt-6 max-w-[30rem] text-[0.95rem] leading-relaxed text-taupe">
             Open {practice.hours}. After-hours callers: leave a message and we
             will call you first thing in the morning.
@@ -153,8 +171,14 @@ export default function Page() {
             Do not wait. Dental problems get worse and more expensive by the
             day.
           </p>
-          <div className="mt-7 flex justify-center">
+          <div className="mt-7 flex flex-col items-center gap-4">
             <CallButton slug={campaign.slug} placement="closing" size="huge" />
+            <a
+              href="#request"
+              className="btn btn-outline w-full justify-center px-7 py-4 text-[1.05rem] sm:w-auto"
+            >
+              Ask us to call you back
+            </a>
           </div>
           <figure className="mx-auto mt-10 max-w-xl">
             <div className="overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-sm)]">
