@@ -1,3 +1,5 @@
+import { getCampaign } from "@/content/campaigns";
+
 /**
  * Shape and validation for everything the website can submit.
  *
@@ -31,7 +33,27 @@ export type AppointmentSubmission = {
   notes: string;
 };
 
-export type Submission = ContactSubmission | AppointmentSubmission;
+/**
+ * A submission from one of the advertising landing pages.
+ *
+ * The questions differ per campaign, so the answers travel as label and value
+ * pairs. They are never taken on trust: the server rebuilds them from the
+ * campaign definition and accepts only values that definition declares, which
+ * stops anyone posting arbitrary text into an email the practice will read.
+ */
+export type CampaignSubmission = {
+  kind: "campaign";
+  campaign: string;
+  name: string;
+  email: string;
+  phone: string;
+  answers: Array<{ label: string; value: string }>;
+};
+
+export type Submission =
+  | ContactSubmission
+  | AppointmentSubmission
+  | CampaignSubmission;
 
 /**
  * The field a real person never sees and a crawler nearly always fills.
@@ -132,6 +154,40 @@ export function parseSubmission(raw: unknown): ParseResult {
     };
   }
 
+  if (body.kind === "campaign") {
+    const campaign = getCampaign(line(body.campaign, 60));
+    if (!campaign) return { ok: false, error: "We could not read that submission." };
+    if (!looksLikePhone(phone)) {
+      return { ok: false, error: "Please give us a phone number we can reach you on." };
+    }
+
+    /*
+     * Answers are rebuilt from the campaign definition rather than read from
+     * the request. The browser chooses which option, never what the question
+     * was or what text the answer carries.
+     */
+    const submitted = (body.answers ?? {}) as Record<string, unknown>;
+    const answers: Array<{ label: string; value: string }> = [];
+    for (const field of campaign.form?.fields ?? []) {
+      const chosen = line(submitted[field.name], 120);
+      if (!chosen) {
+        if (field.required) {
+          return { ok: false, error: `Please answer: ${field.label}` };
+        }
+        continue;
+      }
+      if (!field.options.includes(chosen)) {
+        return { ok: false, error: `Please choose one of the options for: ${field.label}` };
+      }
+      answers.push({ label: field.label, value: chosen });
+    }
+
+    return {
+      ok: true,
+      data: { kind: "campaign", campaign: campaign.slug, name, email, phone, answers },
+    };
+  }
+
   if (body.kind === "contact") {
     const message = text(body.message, LIMITS.message);
     if (message.length < 2) return { ok: false, error: "Please add a message." };
@@ -206,6 +262,24 @@ export function describe(data: Submission): {
       ],
       longFieldLabel: "Anything else we should know",
       longFieldValue: data.notes,
+    };
+  }
+
+  if (data.kind === "campaign") {
+    const campaign = getCampaign(data.campaign);
+    const label = campaign?.name ?? "Campaign enquiry";
+    return {
+      title: label,
+      noticeSubject: `${label} from ${data.name}`,
+      rows: [
+        ["Name", data.name],
+        ["Phone", data.phone],
+        ["Email", data.email],
+        ...data.answers.map(({ label: l, value }) => [l, value] as [string, string]),
+        ["Came from", `/${data.campaign}`],
+      ],
+      longFieldLabel: "",
+      longFieldValue: "",
     };
   }
 

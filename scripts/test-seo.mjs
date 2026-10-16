@@ -29,11 +29,24 @@ const { posts } = load('src/content/posts.ts');
 const { locations } = load('src/content/locations.ts');
 const { serviceCategories } = load('src/content/services.ts');
 const routes = new Set(['/']);
+/*
+ * A directory wrapped in parentheses is a route group. Next uses it to pick a
+ * layout and strips it from the URL, so the same has to happen here or every
+ * page under src/app/(site) looks like a missing route.
+ */
+function toRoute(dir) {
+  const segments = path
+    .relative('src/app', dir)
+    .replaceAll(path.sep, '/')
+    .split('/')
+    .filter((segment) => segment && !(segment.startsWith('(') && segment.endsWith(')')));
+  return segments.length ? '/' + segments.join('/') : '/';
+}
 function discover(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const file = path.join(dir, entry.name);
     if (entry.isDirectory() && !entry.name.includes('[')) discover(file);
-    if (entry.name === 'page.tsx') routes.add('/' + path.relative('src/app', dir).replaceAll(path.sep, '/'));
+    if (entry.name === 'page.tsx') routes.add(toRoute(dir));
   }
 }
 discover('src/app');
@@ -86,13 +99,18 @@ test('GA4 events allow only coarse form types and never submitted patient fields
   const analytics = load('src/lib/analytics-events.ts', {}, { window: { gtag: (...args) => events.push(args) } });
   analytics.trackLeadOutcome('lead_submitted', 'appointment');
   analytics.trackLeadOutcome('lead_submitted', 'private medical text');
+  analytics.trackLeadOutcome('lead_submitted', 'campaign');
   analytics.trackLeadOutcome('lead_failed', 'contact', 500);
   analytics.trackPhoneClick('private medical text');
+  analytics.trackPhoneClick('hero');
   assert.deepEqual(JSON.parse(JSON.stringify(events)), [
     ['event', 'generate_lead', { form_type: 'appointment' }],
     ['event', 'generate_lead', { form_type: 'unknown' }],
+    // A landing page lead is coarse: the kind of form, never which page.
+    ['event', 'generate_lead', { form_type: 'campaign' }],
     ['event', 'lead_failed', { form_type: 'contact', status: 500 }],
     ['event', 'call_started', { placement: 'page' }],
+    ['event', 'call_started', { placement: 'hero' }],
   ]);
 });
 async function formHarness(responder) {

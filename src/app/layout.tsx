@@ -2,15 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { siteUrl, canonical } from "@/lib/site";
-import { Header } from "@/components/site/Header";
-import { Footer } from "@/components/site/Footer";
-import { FaqSection } from "@/components/site/FaqSection";
-import { LocationSection } from "@/components/site/LocationSection";
-import { RouteGate } from "@/components/site/RouteGate";
-import { ScrollToTop } from "@/components/site/ScrollToTop";
-import { MobileActionBar } from "@/components/site/MobileActionBar";
 import { CallTracking } from "@/components/site/CallTracking";
-import { MotionProvider } from "@/components/site/MotionProvider";
 import { JsonLd } from "@/components/site/JsonLd";
 import { siteGraph } from "@/lib/schema";
 import { GA_MEASUREMENT_ID, analyticsEnabled } from "@/lib/analytics";
@@ -183,32 +175,7 @@ export default function RootLayout({
         {/* The practice, the dentist and the site. Every page adds its own
             nodes that reference these by @id rather than restating them. */}
         <JsonLd graph={siteGraph()} />
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-5 focus:py-3 focus:shadow-md"
-        >
-          Skip to content
-        </a>
-        <MotionProvider>
-          <ScrollToTop />
-          <Header />
-          <main id="main">{children}</main>
-
-          {/* Both sections live here so no page can ship without them. The two
-              routes that already own this content opt out rather than repeat it. */}
-          <RouteGate
-            hideOn={["/patient-resources/faqs"]}
-            hidePrefixes={["/services/", "/locations", "/patient-resources/blog/", "/veterans"]}
-          >
-            <FaqSection />
-          </RouteGate>
-          <RouteGate hideOn={["/contact-us"]}>
-            <LocationSection />
-          </RouteGate>
-
-          <Footer />
-          <MobileActionBar />
-        </MotionProvider>
+        {children}
         <CallTracking />
         <Analytics />
         <SpeedInsights />

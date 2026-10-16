@@ -17,7 +17,12 @@ export function trackLeadOutcome(
   kind: string,
   status?: unknown,
 ) {
-  const form_type = kind === "appointment" || kind === "contact" ? kind : "unknown";
+  /* "campaign" is as granular as this gets: which kind of form, never which
+     landing page, and never anything a visitor typed. The page itself is
+     already in the GA4 pageview, so naming it again here would add exposure
+     without adding information. */
+  const allowedKinds = ["appointment", "contact", "campaign"];
+  const form_type = allowedKinds.includes(kind) ? kind : "unknown";
   if (outcome === "lead_submitted") {
     send("generate_lead", { form_type });
   } else {
@@ -29,7 +34,10 @@ export function trackLeadOutcome(
 }
 
 export function trackPhoneClick(placement: string) {
-  const allowed = ["header", "footer", "mobile", "page"];
+  /* The landing pages put the same number in several places, and which one
+     gets pressed is the point of measuring. Still a closed list: a placement
+     that is not on it becomes "page". */
+  const allowed = ["header", "footer", "mobile", "page", "hero", "form", "confirmation"];
   // Preserve the existing event name for historical continuity. A telephone
   // link click does not establish that a call connected or a patient booked.
   send("call_started", { placement: allowed.includes(placement) ? placement : "page" });
