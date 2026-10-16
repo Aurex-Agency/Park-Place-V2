@@ -52,9 +52,11 @@ function Column({
                   <span className="block font-[family-name:var(--font-display)] text-lg leading-tight text-espresso">
                     {item.name}
                   </span>
-                  <span className="mt-1.5 block font-[family-name:var(--font-brand)] text-[0.8rem] uppercase tracking-[0.2em] text-rose-deep">
-                    {item.role}
-                  </span>
+                  {item.role && (
+                    <span className="mt-1.5 block font-[family-name:var(--font-brand)] text-[0.8rem] uppercase tracking-[0.2em] text-rose-deep">
+                      {item.role}
+                    </span>
+                  )}
                 </figcaption>
               </figure>
             </li>
@@ -66,11 +68,23 @@ function Column({
 }
 
 export function Testimonials() {
-  // Six reviews across three columns, so nothing repeats side by side.
+  /*
+   * Three columns, dealt from the whole list rather than from a fixed first
+   * six. The reviews used to be a hardcoded six and these slices matched that
+   * exactly, so every review added afterwards would never have appeared here.
+   * Dealing round-robin also keeps consecutive reviews out of the same column,
+   * which is what the fixed slices were for.
+   *
+   * The durations stay deliberately uneven so the columns drift apart rather
+   * than scrolling in lockstep.
+   */
+  const deal = (column: number) =>
+    testimonials.filter((_, i) => i % 3 === column);
+
   const columns = [
-    { items: testimonials.slice(0, 2), duration: 34 },
-    { items: testimonials.slice(2, 4), duration: 44, className: "hidden md:block" },
-    { items: testimonials.slice(4, 6), duration: 39, className: "hidden lg:block" },
+    { items: deal(0), duration: 34 },
+    { items: deal(1), duration: 44, className: "hidden md:block" },
+    { items: deal(2), duration: 39, className: "hidden lg:block" },
   ];
 
   return (
