@@ -55,14 +55,20 @@ function countUrls(text: string): number {
 }
 
 export function assessSubmission(data: Submission): SpamVerdict {
-  const longField = data.kind === "appointment" ? data.notes : data.message;
-  const haystack = [
-    data.name,
-    longField,
-    data.kind === "contact" ? data.subject : data.reason,
-  ]
-    .join("\n")
-    .toLowerCase();
+  /*
+   * A campaign submission has no free text beyond the sender's name. Every
+   * answer is chosen from a list the server declared, and the parser already
+   * refused anything that was not on it, so there is nothing else here that a
+   * sales pitch could have been typed into.
+   */
+  const freeText =
+    data.kind === "campaign"
+      ? []
+      : data.kind === "appointment"
+        ? [data.notes, data.reason]
+        : [data.message, data.subject];
+
+  const haystack = [data.name, ...freeText].join("\n").toLowerCase();
 
   const reasons: string[] = [];
 
