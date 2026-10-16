@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { campaigns } from "@/content/campaigns";
 import { photos } from "@/content/photography";
-import { testimonials } from "@/lib/content";
 import { CampaignShell } from "@/components/campaign/CampaignShell";
 import { CampaignHero } from "@/components/campaign/CampaignHero";
 import { TrustBar } from "@/components/campaign/TrustBar";
 import { FormSection } from "@/components/campaign/FormSection";
+import { GoogleReviewsSection } from "@/components/campaign/GoogleReviewsSection";
 
 const campaign = campaigns["new-patient-offer"];
 
@@ -37,10 +37,6 @@ const WHY_FAMILIES = [
   "In-house lab means less waiting and fewer return trips",
   "Two doctors on staff, so appointments stay on schedule",
 ] as const;
-
-/* Two long-standing patients. One has been coming since 1987, which is the
-   single most persuasive thing this page can say to a family. */
-const PROOF = [testimonials[2], testimonials[5]] as const;
 
 export default function Page() {
   return (
@@ -101,25 +97,7 @@ export default function Page() {
 
       <TrustBar />
 
-      <section className="bg-white py-16 md:py-20">
-        <div className="shell grid gap-8 md:grid-cols-2">
-          {PROOF.map((t) => (
-            <figure
-              key={t.name}
-              className="rounded-[var(--radius-card)] bg-linen p-7 md:p-8"
-            >
-              <blockquote className="text-[1.05rem] leading-relaxed text-espresso">
-                {t.quote}
-              </blockquote>
-              <figcaption className="mt-5 text-[0.9rem] text-taupe">
-                <span className="font-medium text-espresso">{t.name}</span>
-                <br />
-                {t.role}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
+      <GoogleReviewsSection page="new-patient-offer" />
 
       <FormSection campaign={campaign} />
     </CampaignShell>

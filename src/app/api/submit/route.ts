@@ -182,6 +182,12 @@ export async function POST(request: Request) {
   // impossible to tell apart from "it was never sent".
   console.log("[submit] notice sent:", noticeResult.id, "kind:", data.kind);
 
+  /* No address means there is no receipt to send. The practice has the
+     request and will telephone, which is what this visitor asked for. */
+  if (!data.email) {
+    return NextResponse.json({ ok: true, confirmed: false, ref: noticeResult.id });
+  }
+
   const confirmation = confirmationEmail(data);
   const confirmationResult = await sendEmail({
     to: data.email,

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { campaigns } from "@/content/campaigns";
 import { photos } from "@/content/photography";
-import { testimonials } from "@/lib/content";
 import { CampaignShell } from "@/components/campaign/CampaignShell";
 import { CampaignHero } from "@/components/campaign/CampaignHero";
 import { TrustBar } from "@/components/campaign/TrustBar";
 import { FormSection } from "@/components/campaign/FormSection";
+import { GoogleReviewsSection } from "@/components/campaign/GoogleReviewsSection";
 
 const campaign = campaigns.implants;
 
@@ -31,11 +31,6 @@ const CONSULTATION_STEPS = [
   "An honest answer on whether you are a candidate, including bone health",
   "A clear cost breakdown, including what insurance may cover",
 ] as const;
-
-/* No implant specific review exists in the practice's testimonials, so none is
-   claimed. These two are real and speak to the things an implant patient is
-   weighing: whether the work holds up, and whether the people are any good. */
-const PROOF = [testimonials[3], testimonials[2]] as const;
 
 export default function Page() {
   return (
@@ -89,27 +84,7 @@ export default function Page() {
 
       <TrustBar />
 
-      <section className="bg-white py-16 md:py-20">
-        <div className="shell">
-          <div className="grid gap-8 md:grid-cols-2">
-            {PROOF.map((t) => (
-              <figure
-                key={t.name}
-                className="rounded-[var(--radius-card)] bg-linen p-7 md:p-8"
-              >
-                <blockquote className="text-[1.05rem] leading-relaxed text-espresso">
-                  {t.quote}
-                </blockquote>
-                <figcaption className="mt-5 text-[0.9rem] text-taupe">
-                  <span className="font-medium text-espresso">{t.name}</span>
-                  <br />
-                  {t.role}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
+      <GoogleReviewsSection page="implants" />
 
       <FormSection campaign={campaign} />
     </CampaignShell>

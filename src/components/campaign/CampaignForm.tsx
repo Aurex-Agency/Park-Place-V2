@@ -83,13 +83,13 @@ export function CampaignForm({ campaign }: { campaign: Campaign }) {
         </div>
         <div>
           <label htmlFor="lp-email" className={labelClass}>
-            Email
+            Email{form.emailOptional ? " (optional)" : ""}
           </label>
           <input
             id="lp-email"
             name="email"
             type="email"
-            required
+            required={!form.emailOptional}
             autoComplete="email"
             className={`${fieldClass} mt-2`}
           />

@@ -6,6 +6,7 @@ import { CampaignShell } from "@/components/campaign/CampaignShell";
 import { CampaignHero } from "@/components/campaign/CampaignHero";
 import { TrustBar } from "@/components/campaign/TrustBar";
 import { FormSection } from "@/components/campaign/FormSection";
+import { GoogleReviewsSection } from "@/components/campaign/GoogleReviewsSection";
 
 const campaign = campaigns["same-day-crowns"];
 
@@ -122,6 +123,7 @@ export default function Page() {
         </div>
       </section>
 
+      <GoogleReviewsSection page="same-day-crowns" />
       <TrustBar />
       <FormSection campaign={campaign} />
     </CampaignShell>

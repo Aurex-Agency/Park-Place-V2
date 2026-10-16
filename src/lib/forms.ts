@@ -132,7 +132,21 @@ export function parseSubmission(raw: unknown): ParseResult {
   const phone = line(body.phone, LIMITS.phone);
 
   if (name.length < 2) return { ok: false, error: "Please tell us your name." };
-  if (!looksLikeEmail(email)) return { ok: false, error: "Please check your email address." };
+
+  /*
+   * One campaign asks to be telephoned rather than emailed, so it is allowed
+   * to arrive without an address. Every other form still requires one, and an
+   * address that is supplied is always checked, whoever sent it.
+   */
+  const declaredCampaign =
+    body.kind === "campaign" ? getCampaign(line(body.campaign, 60)) : undefined;
+  const emailOptional = declaredCampaign?.form?.emailOptional === true;
+
+  if (email || !emailOptional) {
+    if (!looksLikeEmail(email)) {
+      return { ok: false, error: "Please check your email address." };
+    }
+  }
 
   if (body.kind === "appointment") {
     if (!looksLikePhone(phone)) {
@@ -155,7 +169,7 @@ export function parseSubmission(raw: unknown): ParseResult {
   }
 
   if (body.kind === "campaign") {
-    const campaign = getCampaign(line(body.campaign, 60));
+    const campaign = declaredCampaign;
     if (!campaign) return { ok: false, error: "We could not read that submission." };
     if (!looksLikePhone(phone)) {
       return { ok: false, error: "Please give us a phone number we can reach you on." };
@@ -274,7 +288,7 @@ export function describe(data: Submission): {
       rows: [
         ["Name", data.name],
         ["Phone", data.phone],
-        ["Email", data.email],
+        ["Email", data.email || "Not given, asked to be called"],
         ...data.answers.map(({ label: l, value }) => [l, value] as [string, string]),
         ["Came from", `/${data.campaign}`],
       ],
