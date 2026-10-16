@@ -19,7 +19,7 @@ export function PostBlocks({ blocks }: { blocks: PostBlock[] }) {
     <div className="flex flex-col gap-14 md:gap-16">
       {blocks.map((block, i) => (
         <section key={i}>
-          {"heading" in block && block.heading && (
+          {"heading" in block && block.heading && block.kind !== "callout" && (
             <Reveal>
               <h2 className="t-h2 max-w-2xl">{block.heading}</h2>
             </Reveal>
@@ -147,7 +147,8 @@ export function PostBlocks({ blocks }: { blocks: PostBlock[] }) {
                 the page sideways on a phone. A comparison is worth nothing if
                 half of it is off the screen.
               */}
-              <div className="mt-8 overflow-x-auto">
+              <p className="mt-6 text-sm text-taupe md:hidden">Swipe across the table to compare all options.</p>
+              <div className="mt-3 overflow-x-auto md:mt-8" tabIndex={0} role="region" aria-label={block.heading ?? "Treatment comparison"}>
                 <table className="w-full min-w-[34rem] border-collapse text-left">
                   <thead>
                     <tr>
@@ -171,12 +172,9 @@ export function PostBlocks({ blocks }: { blocks: PostBlock[] }) {
                         >
                           {row[0]}
                         </th>
-                        <td className="border-b border-sand py-3.5 pr-6 align-top text-[0.975rem] text-taupe">
-                          {row[1]}
-                        </td>
-                        <td className="border-b border-sand py-3.5 align-top text-[0.975rem] text-taupe">
-                          {row[2]}
-                        </td>
+                        {row.slice(1).map((cell, index) => (
+                          <td key={index} className="border-b border-sand py-3.5 pr-6 align-top text-[0.975rem] text-taupe">{cell}</td>
+                        ))}
                       </tr>
                     ))}
                   </tbody>

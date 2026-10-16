@@ -22,7 +22,7 @@ export default function Page() {
       page={meetTheTeam}
       crumbs={[
         { label: "Home", href: "/" },
-        { label: "About Us" },
+        { label: "About Us", href: "/about-us/about-the-practice" },
         { label: meetTheTeam.title },
       ]}
     >

@@ -32,13 +32,13 @@ export function InlineCta({
                   Call {practice.phone}
                 </Button>
                 <Button href="/book-an-appointment" variant="outline">
-                  Book an appointment
+                  Request an appointment
                 </Button>
               </>
             ) : (
               <>
                 <Button href="/book-an-appointment" variant="primary">
-                  Book an appointment
+                  Request an appointment
                 </Button>
                 <Button href={practice.phoneHref} variant="outline">
                   Call {practice.phone}

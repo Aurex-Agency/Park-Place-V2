@@ -9,10 +9,10 @@
  *
  * Run after a deploy that changed content:
  *
- *     npm run indexnow                      # everything in the sitemap
+ *     npm run indexnow -- --all             # deliberate full sitemap submission
  *     npm run indexnow -- /veterans /locations   # only these paths
  *
- * Submitting the whole sitemap is fine and is what the no-argument form does;
+ * Prefer the paths that changed. Use --all deliberately for a full migration;
  * IndexNow accepts up to 10,000 URLs per request and rate-limits by domain
  * rather than by URL count, so there is nothing to be gained by trimming it by
  * hand. Pass paths only when you know exactly what changed.
@@ -34,10 +34,16 @@ async function urlsFromSitemap() {
 
 async function main() {
   const paths = process.argv.slice(2);
-  const urlList = paths.length
+  if (paths.length === 0) {
+    throw new Error("Pass changed paths after deployment, or --all for an intentional full sitemap submission.");
+  }
+  const urlList = paths.includes("--all") ? await urlsFromSitemap() : paths.length
     ? paths.map((path) => `${ORIGIN}${path.startsWith("/") ? path : `/${path}`}`)
-    : await urlsFromSitemap();
+    : [];
 
+  if (urlList.some((url) => new URL(url).origin !== ORIGIN || new URL(url).search || new URL(url).hash)) {
+    throw new Error("Submit canonical paths without query strings or fragments.");
+  }
   if (urlList.length === 0) {
     console.error("Nothing to submit.");
     process.exitCode = 1;

@@ -1,3 +1,4 @@
+import { PatientGuides } from "@/components/page/PatientGuides";
 import { seoFor } from "@/content/seo";
 import { JsonLd } from "@/components/site/JsonLd";
 import { pageGraph } from "@/lib/schema";
@@ -43,6 +44,7 @@ export default function HomePage() {
       <Testimonials />
       <SmileGallery />
       <Insurance />
+      <PatientGuides />
       <ClosingCta />
     </>
   );

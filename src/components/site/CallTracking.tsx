@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { track } from "@vercel/analytics";
+import { trackPhoneClick } from "@/lib/analytics-events";
 
 /**
  * Counts clicks on the practice's phone number, wherever they happen.
@@ -19,7 +20,7 @@ import { track } from "@vercel/analytics";
  * server components that cannot take an `onClick` without becoming client
  * components themselves.
  *
- * What is recorded is the fact of the call and the page it came from. Nothing
+ * What is recorded is a telephone-link click, not a connected call. Nothing
  * a person typed goes anywhere near it.
  */
 export function CallTracking() {
@@ -50,12 +51,7 @@ export function CallTracking() {
         // Measurement must never be the reason a call does not connect.
       }
 
-      try {
-        const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
-        gtag?.("event", "call_started", payload);
-      } catch {
-        // As above.
-      }
+      trackPhoneClick(placement);
     }
 
     document.addEventListener("click", onClick, { capture: true });

@@ -1,3 +1,4 @@
+import { PatientGuides } from "@/components/page/PatientGuides";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/content/seo";
 import { newPatientInformation } from "@/content/pages";
@@ -12,6 +13,7 @@ export const metadata: Metadata = pageMetadata("/new-patients/new-patient-inform
 
 export default function Page() {
   return (
+    <>
     <SimplePageView
       path={"/new-patients/new-patient-information"}
       page={newPatientInformation}
@@ -28,5 +30,7 @@ export default function Page() {
         photos={[photos.operatoryWindow, photos.teamGroupTrio]}
       />
     </SimplePageView>
+    <PatientGuides servicePaths={["/new-patients/new-patient-information"]} />
+    </>
   );
 }

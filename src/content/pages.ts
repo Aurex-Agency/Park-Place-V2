@@ -58,7 +58,7 @@ export const aboutPractice: SimplePage = {
         },
         {
           term: "Root canal expertise",
-          text: "Our in-house endodontic specialist ensures that root canal procedures are done with the utmost precision and care, helping to preserve your natural teeth and maintain your smile for years to come.",
+          text: "Ask our team about root canal assessment, who would provide treatment and whether a specialist referral is appropriate for your tooth.",
         },
       ],
     },
@@ -115,7 +115,7 @@ export const meetTheDentist: SimplePage = {
         },
         {
           term: "Work made in the building",
-          text: "Park Place Dental has its own dental laboratory, so crowns, dentures, partials and repairs are made and adjusted here rather than posted to an outside laboratory. It is the single most common reason patients travel to this practice.",
+          text: "Park Place Dental has an in-house dental laboratory supporting crowns, dentures, partials and repairs. Ask which stages can be completed here and whether your case requires outside work or separate visits.",
         },
         {
           term: "Technology chosen for the patient, not the brochure",
@@ -238,7 +238,7 @@ export const advancedTechnology: SimplePage = {
       heading: "Same-day restorations with our in-house dental lab",
       body: [
         "Park Place Dental also features an in-house dental lab, giving our team greater control over the quality, customization, and timing of your restorations.",
-        "Because our lab is located right here in our office, we can design and create many restorations faster than traditional dental workflows that require work to be sent to an outside lab. This allows us to provide convenient same-day options for crowns, veneers, dentures, and more.",
+        "Our lab is located in the office and supports restorative care. Same-day options depend on the assessment, proposed restoration and schedule. Ask which stages will happen here, whether any outside work is needed and when the team can confirm timing.",
         "Our in-house lab also makes it easier for our dental team to customize your restoration based on your smile, facial features, bite, and goals. Whether you need to repair a damaged tooth, refresh your smile, or replace missing teeth, we can provide care that is efficient, precise, and tailored to you.",
       ],
     },
@@ -596,7 +596,7 @@ export const veteransPage: SimplePage = {
         },
         {
           term: "Restorative work is made here",
-          text: "Crowns, dentures, partials and repairs are made in our own laboratory rather than posted to an outside one. For older veterans in particular, that tends to mean fewer trips and shorter waits.",
+          text: "Our in-house laboratory supports restorative care. Confirm the treatment sequence and expected visits with the team, alongside any required VA authorization.",
         },
       ],
     },
