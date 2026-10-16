@@ -104,7 +104,7 @@ export default function Page() {
             day.
           </p>
           <div className="mt-7 flex justify-center">
-            <CallButton slug={campaign.slug} placement="footer-cta" size="huge" />
+            <CallButton slug={campaign.slug} placement="footer" size="huge" />
           </div>
           <p className="mt-6 text-[0.9rem] text-taupe">
             {practice.address.full}

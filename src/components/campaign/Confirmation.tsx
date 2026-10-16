@@ -64,7 +64,7 @@ export function Confirmation() {
               <br />
               <a
                 href={phone.href}
-                data-call-placement="confirmation-text"
+                data-call-placement="confirmation"
                 className="tap-inline font-medium text-rose-deep underline underline-offset-4"
               >
                 {phone.display}

@@ -35,7 +35,10 @@ function report(
   payload: Record<string, unknown>,
   extra: Record<string, string | number | boolean>,
 ) {
-  const kind = payload.kind === "appointment" || payload.kind === "contact" ? payload.kind : "unknown";
+  const kind =
+    payload.kind === "appointment" || payload.kind === "contact" || payload.kind === "campaign"
+      ? payload.kind
+      : "unknown";
   trackLeadOutcome(event, kind, extra.status);
   try {
     track(event, { kind, ...extra });

@@ -6,8 +6,7 @@ import { useSubmit } from "@/components/page/useSubmit";
 import { Honeypot } from "@/components/page/Honeypot";
 import { HONEYPOT_FIELD } from "@/lib/forms";
 import { phoneFor, type Campaign } from "@/content/campaigns";
-import { track } from "@vercel/analytics";
-import { reportLead } from "@/lib/conversions";
+import { reportAdsConversion } from "@/lib/conversions";
 
 /**
  * The lead form on an advertising landing page.
@@ -50,12 +49,10 @@ export function CampaignForm({ campaign }: { campaign: Campaign }) {
 
     if (!sent) return;
 
-    try {
-      track("lead", { campaign: campaign.slug });
-    } catch {
-      // Never block the confirmation on measurement.
-    }
-    reportLead(campaign.slug);
+    /* useSubmit has already reported this lead to GA4 and to Vercel
+       Analytics, the same way every other form on the site does. Only the
+       Google Ads conversion is left to fire. */
+    reportAdsConversion(campaign.slug);
     router.push(`/request-received?from=${encodeURIComponent(campaign.slug)}`);
   }
 
@@ -135,7 +132,7 @@ export function CampaignForm({ campaign }: { campaign: Campaign }) {
             Prefer to talk now? Call{" "}
             <a
               href={phone.href}
-              data-call-placement="under-form"
+              data-call-placement="form"
               className="tap-inline font-medium text-rose-deep underline underline-offset-4"
             >
               {phone.display}
