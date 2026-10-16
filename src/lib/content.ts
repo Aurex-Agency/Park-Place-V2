@@ -1,3 +1,5 @@
+import { googleReviews } from "@/content/google-reviews";
+
 /**
  * Single source of truth for site copy.
  *
@@ -229,49 +231,19 @@ export const veteransNote =
   "As a trusted VA provider, we are here to serve our veteran community with quality care and dedicated support.";
 
 /**
- * Real patient reviews from the practice's own testimonials page.
+ * Patient reviews shown across the website.
  *
- * Each `role` line is drawn from something the review itself says, so nothing
- * here is invented. Where a review gives no detail, it does not get a claim.
+ * These used to be a second, hand-maintained copy of six reviews. Every one of
+ * them turned out to be a review on the practice's Google Business Profile,
+ * reproduced with small wording differences, so there were two lists saying
+ * nearly the same thing and nothing keeping them in step.
+ *
+ * There is now one list, in content/google-reviews.ts, read from the live
+ * profile and used by both the website and the advertising landing pages. The
+ * site shows all of them; the landing pages take the ones relevant to what
+ * they sell.
  */
-export const testimonials = [
-  {
-    quote:
-      "I've been a Park Place customer for almost 5 years, and now I have to drive 90 miles to get here! But when you find a dental office that treats you well, professionally and with a smile, gets you in and out on time, you keep coming back!",
-    name: "Joe Lawson",
-    role: "Patient of nearly five years",
-  },
-  {
-    quote:
-      "Dr. Goodwin is amazing. He and his staff worked me in super fast, like the day of/next day, to fix my chipped tooth! He gave me a beautiful smile back in high school and gave me that same beautiful smile again!! Absolutely love them the best dentist office in the north Mississippi area!!!",
-    name: "Liberty Burcham",
-    role: "Patient since high school",
-  },
-  {
-    quote:
-      "I have been a client of Park Place Dental since 1987 and have never been disappointed with the treatment from each of their staff. The staff is very prompt and efficient. Through these years, they have become like family to me. Thank you, Park Place Dental, for your service!",
-    name: "Nelene Pannell",
-    role: "Patient since 1987",
-  },
-  {
-    quote:
-      "Love the entire staff at Park Place Dental. Mrs. McDougald and Mrs. Ann are the best ever. I haven't stopped smiling since I got a new smile. Love all of you.",
-    name: "Rick Wilkins",
-    role: "Smile makeover patient",
-  },
-  {
-    quote:
-      "I was just in your office and had my regular cleaning and checkup. I cannot commend you enough for the great experience! Your office staff is so kind and helpful, along with the dental hygienist, Kelly, who made my cleaning a genuine pleasure. I look forward to my next six-month flossing!",
-    name: "Kenneth Forrest",
-    role: "Cleanings and checkups",
-  },
-  {
-    quote:
-      "We've been using this office for years & years. Never had a bad experience. Super-friendly staff, and always have us in and out in no time! We LOVE Park Place Dental!",
-    name: "Candace Mitchell",
-    role: "Patient of many years",
-  },
-] as const;
+export const testimonials = googleReviews;
 
 export const testimonialsSection = {
   badge: "Testimonials",
