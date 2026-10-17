@@ -93,16 +93,6 @@ export function practiceNode(): Node {
         opens: "08:30",
         closes: "17:00",
       },
-      {
-        /* Friday is declared separately because the site says Friday hours may
-           vary. Stating a flat 17:00 close for it, as the previous markup did,
-           asserts something the practice does not. */
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Friday"],
-        opens: "08:30",
-        closes: "17:00",
-        description: practice.hoursNote,
-      },
     ],
     employee: [{ "@id": DOCTOR_ID }, { "@id": ASSOCIATE_ID }],
     founder: { "@id": DOCTOR_ID },
