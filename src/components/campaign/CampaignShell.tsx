@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { BrandLockup } from "@/components/ui/MetalMark";
 import { practice } from "@/lib/content";
@@ -64,8 +65,13 @@ export function CampaignShell({
             <p className="text-linen/85">{practice.hours}</p>
           </div>
           <p className="mt-8 text-[0.8rem] text-linen/60">
-            Park Place Dental, {practice.address.city}, {practice.address.region}
+            Ken Goodwin, DMD, PA, doing business as Park Place Dental.
+            <a href={practice.emailHref} className="ml-2 underline underline-offset-4">{practice.email}</a>
           </p>
+          <div className="mt-3 flex flex-wrap gap-5 text-sm text-linen/85">
+            <Link href="/privacy-policy" className="underline underline-offset-4">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="underline underline-offset-4">Terms of Service</Link>
+          </div>
         </div>
       </footer>
     </>

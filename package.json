@@ -11,7 +11,8 @@
     "check": "npm run check:copy && tsc --noEmit && eslint",
     "indexnow": "node scripts/indexnow.mjs",
     "test:seo": "node --test scripts/test-seo.mjs",
-    "verify:seo": "node scripts/verify-seo.mjs"
+    "verify:seo": "node scripts/verify-seo.mjs",
+    "test:sms": "node --test scripts/test-sms-consent.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.3.5",

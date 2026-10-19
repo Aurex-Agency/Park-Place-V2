@@ -1,3 +1,4 @@
+import { SMS_CONSENT_VERSION, smsConsentRows, type SmsConsentRecord } from "@/lib/smsConsent";
 import { getCampaign } from "@/content/campaigns";
 
 /**
@@ -13,6 +14,7 @@ import { getCampaign } from "@/content/campaigns";
 export type SubmissionKind = "contact" | "appointment";
 
 export type ContactSubmission = {
+  smsConsent: SmsConsentRecord;
   kind: "contact";
   name: string;
   email: string;
@@ -22,6 +24,7 @@ export type ContactSubmission = {
 };
 
 export type AppointmentSubmission = {
+  smsConsent: SmsConsentRecord;
   kind: "appointment";
   name: string;
   email: string;
@@ -42,6 +45,7 @@ export type AppointmentSubmission = {
  * stops anyone posting arbitrary text into an email the practice will read.
  */
 export type CampaignSubmission = {
+  smsConsent: SmsConsentRecord;
   kind: "campaign";
   campaign: string;
   name: string;
@@ -148,6 +152,32 @@ export function parseSubmission(raw: unknown): ParseResult {
     }
   }
 
+  // Never coerce strings (including "false") or numbers into permission.
+  for (const field of ["smsInformational", "smsMarketing"]) {
+    if (body[field] !== undefined && typeof body[field] !== "boolean") {
+      return { ok: false, error: "Please reload the form and choose your text message preferences again." };
+    }
+  }
+  const informational = body.smsInformational === true;
+  const marketing = body.smsMarketing === true;
+  if (informational || marketing) {
+    if (body.smsConsentVersion !== SMS_CONSENT_VERSION) {
+      return { ok: false, error: "Please reload the form to review the current text message choices, or submit without SMS consent." };
+    }
+    if (!looksLikePhone(phone)) {
+      return { ok: false, error: "Please provide a valid phone number for text messages, or leave the text message boxes unchecked." };
+    }
+  }
+  const smsConsent: SmsConsentRecord = {
+    informational,
+    marketing,
+    version: body.smsConsentVersion === SMS_CONSENT_VERSION ? SMS_CONSENT_VERSION : "not presented",
+    recordedAt: new Date().toISOString(),
+    source: body.kind === "campaign" && declaredCampaign
+      ? `/${declaredCampaign.slug}`
+      : body.kind === "appointment" ? "/book-an-appointment" : "/contact-us",
+  };
+
   if (body.kind === "appointment") {
     if (!looksLikePhone(phone)) {
       return { ok: false, error: "Please give us a phone number we can reach you on." };
@@ -155,6 +185,7 @@ export function parseSubmission(raw: unknown): ParseResult {
     return {
       ok: true,
       data: {
+        smsConsent,
         kind: "appointment",
         name,
         email,
@@ -198,7 +229,7 @@ export function parseSubmission(raw: unknown): ParseResult {
 
     return {
       ok: true,
-      data: { kind: "campaign", campaign: campaign.slug, name, email, phone, answers },
+      data: { smsConsent, kind: "campaign", campaign: campaign.slug, name, email, phone, answers },
     };
   }
 
@@ -211,6 +242,7 @@ export function parseSubmission(raw: unknown): ParseResult {
     return {
       ok: true,
       data: {
+        smsConsent,
         kind: "contact",
         name,
         email,
@@ -273,6 +305,7 @@ export function describe(data: Submission): {
         ["Preferred time", data.time || "No preference given"],
         ["New patient", data.newPatient || "Not answered"],
         ["Reason for visit", data.reason || "Not given"],
+        ...smsConsentRows(data.smsConsent),
       ],
       longFieldLabel: "Anything else we should know",
       longFieldValue: data.notes,
@@ -291,6 +324,7 @@ export function describe(data: Submission): {
         ["Email", data.email || "Not given, asked to be called"],
         ...data.answers.map(({ label: l, value }) => [l, value] as [string, string]),
         ["Came from", `/${data.campaign}`],
+        ...smsConsentRows(data.smsConsent),
       ],
       longFieldLabel: "",
       longFieldValue: "",
@@ -307,6 +341,7 @@ export function describe(data: Submission): {
       ["Phone", data.phone || "Not given"],
       ["Email", data.email],
       ["Subject", data.subject || "Not given"],
+      ...smsConsentRows(data.smsConsent),
     ],
     longFieldLabel: "Message",
     longFieldValue: data.message,

@@ -122,6 +122,10 @@ export const seo: Record<string, SeoEntry> = {
     description:
       "Patients drive to Park Place Dental in Booneville from Corinth, Tupelo, Saltillo, Iuka, Baldwyn and across seven counties. Find your drive and your route.",
   },
+  "/terms-of-service": {
+    title: "Terms of Service",
+    description: "Website and SMS messaging terms for Park Place Dental in Booneville, Mississippi.",
+  },
   "/privacy-policy": {
     title: "Privacy Policy",
     description:

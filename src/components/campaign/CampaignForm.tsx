@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { fieldClass, labelClass } from "@/components/page/formStyles";
 import { useSubmit } from "@/components/page/useSubmit";
 import { Honeypot } from "@/components/page/Honeypot";
+import { SmsConsent } from "@/components/page/SmsConsent";
+import { smsConsentPayload } from "@/lib/smsConsent";
 import { HONEYPOT_FIELD } from "@/lib/forms";
 import { phoneFor, type Campaign } from "@/content/campaigns";
 import { reportAdsConversion } from "@/lib/conversions";
@@ -45,6 +47,7 @@ export function CampaignForm({ campaign }: { campaign: Campaign }) {
       phone: get("phone"),
       answers,
       [HONEYPOT_FIELD]: get(HONEYPOT_FIELD),
+      ...smsConsentPayload(data),
     });
 
     if (!sent) return;
@@ -115,6 +118,8 @@ export function CampaignForm({ campaign }: { campaign: Campaign }) {
           </select>
         </div>
       ))}
+
+      <SmsConsent />
 
       <button
         type="submit"
