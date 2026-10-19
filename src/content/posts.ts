@@ -1,5 +1,6 @@
 /** Patient education with stable URLs, explicit editorial dates and source links. */
 
+import { implantTimingGuide } from "./implant-timing-guide";
 import { treatmentGuides } from "./treatment-guides";
 import { patientDecisionGuides } from "./patient-decision-guides";
 
@@ -64,6 +65,7 @@ export type Post = {
 };
 
 export const posts: Post[] = [
+  implantTimingGuide,
   ...patientDecisionGuides,
   ...treatmentGuides,
   {

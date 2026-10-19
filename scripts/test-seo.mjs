@@ -65,10 +65,10 @@ function checkLinks(value) {
     checkLinks(item);
   }
 }
-test('14 articles and 14 towns preserve working links, images and comparison tables', () => {
-  assert.equal(posts.length, 14);
+test('15 articles and 14 towns preserve working links, images and comparison tables', () => {
+  assert.equal(posts.length, 15);
   assert.equal(locations.length, 14);
-  assert.equal(new Set(posts.map(p => p.slug)).size, 14);
+  assert.equal(new Set(posts.map(p => p.slug)).size, posts.length);
   checkLinks(posts); checkLinks(locations);
   for (const post of posts) {
     assert.ok(post.updated >= post.published);
