@@ -116,11 +116,13 @@ export function Footer() {
         <div className="mt-8 flex flex-col gap-4 text-[0.875rem] text-linen/65 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {year} {practice.name}. All rights reserved.
+            <span className="mt-1 block">Ken Goodwin, DMD, PA, doing business as Park Place Dental.</span>
           </p>
           <div className="flex flex-wrap gap-x-6">
             <Link href="/privacy-policy" className="block py-1 transition-colors hover:text-linen">
               Privacy Policy
             </Link>
+            <Link href="/terms-of-service" className="block py-1 transition-colors hover:text-linen">Terms of Service</Link>
             <Link href="/accessibility" className="block py-1 transition-colors hover:text-linen">
               Accessibility
             </Link>

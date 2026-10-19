@@ -5,6 +5,8 @@ import { practice } from "@/lib/content";
 import { fieldClass, labelClass } from "@/components/page/formStyles";
 import { useSubmit } from "@/components/page/useSubmit";
 import { Honeypot } from "@/components/page/Honeypot";
+import { SmsConsent } from "@/components/page/SmsConsent";
+import { smsConsentPayload } from "@/lib/smsConsent";
 import { HONEYPOT_FIELD } from "@/lib/forms";
 import { FormSuccess } from "@/components/page/FormSuccess";
 import { FormError } from "@/components/page/FormError";
@@ -57,6 +59,7 @@ export function AppointmentForm() {
       reason: get("reason"),
       notes: get("notes"),
       [HONEYPOT_FIELD]: get(HONEYPOT_FIELD),
+      ...smsConsentPayload(data),
     });
 
     if (sent) form.reset();
@@ -153,6 +156,8 @@ export function AppointmentForm() {
         </label>
         <textarea id="notes" name="notes" rows={4} className={`${fieldClass} mt-2 resize-y`} />
       </div>
+
+      <SmsConsent />
 
       {status === "error" && error && <FormError message={error} />}
 

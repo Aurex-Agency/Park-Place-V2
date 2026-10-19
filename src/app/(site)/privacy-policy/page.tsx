@@ -29,7 +29,16 @@ const sections = [
   {
     heading: "How we use it",
     body: [
-      "We use what you send only to respond to you, to arrange your appointment, and to provide your care. We do not sell it, and we do not share it with anyone for marketing.",
+      "Ken Goodwin, DMD, PA, doing business as Park Place Dental, uses what you send to respond to you, arrange your appointment and provide your care. If you separately opt in to marketing texts, we may also send you dental service updates and special offers. We do not sell your personal information.",
+    ],
+  },
+  {
+    heading: "Text messaging and consent",
+    body: [
+      "Informational and marketing SMS choices are separate, optional and unchecked by default. Providing a phone number alone does not grant permission to text you. You can request an appointment or contact us without consenting to either type of SMS. Marketing consent is not a condition of purchase or care.",
+      "We record your SMS choices, the phone number provided, the source form, the disclosure wording and version, and the time the server receives your submission. These records are included in the enquiry email delivered to our front desk.",
+      "We do not share, sell or rent mobile phone numbers, SMS opt-in data or consent with third parties or affiliates for their marketing or promotional purposes. We share this information only with service providers that help us deliver and administer our messaging program, as necessary for that service.",
+      "Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. You can also contact the practice using the details below. See our Terms of Service for the SMS program terms.",
     ],
   },
   {
@@ -75,6 +84,7 @@ export default function Page() {
 
       <div className="section">
         <div className="shell-narrow flex flex-col gap-12">
+          <p className="text-taupe">Updated October 19, 2026. <a href="/terms-of-service" className="text-rose-deep underline underline-offset-4">SMS Terms of Service</a></p>
           {sections.map((section) => (
             <section key={section.heading}>
               <Reveal>

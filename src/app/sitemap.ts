@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact-us",
     "/book-an-appointment",
     "/privacy-policy",
+    "/terms-of-service",
     "/accessibility",
   ];
 
