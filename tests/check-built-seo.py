@@ -43,7 +43,7 @@ class Page(HTMLParser):
         self.capture = None
 
 urls = [node.text for node in ElementTree.parse(ROOT / 'sitemap.xml.body').iter() if node.tag.endswith('}loc')]
-assert len(urls) == len(set(urls)) == 63, 'Expected 60 original pages plus three guides'
+assert len(urls) == len(set(urls)) == 68, 'Expected 67 existing pages plus the implant timing guide'
 pages = {}
 for url in urls:
     path = urlsplit(url).path
@@ -69,7 +69,7 @@ for field in ['titles', 'descriptions']:
     duplicates = [text for text, count in Counter(getattr(p, field)[0] for p in pages.values()).items() if count > 1]
     assert not duplicates, (field, duplicates)
 
-new = ['broken-denture-repair-reline-replacement', 'same-day-vs-traditional-crowns', 'implants-bridges-partial-dentures']
+new = ['broken-denture-repair-reline-replacement', 'same-day-vs-traditional-crowns', 'implants-bridges-partial-dentures', 'same-day-dental-implants-candidacy', 'teeth-whitening-vs-veneers']
 for slug in new:
     url = ORIGIN + '/patient-resources/blog/' + slug
     page = pages[url]
@@ -90,4 +90,4 @@ for url, page in pages.items():
         if path in ['/thank-you', '/style-guide']: continue
         broken.append((url, href))
 assert not broken, broken
-print('PASS: 63 pages; unique metadata; canonical/indexability/H1 checks; valid breadcrumb paths; article schema and assets; contextual guide links; no broken internal destinations.')
+print('PASS: 68 pages; unique metadata; canonical/indexability/H1 checks; valid breadcrumb paths; article schema and assets; contextual guide links; no broken internal destinations.')

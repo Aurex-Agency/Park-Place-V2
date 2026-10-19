@@ -414,143 +414,207 @@ export const patientDecisionGuides: Post[] = [
   },
   {
     "author": "practice",
+    "reviewed": false,
     "slug": "teeth-whitening-vs-veneers",
-    "title": "Teeth Whitening or Veneers? Start With What You Want to Change",
-    "seoTitle": "Teeth Whitening vs Veneers",
-    "metaDescription": "Whitening and veneers address different concerns. Compare color, shape, maintenance and questions to discuss at a Booneville dental consultation.",
-    "summary": "Whitening and veneers solve different problems. Whitening can lighten natural teeth; veneers cover the front surfaces to change their appearance. Start by explaining whether your concern is color, shape, a chip or a gap, then ask which options fit the condition of your teeth.",
-    "answer": "Whitening and veneers solve different problems. Whitening can lighten natural teeth; veneers cover the front surfaces to change their appearance. Start by explaining whether your concern is color, shape, a chip or a gap, then ask which options fit the condition of your teeth.",
+    "title": "What Porcelain Veneers Can Change That Whitening Cannot",
+    "seoTitle": "Porcelain Veneers vs Teeth Whitening",
+    "metaDescription": "Compare whitening and porcelain veneers for stains, chips and gaps. Learn the tradeoffs, alternatives, and questions to bring to a Booneville consultation.",
+    "summary": "If whitening leaves you unhappy with your smile, the next step is to identify what still bothers you. A color concern, a chipped edge and a gap call for different conversations.",
+    "answer": "Whitening can lighten natural teeth, including some internal discoloration, but it cannot reshape a tooth, close a gap or rebuild a chipped edge. Porcelain veneers can change the visible shape and color of suitable teeth by covering their front surfaces. They require a different commitment: enamel is usually removed, treatment is irreversible, and veneers may eventually need replacement.",
     "published": "2026-10-02",
-    "updated": "2026-10-02",
+    "updated": "2026-10-19",
     "image": "/images/mcdougald-procedure-loupes.jpg",
-    "imageAlt": "Dr. Rebecca McDougald wearing magnifying loupes",
-    "readingMinutes": 4,
+    "imageAlt": "Dr. Rebecca McDougald wearing magnifying loupes at Park Place Dental",
+    "readingMinutes": 5,
     "topic": "Cosmetic choices",
     "blocks": [
       {
         "kind": "prose",
+        "heading": "Whitening can do more than lift surface stains",
         "body": [
-          "Whitening does not produce the same response in every tooth and does not change the color of crowns, veneers or fillings. Existing restorations therefore matter when planning the shade of your smile. Sensitivity can occur, and products should be used as directed. ADA patient guidance on whitening."
-        ],
-        "heading": "When the concern is color"
+          "Whitening toothpaste primarily helps remove surface stains. Peroxide bleaching products work differently: they change the color of natural teeth and can affect some stains within the tooth. The idea that bleaching gel cannot reach any internal discoloration is incorrect.",
+          "Results depend on the cause and severity of the discoloration. Some tetracycline staining and fluorosis discoloration can respond to bleaching, although the response varies. White spots, brown areas and generalized yellowing should not all be treated as the same problem. A disappointing result from a store-bought kit does not, by itself, establish that you need veneers."
+        ]
       },
       {
         "kind": "links",
         "items": [
           {
-            "label": "ADA patient guidance on whitening",
+            "label": "ADA clinical overview: whitening and intrinsic discoloration",
+            "href": "https://www.ada.org/resources/ada-library/oral-health-topics/whitening"
+          }
+        ]
+      },
+      {
+        "kind": "table",
+        "heading": "Match the treatment to what you want to change",
+        "columns": [
+          "Concern",
+          "Whitening",
+          "Porcelain veneers"
+        ],
+        "rows": [
+          [
+            "Natural tooth color",
+            "May lighten it; response varies.",
+            "Can mask discoloration in suitable cases."
+          ],
+          [
+            "Small chip or uneven outline",
+            "Does not change tooth shape.",
+            "May change the visible shape after assessment."
+          ],
+          [
+            "Small gap",
+            "Does not close it.",
+            "May disguise selected gaps; bite and proportions matter."
+          ],
+          [
+            "Existing crown or filling",
+            "Does not bleach restorative material.",
+            "Requires a separate assessment of the existing dental work."
+          ],
+          [
+            "Long-term commitment",
+            "May need maintenance; sensitivity can occur.",
+            "Usually involves enamel removal and future repair or replacement."
+          ]
+        ]
+      },
+      {
+        "kind": "prose",
+        "heading": "Where veneers can help",
+        "body": [
+          "A veneer is a thin covering bonded to the front of a tooth. For a suitable tooth, it can address a combination of concerns, such as a small chip and discoloration, or an uneven outline and a small space. The goal should be an appearance that works with the other teeth and the bite.",
+          "Veneers are not a universal repair for cracks, decay or worn enamel. A damaged tooth needs a diagnosis before cosmetic treatment is chosen. Healthy teeth and gums are important, and grinding or clenching can affect whether veneers are appropriate."
+        ]
+      },
+      {
+        "kind": "links",
+        "items": [
+          {
+            "label": "ADA patient guidance: veneers, preparation and maintenance",
+            "href": "https://www.mouthhealthy.org/all-topics-a-z/veneers"
+          }
+        ]
+      },
+      {
+        "kind": "callout",
+        "heading": "Enamel removal is a lasting decision",
+        "body": "Enamel does not grow back. Before agreeing to veneers, ask how much tooth structure would be changed, whether a less extensive option would meet your goal, and what future replacement could involve."
+      },
+      {
+        "kind": "prose",
+        "heading": "When to consider whitening first",
+        "body": [
+          "If your teeth are healthy and the concern is mainly shade, ask whether supervised whitening is a reasonable first step. It does not require the tooth preparation used for veneers, but it is not risk-free: sensitivity and gum irritation can occur. Use products as directed rather than extending treatment because a stain is stubborn.",
+          "Whitening does not lighten crowns, veneers or fillings. If you are considering both whitening and new restorations, discuss the sequence before choosing a shade so the planned result is coordinated."
+        ]
+      },
+      {
+        "kind": "links",
+        "items": [
+          {
+            "label": "ADA patient guidance: what whitening can and cannot change",
             "href": "https://www.mouthhealthy.org/all-topics-a-z/teeth-whitening"
           }
         ]
       },
       {
         "kind": "prose",
+        "heading": "What about bonding, orthodontics or a crown?",
         "body": [
-          "At a consultation, point out exactly what bothers you. Is one tooth darker, or do you want an overall change? Have you already tried a product? Bring its name and explain any sensitivity you experienced. That gives the dentist a better starting point than selecting a shade from an advertisement."
+          "The choice is not always whitening or veneers. Ask about bonding for a limited shape change, orthodontic treatment when tooth position is the main concern, or a restorative approach if the tooth is damaged. These are options to discuss, not interchangeable fixes.",
+          "A crown covers more of a tooth than a veneer and can be used to restore a tooth that needs greater structural support. The condition of the tooth should guide that choice, rather than the promise of a particular shade."
         ]
-      },
-      {
-        "kind": "prose",
-        "body": [
-          "Veneers can address the appearance of certain stains, chips, gaps or misshapen teeth. They involve a longer-term commitment: enamel is usually removed, treatment is not reversible, and veneers can need repair or replacement. Decay or gum disease must be addressed before proceeding. ADA patient guidance on veneers."
-        ],
-        "heading": "When the concern includes shape or surface appearance"
       },
       {
         "kind": "links",
         "items": [
           {
-            "label": "ADA patient guidance on veneers",
-            "href": "https://www.mouthhealthy.org/all-topics-a-z/veneers"
+            "label": "ADA: when a tooth may need a crown",
+            "href": "https://www.mouthhealthy.org/all-topics-a-z/crowns"
+          },
+          {
+            "label": "Compare cosmetic services at Park Place Dental",
+            "href": "/services/cosmetic-dentistry"
           }
         ]
       },
       {
-        "kind": "table",
-        "columns": [
-          "Your concern",
-          "Question for the consultation"
-        ],
-        "rows": [
-          [
-            "Color",
-            "“What is causing this discoloration, and is whitening appropriate?”"
-          ],
-          [
-            "Shape or a chip",
-            "“Which options could address this, and what would each change?”"
-          ],
-          [
-            "Existing dental work",
-            "“How will my crowns or fillings fit with the proposed result?”"
-          ],
-          [
-            "Future care",
-            "“What maintenance or replacement should I plan for?”"
-          ]
+        "kind": "list",
+        "heading": "Five questions that make the consultation more useful",
+        "items": [
+          "What is causing the color, shape or spacing concern on each tooth?",
+          "Which suitable option would preserve the most healthy tooth structure?",
+          "How will existing crowns or fillings affect the final appearance?",
+          "What maintenance, replacement and total costs should I plan for?",
+          "Can we discuss the proposed shape and shade before treatment starts?"
         ]
       },
       {
         "kind": "prose",
+        "heading": "Bring the details that matter to you",
         "body": [
-          "You do not need to arrive committed to veneers or whitening. Ask whether there are other appropriate choices and what the tradeoffs are. Your priorities may include preserving tooth structure, changing only one area, planning around an event, or setting a manageable budget."
-        ],
-        "heading": "Ask for the least extensive suitable option"
-      },
-      {
-        "kind": "prose",
-        "body": [
-          "Before scheduling, ask which parts of the plan are optional, what is included in the estimate, and when you will have an opportunity to discuss the expected appearance. A photograph can help communicate your preference, but it is not a promise that a particular result can be reproduced."
+          "Tell the dentist which whitening products you have tried, how you used them, and whether they caused sensitivity. Point out the particular tooth or area that bothers you. If a photograph helps explain your preference, bring it as a conversation starter rather than an exact result to reproduce.",
+          "Ask for an estimate that explains the complete plan, not just a per-tooth price. Leave knowing which steps are necessary for oral health, which are cosmetic choices, and what happens if you choose to wait."
         ]
       },
       {
         "kind": "prose",
+        "heading": "Explore your smile options in Booneville",
         "body": [
-          "Park Place Dental provides teeth whitening and porcelain veneer care at its Booneville office. Call (662) 728-8171 or request an appointment to discuss what you want to change. The office is at 403 N 3rd St, Booneville, MS 38829."
-        ],
-        "heading": "Plan your consultation in Booneville"
+          "Park Place Dental offers teeth whitening and porcelain veneer care in Booneville, Mississippi. You do not need to decide on a treatment before your visit. Explain what you want to change, and ask the team to help you arrange an assessment of the options."
+        ]
       },
       {
         "kind": "links",
         "items": [
           {
-            "label": "teeth whitening",
+            "label": "Teeth whitening",
             "href": "/services/cosmetic-dentistry/teeth-whitening"
           },
           {
-            "label": "porcelain veneer care",
+            "label": "Porcelain veneers",
             "href": "/services/cosmetic-dentistry/veneers"
           },
           {
-            "label": "(662) 728-8171",
-            "href": "tel:+16627288171"
-          },
-          {
-            "label": "request an appointment",
+            "label": "Request a consultation",
             "href": "/book-an-appointment"
           }
         ]
       }
     ],
-    "faqs": [],
-    "related": [
+    "faqs": [
       {
-        "label": "teeth whitening",
-        "href": "/services/cosmetic-dentistry/teeth-whitening"
+        "q": "Does an unsuccessful whitening kit mean I need veneers?",
+        "a": "No. An examination can help identify why the color did not change and whether further whitening, another approach or no treatment is appropriate."
       },
       {
-        "label": "porcelain veneer care",
+        "q": "Can whitening make a chipped tooth look whole again?",
+        "a": "Whitening changes color, not the missing tooth structure. Ask the dentist to assess the chip and explain suitable repair options."
+      },
+      {
+        "q": "Can I whiten porcelain veneers later?",
+        "a": "Bleaching does not change the color of porcelain veneers. Discuss any planned whitening before choosing the shade of new dental work."
+      }
+    ],
+    "related": [
+      {
+        "label": "Porcelain veneers",
         "href": "/services/cosmetic-dentistry/veneers"
       },
       {
-        "label": "request an appointment",
-        "href": "/book-an-appointment"
+        "label": "Teeth whitening",
+        "href": "/services/cosmetic-dentistry/teeth-whitening"
       }
     ],
-    "relatedSlugs": [],
+    "relatedSlugs": [
+      "same-day-vs-traditional-crowns"
+    ],
     "cta": {
-      "heading": "Discuss your next visit in Booneville",
-      "body": "Call (662) 728-8171 or send an appointment request. The team will confirm availability and the next step."
+      "heading": "Discuss what you want to change",
+      "body": "Request a cosmetic consultation at Park Place Dental in Booneville. The team will contact you to confirm availability and the next step."
     }
   }
 ];
