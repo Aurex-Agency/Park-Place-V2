@@ -72,6 +72,8 @@ export function useSubmit() {
   const accepted = useRef(false);
   const mintedAt = useRef<number>(0);
   const submitting = useRef(false);
+  // Keep the same ID across a network retry, but not after editing the form.
+  const attempt = useRef<{ fingerprint: string; id: string } | null>(null);
 
   const loadToken = useCallback(async () => {
     try {
@@ -109,10 +111,14 @@ export function useSubmit() {
   }, [loadToken, isStale]);
 
   async function post(payload: Record<string, unknown>) {
+    const fingerprint = JSON.stringify(payload);
+    if (attempt.current?.fingerprint !== fingerprint) {
+      attempt.current = { fingerprint, id: crypto.randomUUID() };
+    }
     const response = await fetch("/api/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...payload, formToken: token.current }),
+      body: JSON.stringify({ ...payload, submissionId: attempt.current.id, formToken: token.current }),
     });
 
     const result = (await response.json().catch(() => null)) as

@@ -90,7 +90,7 @@ export function practiceNode(): Node {
       {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-        opens: "08:30",
+        opens: "09:00",
         closes: "17:00",
       },
     ],

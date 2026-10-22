@@ -165,3 +165,44 @@ From the earlier set, still worth flagging:
 - `smile-before-after-2.jpg` carries a visible "PicCollage" watermark.
 - `goodwin-treating-patient.jpg` has a social media sticker burned into it. It
   is unused for that reason.
+
+## Website enquiry confirmations in GHL
+
+`/api/submit` preserves the existing Resend office notice and visitor receipt.
+After the office notice succeeds, contact and appointment submissions also POST
+to separate server-only webhook URLs (`GHL_CONTACT_WEBHOOK_URL` and
+`GHL_APPOINTMENT_WEBHOOK_URL`). Campaign forms keep their existing email flow.
+
+Every contact/appointment submission is forwarded, even without SMS consent or
+an optional contact phone number. The payload includes the contact, form source,
+submission ID, server receipt time, consent choices/disclosures, and a complete
+plain-text submission summary for the contact's GHL notes. No webhook URL or
+patient payload is exposed to analytics or logged on webhook failure.
+
+Office status is calculated on the server at submission time in
+`America/Chicago`: Monday–Thursday, 09:00 inclusive to 17:00 exclusive. Friday,
+Saturday and Sunday are closed. The GHL workflows branch on `office_status` and
+require `sms_informational_consent` to equal `yes`; marketing consent alone never
+sends the confirmation. GHL's existing SMS DND/STOP handling remains in place.
+
+GHL workflows in Park Place Dental:
+- `PPD | Website Contact | SMS Confirmation`
+- `PPD | Website Appointment | SMS Confirmation`
+
+Both create/update the contact, record the submission, notify account users,
+and send the appropriate confirmation from the account's approved number.
+The `PPD Last Website Submission ID` field suppresses an immediate replay of the
+last texted submission. The browser preserves its attempt ID across network
+retries. This is a last-submission check, not an unlimited historical replay
+ledger; a replay after a different submission can send again.
+
+Webhook errors are logged with the Resend office-notice reference. They do not
+remove the existing email receipt or report the already-emailed enquiry as lost.
+There is no automatic webhook retry on ambiguous timeouts, to avoid duplicate
+texts. Check GHL execution logs and the Resend reference before manually replaying
+an unsuccessful CRM delivery. A 2xx webhook response means accepted for workflow
+processing, not proof of carrier delivery.
+
+Validation: `npm run check`, `npm run test:sms`, `npm run test:seo`, and
+`npm run test:ghl`. Production and preview need both webhook environment variables
+before the PR is deployed.

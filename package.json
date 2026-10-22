@@ -12,7 +12,8 @@
     "indexnow": "node scripts/indexnow.mjs",
     "test:seo": "node --test scripts/test-seo.mjs",
     "verify:seo": "node scripts/verify-seo.mjs",
-    "test:sms": "node --test scripts/test-sms-consent.mjs"
+    "test:sms": "node --test scripts/test-sms-consent.mjs",
+    "test:ghl": "node --test scripts/test-ghl.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.3.5",
