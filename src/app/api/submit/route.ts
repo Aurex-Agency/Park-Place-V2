@@ -27,6 +27,8 @@ import { assessSubmission } from "@/lib/spam";
 import { practice } from "@/lib/content";
 import { noticeEmail, confirmationEmail } from "@/lib/email/templates";
 import { sendEmail, isEmailConfigured, CONTACT_TO } from "@/lib/email/send";
+import { createHash, randomUUID } from "node:crypto";
+import { sendToGhl } from "@/lib/ghl";
 
 export const runtime = "nodejs";
 // Nothing about a submission is cacheable or knowable ahead of time.
@@ -181,6 +183,25 @@ export async function POST(request: Request) {
   // without having to reproduce it. "It did not arrive" is otherwise
   // impossible to tell apart from "it was never sent".
   console.log("[submit] notice sent:", noticeResult.id, "kind:", data.kind);
+
+  const requestedId = (body as Record<string, unknown>).submissionId;
+  const attemptId = typeof requestedId === "string" && /^[a-f0-9-]{36}$/i.test(requestedId)
+    ? requestedId : randomUUID();
+  // Bind a browser attempt to its validated form content. A reused UUID on
+  // a different form or changed enquiry must not suppress a new submission.
+  const submissionId = createHash("sha256").update(JSON.stringify({
+    attemptId,
+    ...data,
+    smsConsent: { ...data.smsConsent, recordedAt: undefined },
+  })).digest("hex");
+  const ghlResult = await sendToGhl(data, submissionId);
+  if (!ghlResult.ok) {
+    // The practice already has the full enquiry and consent record in Resend.
+    // A CRM outage must not prevent the visitor's existing email receipt.
+    console.error("[submit] GHL delivery FAILED:", ghlResult.error, "ref:", noticeResult.id);
+  } else if (!ghlResult.skipped) {
+    console.log("[submit] GHL accepted:", submissionId, "kind:", data.kind);
+  }
 
   /* No address means there is no receipt to send. The practice has the
      request and will telephone, which is what this visitor asked for. */

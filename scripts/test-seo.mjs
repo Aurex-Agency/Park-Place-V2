@@ -16,7 +16,7 @@ function load(file, mocks = {}, globals = {}, cache = new Map()) {
   }).outputText;
   vm.runInNewContext(code, {
     exports, process: { env: { NEXT_PUBLIC_SITE_URL: 'https://parkplacedentist.com' } },
-    setTimeout, console, ...globals,
+    setTimeout, console, crypto, ...globals,
     require(name) {
       if (name in mocks) return mocks[name];
       const local = name.startsWith('@/') ? path.join(root, 'src', name.slice(2)) : path.resolve(path.dirname(absolute), name);

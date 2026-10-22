@@ -27,8 +27,8 @@ export const practice = {
   phoneHref: "tel:+16627288171",
   email: "apptatppd@gmail.com",
   emailHref: "mailto:apptatppd@gmail.com",
-  hours: "Monday to Friday, 8:30 AM to 5:00 PM",
-  hoursNote: "Friday hours may vary",
+  hours: "Monday to Thursday, 9:00 AM to 5:00 PM",
+  hoursNote: "Closed Friday, Saturday and Sunday",
   mapsHref:
     "https://www.google.com/maps/search/?api=1&query=403+N+3rd+St+Booneville+MS+38829",
 } as const;
