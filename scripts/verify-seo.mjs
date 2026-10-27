@@ -4,7 +4,7 @@ import http from 'node:http';
 const base = process.env.SEO_BASE_URL ?? 'http://localhost:3009';
 const sitemap = await (await fetch(`${base}/sitemap.xml`)).text();
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
-assert.equal(urls.length, 68, 'Expected 67 existing URLs and the implant timing guide');
+assert.equal(urls.length, 73, 'Expected 69 existing URLs and four follow-up guides');
 assert.equal(new Set(urls).size, urls.length);
 const titles = new Set();
 let breadcrumbs = 0;

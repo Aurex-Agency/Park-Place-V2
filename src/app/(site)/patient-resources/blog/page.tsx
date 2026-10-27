@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { pageMetadata, seoFor } from "@/content/seo";
 import { postsByDate } from "@/content/posts";
-import { practice, doctor } from "@/lib/content";
+import { practice } from "@/lib/content";
 import { pageGraph } from "@/lib/schema";
 import { JsonLd } from "@/components/site/JsonLd";
 import { PageHeader } from "@/components/page/PageHeader";
@@ -53,7 +53,7 @@ export default function Page() {
         eyebrow="Patient Resources"
         headline="Straight answers / to real questions"
         lead={[
-          `Articles written and reviewed by ${doctor.name}, who has practised dentistry in Booneville since 1982. No filler, no ten-tips lists: these are the questions patients actually ask us, answered properly.`,
+          "Practical dental information from Park Place Dental, with authorship and source information on each article. Use these guides to prepare questions for your dentist; they do not replace an examination.",
           "If yours is not here, call the office and ask. We would rather talk it through than have you guess.",
         ]}
         crumbs={crumbs}

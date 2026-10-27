@@ -65,8 +65,8 @@ function checkLinks(value) {
     checkLinks(item);
   }
 }
-test('15 articles and 14 towns preserve working links, images and comparison tables', () => {
-  assert.equal(posts.length, 15);
+test('19 articles and 14 towns preserve working links, images and comparison tables', () => {
+  assert.equal(posts.length, 19);
   assert.equal(locations.length, 14);
   assert.equal(new Set(posts.map(p => p.slug)).size, posts.length);
   checkLinks(posts); checkLinks(locations);
@@ -164,4 +164,23 @@ test('legacy redirects preserve paths and never match the current or unrelated h
     assert.equal(rule.destination, 'https://parkplacedentist.com/:path*');
     assert.equal(rule.permanent, true);
   }
+});
+
+test('four follow-up guides retain practice authorship and service/request paths', () => {
+  const { followUpGuides } = load('src/content/follow-up-guides.ts');
+  assert.equal(followUpGuides.length, 4);
+  for (const post of followUpGuides) {
+    assert.equal(post.author, 'practice');
+    assert.equal(post.reviewed, false);
+    assert.ok(post.related.some(link => link.href === '/book-an-appointment'));
+    assert.ok(post.related.some(link => link.href.startsWith('/services/')));
+    assert.ok(post.blocks.some(block => block.kind === 'links' && block.items.some(link => link.href.startsWith('https://'))));
+  }
+});
+
+test('HTTP success without accepted payload does not count a lead', async () => {
+  const h = await formHarness(async () => ({ ok: true, status: 200, json: async () => ({ ok: false }) }));
+  assert.equal(h.events.length, 0);
+  assert.equal(await h.form.submit({ kind: 'appointment' }), false);
+  assert.equal(h.events.filter(event => event[0] === 'lead_submitted').length, 0);
 });
