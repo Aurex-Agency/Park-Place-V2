@@ -1,0 +1,31 @@
+name: Site checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SITE_URL: https://parkplacedentist.com
+      NEXT_PUBLIC_GA_IN_PREVIEW: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=high
+      - run: npm run check
+      - run: npm run test:seo && npm run test:sms && npm run test:ghl
+      - run: node --experimental-strip-types --test tests/analytics-events.test.mjs
+      - run: npm run build
+      - name: Verify rendered pages
+        run: |
+          npm run start -- --port 3009 > /tmp/site.log 2>&1 &
+          trap 'kill $!' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://localhost:3009/sitemap.xml > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run verify:seo
